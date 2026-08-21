@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Vulkan01\\x64\\Debug\\particleSystem.obj",
+            "outputs": [
+                "Vulkan01\\x64\\Debug\\particleSystem.h.obj.dt.module.json",
+                "Vulkan01\\x64\\Debug\\particleSystem.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

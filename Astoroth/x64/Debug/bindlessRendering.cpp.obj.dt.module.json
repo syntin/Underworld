@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Vulkan01\\x64\\Debug\\bindlessRendering.obj",
+            "outputs": [
+                "Vulkan01\\x64\\Debug\\bindlessRendering.cpp.obj.dt.module.json",
+                "Vulkan01\\x64\\Debug\\bindlessRendering.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

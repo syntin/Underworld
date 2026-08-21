@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Vulkan01\\x64\\Debug\\sceneComposer.obj",
+            "outputs": [
+                "Vulkan01\\x64\\Debug\\sceneComposer.h.obj.dt.module.json",
+                "Vulkan01\\x64\\Debug\\sceneComposer.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}
