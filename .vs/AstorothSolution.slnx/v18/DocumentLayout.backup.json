@@ -1,7 +1,24 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\DEV\\WishboneInteractive\\Vulkan\\Underworld\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\DEV\\Underworld\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|D:\\DEV\\Underworld\\Source\\bindlessRender.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|solutionrelative:Source\\bindlessRender.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|D:\\DEV\\Underworld\\Source\\bindlessRender.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|solutionrelative:Source\\bindlessRender.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|D:\\DEV\\Underworld\\Source\\descriptorPool.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|solutionrelative:Source\\descriptorPool.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|D:\\DEV\\Underworld\\Source\\descriptorPool.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B40A5112-1F56-4E29-8435-69EB0704568E}|Astoroth.vcxproj|solutionrelative:Source\\descriptorPool.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +26,38 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "bindlessRender.cpp",
+              "DocumentMoniker": "D:\\DEV\\Underworld\\Source\\bindlessRender.cpp",
+              "RelativeDocumentMoniker": "Source\\bindlessRender.cpp",
+              "ToolTip": "D:\\DEV\\Underworld\\Source\\bindlessRender.cpp",
+              "RelativeToolTip": "Source\\bindlessRender.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-08-22T19:18:18.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "bindlessRender.h",
+              "DocumentMoniker": "D:\\DEV\\Underworld\\Source\\bindlessRender.h",
+              "RelativeDocumentMoniker": "Source\\bindlessRender.h",
+              "ToolTip": "D:\\DEV\\Underworld\\Source\\bindlessRender.h",
+              "RelativeToolTip": "Source\\bindlessRender.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-08-22T19:18:11.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{269a02dc-6af8-11d3-bdc4-00c04f688e50}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -34,6 +81,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{2d7728c2-de0a-45b5-99aa-89b609dfde73}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "descriptorPool.h",
+              "DocumentMoniker": "D:\\DEV\\Underworld\\Source\\descriptorPool.h",
+              "RelativeDocumentMoniker": "Source\\descriptorPool.h",
+              "ToolTip": "D:\\DEV\\Underworld\\Source\\descriptorPool.h",
+              "RelativeToolTip": "Source\\descriptorPool.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-08-22T17:52:50.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "descriptorPool.cpp",
+              "DocumentMoniker": "D:\\DEV\\Underworld\\Source\\descriptorPool.cpp",
+              "RelativeDocumentMoniker": "Source\\descriptorPool.cpp",
+              "ToolTip": "D:\\DEV\\Underworld\\Source\\descriptorPool.cpp",
+              "RelativeToolTip": "Source\\descriptorPool.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-08-22T17:52:02.696Z",
+              "EditorCaption": ""
             }
           ]
         }

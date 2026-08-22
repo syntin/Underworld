@@ -185,9 +185,6 @@
     <ClCompile Include="Source\device.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
-    <ClCompile Include="Source\bindlessRender.cpp">
-      <Filter>Source Files\Src\Private\Initialization</Filter>
-    </ClCompile>
     <ClCompile Include="Source\commandList.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
@@ -352,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="Source\componentManager.cpp">
       <Filter>Source Files\Src\Private\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\bindlessRender.cpp">
+      <Filter>Source Files\Src\Private\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -553,9 +553,6 @@
     <ClInclude Include="Source\systemScheduler.h">
       <Filter>Source Files\Headers\Public\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\bindlessRender.h">
-      <Filter>Source Files\Headers\Public\Initialization</Filter>
-    </ClInclude>
     <ClInclude Include="Source\commandList.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
@@ -596,6 +593,9 @@
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\virtualTexting.h">
+      <Filter>Source Files\Headers\Public\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\bindlessRender.h">
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

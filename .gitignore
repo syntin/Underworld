@@ -3,3 +3,10 @@
 *.cmd
 *.swp
 *.obj
+*.vsldx
+*.log
+*.recipe
+*.ilk
+*.tlog
+Asorototh.exe
+Astoroth.pcb
