@@ -3,10 +3,10 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "Agoroth\\x64\\Debug\\mesh.obj",
+            "primary-output": "Astoroth\\x64\\Debug\\mesh.obj",
             "outputs": [
-                "Agoroth\\x64\\Debug\\mesh.h.obj.dt.module.json",
-                "Agoroth\\x64\\Debug\\mesh.h.obj.dt.d.json"
+                "Astoroth\\x64\\Debug\\mesh.h.obj.dt.module.json",
+                "Astoroth\\x64\\Debug\\mesh.h.obj.dt.d.json"
             ],
             "requires": []
         }

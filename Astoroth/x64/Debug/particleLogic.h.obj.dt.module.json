@@ -3,10 +3,10 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "Vulkan01\\x64\\Debug\\particleLogic.obj",
+            "primary-output": "Astoroth\\x64\\Debug\\particleLogic.obj",
             "outputs": [
-                "Vulkan01\\x64\\Debug\\particleLogic.h.obj.dt.module.json",
-                "Vulkan01\\x64\\Debug\\particleLogic.h.obj.dt.d.json"
+                "Astoroth\\x64\\Debug\\particleLogic.h.obj.dt.module.json",
+                "Astoroth\\x64\\Debug\\particleLogic.h.obj.dt.d.json"
             ],
             "requires": []
         }
