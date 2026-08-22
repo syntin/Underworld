@@ -11,7 +11,9 @@ VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindles
 	VkPhysicalDeviceDescriptorIndexingFeatures indexingFeatures{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES, nullptr };
 	VkPhysicalDeviceFeatures2 device_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &indexingFeatures };
 	vkGetPhysicalDeviceFeatures2(_vulkanPhysicalDevice, &device_features);
-	_isSupported = indexingFeatures.descriptorBindingPartiallyBound && indexingFeatures.runtimeDescriptorArray;
+	_bindlessSupported = indexingFeatures.descriptorBindingPartiallyBound && indexingFeatures.runtimeDescriptorArray;
+	DescriptorPool pool;
+	pool.Create(_vkAllocationCallbacks);
 	return indexingFeatures;
 }
 
@@ -21,7 +23,7 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 	vkGetPhysicalDeviceFeatures2(_vulkanPhysicalDevice, &physicalFeatures2);
 	VkDeviceCreateInfo deviceCreateInfo = {};
 	deviceCreateInfo.pNext = &physicalFeatures2;
-	if (_isSupported) {
+	if (_bindlessSupported) {
 		physicalFeatures2.pNext = &indexingFeatures;
 	}
 	vkCreateDevice(_vulkanPhysicalDevice, &deviceCreateInfo, _vkAllocationCallbacks, &vulkanDevice);
