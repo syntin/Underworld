@@ -1,10 +1,5 @@
-# Set up files to ignore
 *.json
 *.command
 *.cmd
 *.swp
-
-/..gitignore.un~
-/.gitignore
-/.gitignore~
-/.vs/AstorothSolution.slnx/FileContentIndex/a155856c-f899-4038-ad1b-d33b50ce688c.vsidx
+*.obj
