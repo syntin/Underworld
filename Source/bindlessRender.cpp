@@ -1,9 +1,19 @@
 #include "bindlessRender.h"
 #include "descriptorPool.h"
 
+BindlessRender::BindlessRender()
+{
+
+}
+
+BindlessRender::~BindlessRender()
+{
+
+}
+
 void BindlessRender::SetAllocationCallbacks(const VkAllocationCallbacks* pCallbacks)
 {
-	_vkAllocationCallbacks = pCallbacks;
+	_vkAllocationCallback = pCallbacks;
 }
 
 VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindlessSupport()
@@ -13,7 +23,7 @@ VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindles
 	vkGetPhysicalDeviceFeatures2(_vulkanPhysicalDevice, &device_features);
 	_bindlessSupported = indexingFeatures.descriptorBindingPartiallyBound && indexingFeatures.runtimeDescriptorArray;
 	DescriptorPool pool;
-	pool.Create(_vkAllocationCallbacks);
+	pool.Create(_vkAllocationCallback);
 	return indexingFeatures;
 }
 
@@ -26,7 +36,7 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 	if (_bindlessSupported) {
 		physicalFeatures2.pNext = &indexingFeatures;
 	}
-	vkCreateDevice(_vulkanPhysicalDevice, &deviceCreateInfo, _vkAllocationCallbacks, &vulkanDevice);
+	vkCreateDevice(_vulkanPhysicalDevice, &deviceCreateInfo, &_vkAllocationCallback, &vulkanDevice);
 	DescriptorPool descriptorPool{};
-	descriptorPool.Create();
+	descriptorPool.Create(&_vkAllocationCallback);
 }

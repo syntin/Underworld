@@ -8,13 +8,13 @@
 class DescriptorPool
 {
 public:
-	DescriptorPool() {}
-	virtual ~DescriptorPool() {}
+	DescriptorPool();
+	virtual ~DescriptorPool();
 
 public:
 	void Create(VkAllocationCallbacks* allocationCallbacks);
 
 private:
-	VkDevice _vulkanDevice;
-	uint32_t _kMaxBindlessResources;
+	VkDevice _vulkanDevice = VK_NULL_HANDLE;
+	uint32_t _kMaxBindlessResources = 0;
 };

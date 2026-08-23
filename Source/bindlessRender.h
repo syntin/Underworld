@@ -17,5 +17,5 @@ private:
 	bool _bindlessSupported = false;
 	bool _bindlessEnabled = false;
 	VkPhysicalDevice _vulkanPhysicalDevice;
-	const VkAllocationCallbacks* _vkAllocationCallbacks;
+	const VkAllocationCallbacks* _vkAllocationCallback;
 };
