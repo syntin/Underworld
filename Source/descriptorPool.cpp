@@ -13,7 +13,7 @@ DescriptorPool::~DescriptorPool()
 {
 }
 
-void DescriptorPool::Create(VkAllocationCallbacks* allocationCallbacks)
+void DescriptorPool::Create(VkAllocationCallbacks* allocationCallback)
 {
 	VkDescriptorPoolSize poolSizesBindless[] = {
 		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, _kMaxBindlessResources },
@@ -28,7 +28,7 @@ void DescriptorPool::Create(VkAllocationCallbacks* allocationCallbacks)
 	poolInfo.pPoolSizes = poolSizesBindless;
 
 	VkDescriptorPool bindlessDescriptorPool = VK_NULL_HANDLE;
-	VkResult result = vkCreateDescriptorPool(_vulkanDevice, &poolInfo, allocationCallbacks, &bindlessDescriptorPool);
+	VkResult result = vkCreateDescriptorPool(_vulkanDevice, &poolInfo, allocationCallback, &bindlessDescriptorPool);
 	if (result != VK_SUCCESS) {
 	    throw std::runtime_error("Failed to create Descriptor Pool");
 	}

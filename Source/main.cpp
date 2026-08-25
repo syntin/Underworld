@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include <GLFW/glfw3.h>
 #include "utils.h"
+#include "vulkanWrapper.h"
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -18,10 +19,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     }
 }
 
+VulkanWrapper wrapper;
+
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     const wchar_t className[] = L"Vulkan Window";
     const wchar_t windowName[] = L"Vulkan Engine";
+
     WNDCLASSEX wc = { };
     wc.cbSize = sizeof(WNDCLASSEX);
     wc.lpfnWndProc = WindowProc;
@@ -30,13 +34,24 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     RegisterClassEx(&wc);
 
-    HWND hWnd = CreateWindowExW(WS_OVERLAPPEDWINDOW, className, windowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT, NULL, NULL, hInstance, NULL);
+    HWND hWnd = CreateWindowExW(WS_OVERLAPPEDWINDOW,
+        className,
+        windowName,
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        WIDTH,
+        HEIGHT,
+        NULL,
+        NULL,
+        hInstance,
+        NULL);
 
     // Initialize Vulkan
-
+    wrapper.InitializeVulkan();
     ShowWindow(hWnd, nShowCmd);
 
-    // 5. Run the message loop
+    // Run the message loop
     MSG msg = { };
     while (PeekMessage(&msg, hWnd, 0, 0, 0) > 0) {
         TranslateMessage(&msg);

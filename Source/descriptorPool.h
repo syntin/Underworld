@@ -12,7 +12,7 @@ public:
 	virtual ~DescriptorPool();
 
 public:
-	void Create(VkAllocationCallbacks* allocationCallbacks);
+	void Create(VkAllocationCallbacks* allocationCallback);
 
 private:
 	VkDevice _vulkanDevice = VK_NULL_HANDLE;
