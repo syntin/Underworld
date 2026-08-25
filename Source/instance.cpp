@@ -15,7 +15,7 @@ void VulkanInstance::CreateInstance()
 {
 	VkInstanceCreateInfo createInfo{};
 
-	vkCreateInstance(&createInfo, pAllocator, &_instance);
+	vkCreateInstance(&createInfo, nullptr, &_instance);
 }
 
 void VulkanInstance::DestroyInstance()

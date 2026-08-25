@@ -23,40 +23,8 @@ VulkanWrapper wrapper;
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    const wchar_t className[] = L"Vulkan Window";
-    const wchar_t windowName[] = L"Vulkan Engine";
-
-    WNDCLASSEX wc = { };
-    wc.cbSize = sizeof(WNDCLASSEX);
-    wc.lpfnWndProc = WindowProc;
-    wc.hInstance = hInstance;
-    wc.lpszClassName = className; // <-- Setting the unique identifier
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    RegisterClassEx(&wc);
-
-    HWND hWnd = CreateWindowExW(WS_OVERLAPPEDWINDOW,
-        className,
-        windowName,
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        WIDTH,
-        HEIGHT,
-        NULL,
-        NULL,
-        hInstance,
-        NULL);
-
-    // Initialize Vulkan
-    wrapper.InitializeVulkan();
-    ShowWindow(hWnd, nShowCmd);
-
-    // Run the message loop
-    MSG msg = { };
-    while (PeekMessage(&msg, hWnd, 0, 0, 0) > 0) {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+     // Initialize Vulkan
+    wrapper.InitializeVulkan(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
     
     return 0;
 }

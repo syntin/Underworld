@@ -12,6 +12,6 @@ public:
 	void DestroyInstance();
 
 private:
-	VkInstance _instance;
+	VkInstance _instance{};
 };
 
