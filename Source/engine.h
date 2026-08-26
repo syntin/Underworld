@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vulkan/vulkan.h>
 //#define GLFW_DLL
 //#include <GLFW/glfw3.h>
@@ -12,10 +11,12 @@ public:
 	Engine_t();
 	virtual ~Engine_t();
 
+/*
 public:
 	void Run();
 
 protected:
+
 private:
 	void InitWindow();
 	void InitVulkan();
@@ -55,4 +56,5 @@ private:
 private:
 	GLFWwindow* _window;
 	VkDevice _device;
+*/
 };

@@ -14,7 +14,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     return VK_FALSE;
 }
 
-
+/*
 void Engine_t::Run()
 {
     InitWindow();
@@ -71,6 +71,7 @@ void Engine_t::MainLoop()
 
     vkDeviceWaitIdle(_device);
 }
+
 
 void Engine_t::DrawFrame()
 {
@@ -206,3 +207,5 @@ void Engine_t::Cleanup()
 {
 
 }
+*/
+

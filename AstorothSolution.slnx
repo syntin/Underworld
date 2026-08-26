@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../WishboneGame/WishboneGame.vcxproj" Id="4e39be26-44cd-47fc-af2e-cb5c78f2b057" />
   <Project Path="Astoroth.vcxproj" Id="b40a5112-1f56-4e29-8435-69eb0704568e" />
 </Solution>

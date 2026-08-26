@@ -353,6 +353,9 @@
     <ClCompile Include="Source\bindlessRender.cpp">
       <Filter>Source Files\Src\Private\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\vulkanWrapper.cpp">
+      <Filter>Source Files\Src\Private\Initialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -597,6 +600,9 @@
     </ClInclude>
     <ClInclude Include="Source\bindlessRender.h">
       <Filter>Source Files\Headers\Public\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\vulkanWrapper.h">
+      <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
