@@ -12,6 +12,8 @@ public:
 	void DestroyInstance();
 
 private:
+	bool CheckValidationLayerSupport();
+
+private:
 	VkInstance _instance;
 };
-

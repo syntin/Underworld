@@ -14,11 +14,14 @@ public:
 	virtual ~VulkanWrapper();
 
 public:
-	InitializeVulkan();
+	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nShowCmd);
+
+protected:
+	void Destroy();
 
 private:
-	VulkanInstance _vulkanInstance;
-	DebugMessenger _debugMessenger;
-	Extensions _extensions;
-	Window _window;
+	VulkanInstance _vulkanInstance{};
+	DebugMessenger _debugMessenger{};
+	Extensions _extensions{};
+	Window _window{};
 };
