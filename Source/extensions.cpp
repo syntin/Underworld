@@ -1,9 +1,10 @@
-#include "extensions.h"
-#include <GLFW/glfw3.h>>
+#include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 #include <iostream>
+#include <stdio.h>
 #include <cstdint>
 #include <vector>
+#include "extensions.h"
 
 using namespace std;
 
@@ -13,11 +14,6 @@ Extensions::Extensions()
 }
 
 Extensions::~Extensions()
-{
-
-}
-
-void Extensions::GetRequiredExtensions()
 {
 
 }
@@ -41,8 +37,7 @@ void Extensions::CheckExtensions()
 
 void Extensions::GetRequiredExtensions() {
 	unsigned int glfwExtensionCount = 0;
-	const char** glfwExtensions;
-	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+	const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
 	_extensions = vector<const char*>(glfwExtensions, glfwExtensions + glfwExtensionCount);
 

@@ -14,7 +14,8 @@ public:
 	virtual ~VulkanWrapper();
 
 public:
-	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nShowCmd);
+	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+	void RunRenderLoop();
 
 protected:
 	void Destroy();

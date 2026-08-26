@@ -1,3 +1,5 @@
+#include <vulkan/vulkan.h>
+#include <GLFW/glfw3.h>
 #include "debugMessenger.h"
 #include "utils.h"
 #include <cstdint>

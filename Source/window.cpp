@@ -5,18 +5,19 @@
 #include "utils.h"
 #include <Windows.h>
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+ 
+
+Window::Window()
 {
-	switch (uMsg) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-	default:
-		return DefWindowProc(hwnd, uMsg, wParam, lParam);
-	}
+
 }
 
-void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+Window::~Window()
+{
+
+}
+
+void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
 	CreateBasicWindow(hInstance, hPrevInstance, pCmdLine, nCmdShow);
 
@@ -42,21 +43,31 @@ void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWST
 	RunMessageLoop();
 }
 
-void Window::CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+void Window::CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
-	const wchar_t className[] = L"Vulkan Window";
-	const wchar_t windowName[] = L"Vulkan Engine";
+	const wchar_t className[] = L"Astoroth Render Engine";
+	const wchar_t windowName[] = L"Wishbone Game Engine";
 
 	WNDCLASSEXW wc = { };
 	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.lpfnWndProc = WindowProc;
+	wc.lpfnWndProc = Window::WindowProc;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = className;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	RegisterClassExW(&wc);
 
-	_hWnd = CreateWindowExW(WS_OVERLAPPEDWINDOW, className, windowName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 
-		CW_USEDEFAULT, WIDTH, HEIGHT, NULL, NULL, hInstance, NULL);
+	_hWnd = CreateWindowExW(WS_OVERLAPPEDWINDOW,
+		className,
+		windowName,
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		WIDTH,
+		HEIGHT,
+		NULL,
+		NULL,
+		hInstance,
+		NULL);
 }
 
 int Window::RunMessageLoop()

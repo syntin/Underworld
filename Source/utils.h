@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
@@ -20,6 +21,10 @@ const std::vector<const char*> validationLayers = {
 	const bool enableValidationLayers = true;
 #endif
 
+
+
+
+/*
 static VKAPI_ATTR uint32_t VKAPI_CALL debugCallback(
 	VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
 	VkDebugUtilsMessageTypeFlagsEXT messageType,
@@ -49,7 +54,7 @@ VkResult CreateDebugUtilsMessengerEXT(VkInstance instance,
 		return VK_ERROR_EXTENSION_NOT_PRESENT;
 	}
 }
-
+*/
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 

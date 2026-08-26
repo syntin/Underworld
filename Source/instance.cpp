@@ -2,7 +2,8 @@
 #include "utils.h"
 #include <vector>
 
-VulkanInstance::VulkanInstance()
+VulkanInstance::VulkanInstance() :
+	_instance()
 {
 
 }
@@ -55,7 +56,7 @@ void VulkanInstance::DestroyInstance()
 	}
 }
 
-bool CheckValidationLayerSupport()
+bool VulkanInstance::CheckValidationLayerSupport()
 {
 	uint32_t layerCount;
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
