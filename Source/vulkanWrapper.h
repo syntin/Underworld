@@ -19,7 +19,7 @@ public:
 public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void RunRenderLoop();
-	VkInstance GetInstance() { return _vulkanInstance; }
+	VkInstance GetInstance() { return _vkInstance; }
 
 protected:
 	void Destroy();
