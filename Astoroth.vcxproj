@@ -225,6 +225,7 @@
     <ClCompile Include="Source\transformSystem.cpp" />
     <ClCompile Include="Source\velocityComponents.cpp" />
     <ClCompile Include="Source\virtualTexturing.cpp" />
+    <ClCompile Include="Source\vulkanWrapper.cpp" />
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
   </ItemGroup>
@@ -308,6 +309,7 @@
     <ClInclude Include="Source\transformSystem.h" />
     <ClInclude Include="Source\velocityComponents.h" />
     <ClInclude Include="Source\virtualTexting.h" />
+    <ClInclude Include="Source\vulkanWrapper.h" />
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\workThief.h" />
   </ItemGroup>

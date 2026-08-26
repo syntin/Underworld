@@ -1,6 +1,6 @@
 #include "engine.h"
 #include <iostream>
-
+/*
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
@@ -206,3 +206,4 @@ void Engine_t::Cleanup()
 {
 
 }
+*/

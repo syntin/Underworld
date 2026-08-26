@@ -11,7 +11,7 @@ class Engine_t
 public:
 	Engine_t();
 	virtual ~Engine_t();
-
+/*
 public:
 	void Run();
 
@@ -55,4 +55,7 @@ private:
 private:
 	GLFWwindow* _window;
 	VkDevice _device;
+*/
 };
+
+
