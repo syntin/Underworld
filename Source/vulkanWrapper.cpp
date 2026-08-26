@@ -12,7 +12,8 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	_vulkanInstance.CreateInstance();
+    _vulkanInstance.CreateInstance();
+    _queue.Initialize(_vkInstance);
 	_debugMessenger.SetupDebugMessenger();
 	_extensions.GetRequiredExtensions();
 

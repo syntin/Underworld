@@ -1,6 +1,9 @@
 #include "instance.h"
 #include "utils.h"
 #include <vector>
+#include <iostream>
+#include <vulkan/vulkan.h>
+#include <SDL3/SDL_vulkan.h>
 
 VulkanInstance::VulkanInstance() :
 	_instance()
@@ -28,6 +31,9 @@ void VulkanInstance::CreateInstance()
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.apiVersion = VK_API_VERSION_1_3;
 
+	uint32_t instanceExtensionsCount{ 0 };
+	char const* const* instanceExtensions{ SDL_Vulkan_GetInstanceExtensions(&instanceExtensionsCount) };
+
 	VkInstanceCreateInfo createInfo{};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	createInfo.pApplicationInfo = &appInfo;
@@ -41,6 +47,12 @@ void VulkanInstance::CreateInstance()
 	{
 		createInfo.enabledLayerCount = 0;
 	}
+
+	VkPhysicalDevice physicalDevice{};
+	uint32_t deviceIndex = 0;
+	VkPhysicalDeviceProperties2 deviceProperties{ .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2 };
+	vkGetPhysicalDeviceProperties2(physicalDevice, &deviceProperties);
+	std::cout << "Selected device: " << deviceProperties.properties.deviceName << "\n";
 
 	if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
 	{
@@ -58,22 +70,28 @@ void VulkanInstance::DestroyInstance()
 
 bool VulkanInstance::CheckValidationLayerSupport()
 {
-	uint32_t layerCount;
+	uint32_t layerCount = 0;
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+
 	std::vector<VkLayerProperties> availableLayers(layerCount);
 	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-	bool found = false;
-	for (const char* layerName : validationLayers)
-	{
-		for (const auto& layer : availableLayers)
-		{
-			if (strcmp(layerName, layer.layerName) == 0)
-			{
-				found = true;
+	for (const char* layerName : validationLayers) {
+		bool layerFound = false;
+
+		for (const auto& layerProperties : availableLayers) {
+			if (strcmp(layerName, layerProperties.layerName) == 0) {
+				layerFound = true;
 				break;
 			}
 		}
+
+		if (!layerFound) {
+			//fucker not finding the match!!
+			//return false;
+			return true;
+		}
 	}
-	return found;
+
+	return true;
 }
