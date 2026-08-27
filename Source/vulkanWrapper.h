@@ -19,16 +19,17 @@ public:
 public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void RunRenderLoop();
-	VkInstance GetInstance() { return _vkInstance; }
+	VkInstance GetInstance() { return _vulkanInstance.GetInstance(); }
+	VulkanInstance GetInstanceObject() { return _vulkanInstance; }
 
 protected:
 	void Destroy();
 
 private:
 	VulkanInstance _vulkanInstance;
-	VkInstance _vkInstance{};
 	VulkanQueue _queue;
 	DebugMessenger _debugMessenger{};
 	Extensions _extensions{};
 	Window _window{};
+	Device _device;
 };

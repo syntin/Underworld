@@ -1,4 +1,9 @@
+#include <vulkan/vulkan.h>
 #include "vulkanWrapper.h"
+#include "utils.h"
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_vulkan.h>
+
 
 VulkanWrapper::VulkanWrapper()
 {
@@ -12,10 +17,14 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    _vulkanInstance.CreateInstance();
-    _queue.Initialize(_vkInstance);
-	_debugMessenger.SetupDebugMessenger();
-	_extensions.GetRequiredExtensions();
+    chk(SDL_Init(SDL_INIT_VIDEO));
+    chk(SDL_Vulkan_LoadLibrary(NULL));
+
+    _vulkanInstance.Initialize();
+    _device.Initialize(_vulkanInstance.GetInstance(), _device);
+    _queue.Initialize(_vulkanInstance.GetInstance(), _device);
+	_debugMessenger.Initialize();
+	_extensions.Initialize();
 
 	// The next line will create the basic window then create the GLFW window
 	_window.CreateGLFWwindow(hInstance, hPrevInstance, lpCmdLine, nShowCmd);

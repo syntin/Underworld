@@ -105,6 +105,9 @@
     <Filter Include="Source Files\Src\Private\Initialization">
       <UniqueIdentifier>{885fe369-0087-4ce1-9f52-7115b64212f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Src\Private\ECS">
+      <UniqueIdentifier>{471a0b02-86d6-4a0f-b24b-bcedf0d6a467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
