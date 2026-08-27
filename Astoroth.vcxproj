@@ -112,12 +112,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\include;%(AdditionalIncludeDirectories);C:\VulkanSDK\1.4.357.0\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>F:\VulkanSDK\1.4.357.0\Lib;F:\SDL\SDL3-3.4.14\lib;F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\lib-vc2026;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>F:\VulkanSDK\1.4.357.0\Lib;F:\SDL\SDL3-3.4.14\lib;F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\lib-vc2026;F:\SDL\SDL3-3.4.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Vulkan-1.lib;SDL3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>Vulkan-1.lib SDL3.lib glfw.lib</ImportLibrary>
     </Link>
@@ -134,11 +134,12 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>;C:\VulkanSDK\1.4.357.0\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Vulkan-1.lib;SDL3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -171,12 +172,14 @@
     <ClCompile Include="Source\coreServices.cpp" />
     <ClCompile Include="Source\culling.cpp" />
     <ClCompile Include="Source\cullingSystem.cpp" />
+    <ClCompile Include="Source\debugMessenger.cpp" />
     <ClCompile Include="Source\descriptorPool.cpp" />
     <ClCompile Include="Source\device.cpp" />
     <ClCompile Include="Source\directedAcyclicGraph.cpp" />
     <ClCompile Include="Source\engine.cpp" />
     <ClCompile Include="Source\entityComponentSystem.cpp" />
     <ClCompile Include="Source\environmentMap.cpp" />
+    <ClCompile Include="Source\extensions.cpp" />
     <ClCompile Include="Source\fences.cpp" />
     <ClCompile Include="Source\frameGraph.cpp" />
     <ClCompile Include="Source\frameStack.cpp" />
@@ -225,6 +228,7 @@
     <ClCompile Include="Source\transformSystem.cpp" />
     <ClCompile Include="Source\velocityComponents.cpp" />
     <ClCompile Include="Source\virtualTexturing.cpp" />
+    <ClCompile Include="Source\vulkanQueue.cpp" />
     <ClCompile Include="Source\vulkanWrapper.cpp" />
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
@@ -256,12 +260,14 @@
     <ClInclude Include="Source\coreServices.h" />
     <ClInclude Include="Source\culling.h" />
     <ClInclude Include="Source\cullingSystem.h" />
+    <ClInclude Include="Source\debugMessenger.h" />
     <ClInclude Include="Source\descriptorPool.h" />
     <ClInclude Include="Source\device.h" />
     <ClInclude Include="Source\directedAcyclicGraph.h" />
     <ClInclude Include="Source\engine.h" />
     <ClInclude Include="Source\entityComponentSystem.h" />
     <ClInclude Include="Source\environmentMap.h" />
+    <ClInclude Include="Source\extensions.h" />
     <ClInclude Include="Source\fences.h" />
     <ClInclude Include="Source\frameGraph.h" />
     <ClInclude Include="Source\frameStack.h" />
@@ -287,6 +293,7 @@
     <ClInclude Include="Source\particleSystem.h" />
     <ClInclude Include="Source\physicsSystem.h" />
     <ClInclude Include="Source\platform.h" />
+    <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\raytracer.h" />
     <ClInclude Include="Source\reflections.h" />
     <ClInclude Include="Source\renderer.h" />
@@ -307,6 +314,7 @@
     <ClInclude Include="Source\transformationMathematics.h" />
     <ClInclude Include="Source\transformComponents.h" />
     <ClInclude Include="Source\transformSystem.h" />
+    <ClInclude Include="Source\utils.h" />
     <ClInclude Include="Source\velocityComponents.h" />
     <ClInclude Include="Source\virtualTexting.h" />
     <ClInclude Include="Source\vulkanWrapper.h" />

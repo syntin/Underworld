@@ -1,5 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Microsoft\VC\v180\Microsoft.CppBuild.targets(551,5): warning MSB8028: The intermediate directory (Astoroth\x64\Debug\) contains files shared from another project (Vulkan01.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  aiComponents.cpp
+﻿  aiComponents.cpp
   aiSystem.cpp
   animationMathematics.cpp
   animationStateComponents.cpp
@@ -12,9 +11,6 @@
   audioComponents.cpp
   audioSystem.cpp
   bindlessRender.cpp
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.h(8,7): error C2533: 'DescriptorPool': constructors not allowed a return type
-  (compiling source file 'Source/bindlessRender.cpp')
-  
   buffer.cpp
   cache.cpp
   camera.cpp
@@ -30,74 +26,28 @@ C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.h(8,7): error C2533
   coreServices.cpp
   culling.cpp
   cullingSystem.cpp
+  debugMessenger.cpp
   descriptorPool.cpp
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.h(8,7): error C2533: 'DescriptorPool': constructors not allowed a return type
-  (compiling source file 'Source/descriptorPool.cpp')
-  
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(6,48): error C2065: 'k_max_bindless_resources': undeclared identifier
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(6,72): error C2059: syntax error: ';'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(6,76): error C2059: syntax error: ','
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(7,3): error C2143: syntax error: missing ';' before '{'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(7,3): error C2447: '{': missing function header (old-style formal list?)
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(8,2): error C2059: syntax error: '}'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(8,2): error C2143: syntax error: missing ';' before '}'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,2): error C3927: '->': trailing return type is not allowed after a non-function declarator
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,11): error C3484: syntax error: expected '->' before the return type
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,12): error C3613: missing return type after '->' ('int' assumed)
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,12): error C2146: syntax error: missing ';' before identifier 'flags'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,2): error C3927: '->': trailing return type is not allowed after a non-function declarator
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,11): error C3484: syntax error: expected '->' before the return type
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,12): error C3613: missing return type after '->' ('int' assumed)
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,2): error C2086: 'int pool_info': redefinition
-      C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,2):
-      see declaration of 'pool_info'
-  
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(10,12): error C2146: syntax error: missing ';' before identifier 'maxSets'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,2): error C3927: '->': trailing return type is not allowed after a non-function declarator
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,11): error C3484: syntax error: expected '->' before the return type
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,12): error C3613: missing return type after '->' ('int' assumed)
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,2): error C2086: 'int pool_info': redefinition
-      C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,2):
-      see declaration of 'pool_info'
-  
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(11,12): error C2146: syntax error: missing ';' before identifier 'poolSizeCount'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,2): error C3927: '->': trailing return type is not allowed after a non-function declarator
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,11): error C3484: syntax error: expected '->' before the return type
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,12): error C3613: missing return type after '->' ('int' assumed)
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,2): error C2086: 'int pool_info': redefinition
-      C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(9,2):
-      see declaration of 'pool_info'
-  
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(12,12): error C2146: syntax error: missing ';' before identifier 'pPoolSizes'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(13,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(13,2): error C2365: 'vkCreateDescriptorPool': redefinition; previous definition was 'function'
-      C:\VulkanSDK\1.4.357.0\Include\vulkan\vulkan_core.h(5187,32):
-      see declaration of 'vkCreateDescriptorPool'
-  
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(13,25): error C2065: 'vulkan_device': undeclared identifier
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(13,52): error C2065: 'vulkan_allocation_callbacks': undeclared identifier
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(13,82): error C2065: 'vulkan_bindless_descriptor_pool': undeclared identifier
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(14,1): error C2059: syntax error: '}'
-C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(14,1): error C2143: syntax error: missing ';' before '}'
   device.cpp
+F:\DEV\WishboneStudios\Vulkan\Underworld\Source\device.cpp(42,100): error C2440: '=': cannot convert from 'VkDeviceQueueCreateInfo' to 'const VkDeviceQueueCreateInfo *'
+      F:\DEV\WishboneStudios\Vulkan\Underworld\Source\device.cpp(42,100):
+      No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  
   directedAcyclicGraph.cpp
   engine.cpp
   entityComponentSystem.cpp
   environmentMap.cpp
+  extensions.cpp
   fences.cpp
   frameGraph.cpp
   frameStack.cpp
   gpuPipeline.cpp
   guid.cpp
   healthComponents.cpp
-  import.cpp
-  instance.cpp
   Generating Code...
   Compiling...
+  import.cpp
+  instance.cpp
   jobSystem.cpp
   levelLoader.cpp
   lightComponents.cpp
@@ -116,10 +66,10 @@ C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(14,1): error C2
   particleSystem.cpp
   physicsSystem.cpp
   platform.cpp
-  raytracer.cpp
-  reflections.cpp
   Generating Code...
   Compiling...
+  raytracer.cpp
+  reflections.cpp
   renderer.cpp
   renderGraph.cpp
   renderMeshComponents.cpp
@@ -138,10 +88,22 @@ C:\Users\dmbet\source\repos\Underworld\Source\descriptorPool.cpp(14,1): error C2
   transformationMathematics.cpp
   transformComponents.cpp
   transformSystem.cpp
-  velocityComponents.cpp
-  virtualTexturing.cpp
   Generating Code...
   Compiling...
+  velocityComponents.cpp
+  virtualTexturing.cpp
+  vulkanQueue.cpp
+  vulkanWrapper.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,9): warning C4005: 'APIENTRY': macro redefinition
+  (compiling source file 'Source/vulkanWrapper.cpp')
+      F:\glfw\include\GLFW\glfw3.h(123,11):
+      see previous definition of 'APIENTRY'
+  
   window.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\minwindef.h(130,9): warning C4005: 'APIENTRY': macro redefinition
+  (compiling source file 'Source/window.cpp')
+      F:\glfw\include\GLFW\glfw3.h(123,11):
+      see previous definition of 'APIENTRY'
+  
   workThief.cpp
   Generating Code...
