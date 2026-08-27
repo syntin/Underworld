@@ -77,7 +77,7 @@ public:
 	std::vector<Entity>& GetEntities() { return m_entities; }
 	const std::vector<Entity>& GetEntities() const { return m_entities; }
 
-private;
+private:
 	std::vector<T> m_components;
 	std::vector<Entity> m_entities;
 	std::unordered_map<uint32_t, uint32_t> m_entityToIndex;

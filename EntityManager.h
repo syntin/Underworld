@@ -15,7 +15,7 @@ public:
 		{
 			index = m_freeIndices.front();
 			m_freeIndices.pop();
-			m_generations[index] + 1;
+			m_generations[index] += 1;
 		}
 		else
 		{
