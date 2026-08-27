@@ -43,6 +43,11 @@ void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPST
 	RunMessageLoop();
 }
 
+void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
+{
+
+}
+
 void Window::CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
 	const wchar_t className[] = L"Astoroth Render Engine";

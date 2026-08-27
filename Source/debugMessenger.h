@@ -11,7 +11,7 @@ public:
 	virtual ~DebugMessenger();
 
 public:
-	void SetupDebugMessenger();
+	void Initialize();
 
 private:
 	std::vector<const char*> _extensions;

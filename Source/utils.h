@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
+#include <iostream>
 
 #pragma warning(disable: 4005)
 #pragma warning(disable: 4098)
@@ -22,6 +23,34 @@ const std::vector<const char*> validationLayers = {
 #endif
 
 
+static inline void chk(VkResult result)
+{
+	if (result != VK_SUCCESS)
+	{
+		std::cerr << "Vulkan call returned an error (" << result << ")\n";
+		exit(result);
+	}
+}
+/*
+static inline void chkSwapchain(VkResult result) {
+	if (result < VK_SUCCESS) {
+		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+			updateSwapchain = true;
+			return;
+		}
+		std::cerr << "Vulkan call returned an error (" << result << ")\n";
+		exit(result);
+	}
+}
+*/
+static inline void chk(bool result)
+{
+	if (!result)
+	{
+		std::cerr << "Call returned an error\n";
+		exit(result);
+	}
+}
 
 
 /*
