@@ -105,6 +105,9 @@
     <Filter Include="Source Files\Src\Private\Initialization">
       <UniqueIdentifier>{885fe369-0087-4ce1-9f52-7115b64212f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Src\Private\ECS">
+      <UniqueIdentifier>{471a0b02-86d6-4a0f-b24b-bcedf0d6a467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -356,6 +359,9 @@
     <ClCompile Include="Source\vulkanWrapper.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
+    <ClCompile Include="TestECS.cpp">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -603,6 +609,24 @@
     </ClInclude>
     <ClInclude Include="Source\vulkanWrapper.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentPool.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGraph.h">
+      <Filter>Source Files\Src\Private\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
