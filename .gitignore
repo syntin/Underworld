@@ -6,12 +6,14 @@
 *.vsix
 *.vssettings
 
-[Bb]uild/
-[Bb]in/
-[Dd]ebug/
-[Rr]elease/
+
+build/
+bin/
+Debug/
+Release/
 x64/
 x86/
+
 
 *.o
 *.lo
@@ -28,7 +30,6 @@ x86/
 *.pch
 *.pchi
 *.tmp
-*.json
 *.command
 *.cmd
 *.swp
@@ -39,15 +40,15 @@ x86/
 *.ilk
 *.tlog
 
+
 ipch/
 *.ipch
+
 
 *.dt.module.json
 *.dt.module.json.command
 
+
 Astoroth.exe
 Astoroth.pdb
 Astoroth.ilk
-/Astoroth/x64/Debug/bindlessRender.h.obj.dt.module.json.command
-/Astoroth/x64/Debug/bindlessRender.h.obj.dt.module.json
-/Astoroth/x64/Debug/bindlessRender.h.obj.dt.d.json
