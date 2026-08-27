@@ -232,8 +232,14 @@
     <ClCompile Include="Source\vulkanWrapper.cpp" />
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
+    <ClCompile Include="TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="ComponentPool.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
     <ClInclude Include="Source\animationMathematics.h" />
@@ -320,6 +326,7 @@
     <ClInclude Include="Source\vulkanWrapper.h" />
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\workThief.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

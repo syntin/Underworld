@@ -105,6 +105,9 @@
     <Filter Include="Source Files\Src\Private\Initialization">
       <UniqueIdentifier>{885fe369-0087-4ce1-9f52-7115b64212f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Src\Private\ECS">
+      <UniqueIdentifier>{471a0b02-86d6-4a0f-b24b-bcedf0d6a467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -356,15 +359,6 @@
     <ClCompile Include="Source\vulkanWrapper.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
-    <ClCompile Include="Source\extensions.cpp">
-      <Filter>Source Files\Src\Private\Initialization</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\debugMessenger.cpp">
-      <Filter>Source Files\Src\Private\Initialization</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\vulkanQueue.cpp">
-      <Filter>Source Files\Src\Private\Initialization</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -611,18 +605,6 @@
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\vulkanWrapper.h">
-      <Filter>Source Files\Headers\Public\Initialization</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\extensions.h">
-      <Filter>Source Files\Headers\Public\Initialization</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\debugMessenger.h">
-      <Filter>Source Files\Headers\Public\Initialization</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\utils.h">
-      <Filter>Source Files\Headers\Public\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\vulkanQueue.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
   </ItemGroup>
