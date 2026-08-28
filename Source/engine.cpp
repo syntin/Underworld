@@ -1,5 +1,24 @@
 #include "engine.h"
 #include <iostream>
+
+Engine::Engine()
+{
+
+}
+
+Engine::~Engine()
+{
+
+}
+
+void Engine::Initialize()
+{
+
+}
+
+
+
+
 /*
 const int WIDTH = 800;
 const int HEIGHT = 600;
