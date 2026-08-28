@@ -25,10 +25,23 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
     _queue.Initialize(_vulkanInstance.GetInstance(), _device);
 	_debugMessenger.Initialize();
 	_extensions.Initialize();
+	_window.CreateSDLwindow(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+    _swapChain.Initialize();
+    _depthAttachment.Initialize();
+    _mesh.Initialize();
+    _vertexData.Initialize();
+    _shaderData.Initialize();
+    _synchronization.Initialize();
+    _commandPool.Initialize();
 
-	// The next line will create the basic window then create the GLFW window
-	_window.CreateGLFWwindow(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+    _textureImages.Initialize();
+    _descriptor.Initialize();
+    _slangShader.Initialize();
+    _loadShader.Initialize();
+    _pipeline.Initialize();
+
     RunRenderLoop();
+    Destroy();
 }
 
 void VulkanWrapper::RunRenderLoop()

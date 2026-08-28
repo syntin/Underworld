@@ -1,10 +1,10 @@
 #pragma once
 
-class Mesh
+class Pipeline
 {
 public:
-	Mesh();
-	virtual ~Mesh();
+	Pipeline();
+	virtual ~Pipeline();
 
 public:
 	void Initialize();
