@@ -1,5 +1,7 @@
 #pragma once
 
+#include "device.h"
+
 class SwapChain
 {
 public:
@@ -7,6 +9,6 @@ public:
 	virtual ~SwapChain();
 
 public:
-	void Initialize();
+	void Initialize(Device device);
 };
 

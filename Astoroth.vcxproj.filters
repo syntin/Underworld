@@ -398,6 +398,18 @@
     <ClCompile Include="TestECS.cpp">
       <Filter>Source Files\Src\Private\Testing</Filter>
     </ClCompile>
+    <ClCompile Include="Source\logicalDevice.cpp">
+      <Filter>Source Files\Src\Private\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="windowSize.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shaderData.cpp">
+      <Filter>Source Files\Src\Private\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\descriptor.cpp">
+      <Filter>Source Files\Src\Private\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -697,10 +709,11 @@
     <ClInclude Include="Source\entityManager.h">
       <Filter>Source Files\Headers\Public\Components</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\shaderData,cpp">
-      <Filter>Source Files\Src\Private\Rendering</Filter>
-    </None>
+    <ClInclude Include="Source\logicalDevice.h">
+      <Filter>Source Files\Headers\Public\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\descriptor.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

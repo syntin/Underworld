@@ -8,4 +8,7 @@ public:
 
 public:
 	void Initialize();
+
+private:
+	SlangShader _slang;
 };

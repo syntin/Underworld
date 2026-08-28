@@ -175,6 +175,7 @@
     <ClCompile Include="Source\cullingSystem.cpp" />
     <ClCompile Include="Source\debugMessenger.cpp" />
     <ClCompile Include="Source\depthAttachment.cpp" />
+    <ClCompile Include="Source\descriptor.cpp" />
     <ClCompile Include="Source\descriptorPool.cpp" />
     <ClCompile Include="Source\device.cpp" />
     <ClCompile Include="Source\directedAcyclicGraph.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Source\lighting.cpp" />
     <ClCompile Include="Source\loader.cpp" />
     <ClCompile Include="Source\loadShader.cpp" />
+    <ClCompile Include="Source\logicalDevice.cpp" />
     <ClCompile Include="Source\lua.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\materialComponents.cpp" />
@@ -222,6 +224,7 @@
     <ClCompile Include="Source\sceneComposer.cpp" />
     <ClCompile Include="Source\scriptSystem.cpp" />
     <ClCompile Include="Source\semaphores.cpp" />
+    <ClCompile Include="Source\shaderData.cpp" />
     <ClCompile Include="Source\shadows.cpp" />
     <ClCompile Include="Source\skeletalComponents.cpp" />
     <ClCompile Include="Source\slangShader.cpp" />
@@ -241,6 +244,7 @@
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
     <ClCompile Include="TestECS.cpp" />
+    <ClCompile Include="windowSize.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sceneGraph.h" />
@@ -274,6 +278,7 @@
     <ClInclude Include="Source\cullingSystem.h" />
     <ClInclude Include="Source\debugMessenger.h" />
     <ClInclude Include="Source\depthAttachment.h" />
+    <ClInclude Include="Source\descriptor.h" />
     <ClInclude Include="Source\descriptorPool.h" />
     <ClInclude Include="Source\device.h" />
     <ClInclude Include="Source\directedAcyclicGraph.h" />
@@ -297,6 +302,7 @@
     <ClInclude Include="Source\lighting.h" />
     <ClInclude Include="Source\loader.h" />
     <ClInclude Include="Source\loadShader.h" />
+    <ClInclude Include="Source\logicalDevice.h" />
     <ClInclude Include="Source\lua.h" />
     <ClInclude Include="Source\materialComponents.h" />
     <ClInclude Include="Source\memoryAllocator.h" />
@@ -342,9 +348,6 @@
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\workThief.h" />
     <ClInclude Include="Transform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\shaderData,cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
