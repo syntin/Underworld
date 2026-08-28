@@ -16,9 +16,7 @@ public:
 	void SetWidth(uint32_t width) { _width = width; }
 	void SetHeight(uint32_t height) { _height = height; }
 	uint32_t GetWidth() { return _width; }
-	uint32_t x() { return _width; }
 	uint32_t GetHeight() { return _height; }
-	uint32_t y() { return _height; }
 
 private:
 	uint32_t _width;
