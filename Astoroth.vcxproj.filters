@@ -670,20 +670,8 @@
     <ClInclude Include="Source\pipeline.h">
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentManager.h">
-      <Filter>Source Files\Headers\Public\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentPool.h">
-      <Filter>Source Files\Headers\Public\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\debugMessenger.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Source Files\Headers\Public\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Source Files\Headers\Public\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\extensions.h">
       <Filter>Source Files\Headers\Public\Components</Filter>
@@ -698,6 +686,15 @@
       <Filter>Source Files\Headers\Public\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\vulkanQueue.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\componentPool.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\entity.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\entityManager.h">
       <Filter>Source Files\Headers\Public\Components</Filter>
     </ClInclude>
   </ItemGroup>

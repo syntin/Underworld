@@ -243,10 +243,6 @@
     <ClCompile Include="TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentManager.h" />
-    <ClInclude Include="ComponentPool.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
@@ -271,6 +267,7 @@
     <ClInclude Include="Source\commandList.h" />
     <ClInclude Include="Source\commandPool.h" />
     <ClInclude Include="Source\componentManager.h" />
+    <ClInclude Include="Source\componentPool.h" />
     <ClInclude Include="Source\computeShader.h" />
     <ClInclude Include="Source\coreServices.h" />
     <ClInclude Include="Source\culling.h" />
@@ -281,7 +278,9 @@
     <ClInclude Include="Source\device.h" />
     <ClInclude Include="Source\directedAcyclicGraph.h" />
     <ClInclude Include="Source\engine.h" />
+    <ClInclude Include="Source\entity.h" />
     <ClInclude Include="Source\entityComponentSystem.h" />
+    <ClInclude Include="Source\entityManager.h" />
     <ClInclude Include="Source\environmentMap.h" />
     <ClInclude Include="Source\extensions.h" />
     <ClInclude Include="Source\fences.h" />
