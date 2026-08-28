@@ -359,6 +359,18 @@
     <ClCompile Include="Source\vulkanWrapper.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
+    <ClCompile Include="Source\debugMessenger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\extensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\vulkanQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestECS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -607,5 +619,15 @@
     <ClInclude Include="Source\vulkanWrapper.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="ComponentPool.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Source\debugMessenger.h" />
+    <ClInclude Include="Source\extensions.h" />
+    <ClInclude Include="Source\vulkanQueue.h" />
+    <ClInclude Include="Source\utils.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
 </Project>
