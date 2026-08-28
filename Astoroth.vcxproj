@@ -243,7 +243,7 @@
     <ClCompile Include="TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="sceneGraph.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
     <ClInclude Include="Source\animationMathematics.h" />

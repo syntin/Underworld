@@ -676,7 +676,7 @@
     <ClInclude Include="Source\extensions.h">
       <Filter>Source Files\Headers\Public\Components</Filter>
     </ClInclude>
-    <ClInclude Include="SceneGraph.h">
+    <ClInclude Include="sceneGraph.h">
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
