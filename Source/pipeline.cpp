@@ -1,4 +1,9 @@
+#include <vulkan/vulkan.h>
+#include <vulkan/vulkan_core.h>
+#include <vector>
+#include "utils.h"
 #include "pipeline.h"
+#include <stddef.h>
 
 Pipeline::Pipeline()
 {
@@ -10,8 +15,9 @@ Pipeline::~Pipeline()
 
 }
 
-void Pipeline::Initialize()
+void Pipeline::Initialize(VkDevice device)
 {
+	VkPipelineLayout pipelineLayout;
 	VkPushConstantRange pushConstantRange{ .stageFlags = VK_SHADER_STAGE_VERTEX_BIT, .size = sizeof(VkDeviceAddress) };
 	VkPipelineLayoutCreateInfo pipelineLayoutCI{ .sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO, .setLayoutCount = 1, .pSetLayouts = &descriptorSetLayoutTex, .pushConstantRangeCount = 1, .pPushConstantRanges = &pushConstantRange };
 	chk(vkCreatePipelineLayout(device, &pipelineLayoutCI, nullptr, &pipelineLayout));
@@ -19,7 +25,11 @@ void Pipeline::Initialize()
 		{.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO, .stage = VK_SHADER_STAGE_VERTEX_BIT, .module = shaderModule, .pName = "main"},
 		{.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO, .stage = VK_SHADER_STAGE_FRAGMENT_BIT, .module = shaderModule, .pName = "main" }
 	};
-	VkVertexInputBindingDescription vertexBinding{ .binding = 0, .stride = sizeof(Vertex), .inputRate = VK_VERTEX_INPUT_RATE_VERTEX };
+	VkVertexInputBindingDescription vertexBinding{
+		.binding = 0,
+		.stride = sizeof(Vertex),
+		.inputRate = VK_VERTEX_INPUT_RATE_VERTEX
+	};
 	std::vector<VkVertexInputAttributeDescription> vertexAttributes{
 		{.location = 0, .binding = 0, .format = VK_FORMAT_R32G32B32_SFLOAT },
 		{.location = 1, .binding = 0, .format = VK_FORMAT_R32G32B32_SFLOAT, .offset = offsetof(Vertex, normal) },
