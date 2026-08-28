@@ -167,12 +167,14 @@
     <ClCompile Include="Source\colliderComponents.cpp" />
     <ClCompile Include="Source\collision.cpp" />
     <ClCompile Include="Source\commandList.cpp" />
+    <ClCompile Include="Source\commandPool.cpp" />
     <ClCompile Include="Source\componentManager.cpp" />
     <ClCompile Include="Source\computerShader.cpp" />
     <ClCompile Include="Source\coreServices.cpp" />
     <ClCompile Include="Source\culling.cpp" />
     <ClCompile Include="Source\cullingSystem.cpp" />
     <ClCompile Include="Source\debugMessenger.cpp" />
+    <ClCompile Include="Source\depthAttachment.cpp" />
     <ClCompile Include="Source\descriptorPool.cpp" />
     <ClCompile Include="Source\device.cpp" />
     <ClCompile Include="Source\directedAcyclicGraph.cpp" />
@@ -193,6 +195,7 @@
     <ClCompile Include="Source\lightComponents.cpp" />
     <ClCompile Include="Source\lighting.cpp" />
     <ClCompile Include="Source\loader.cpp" />
+    <ClCompile Include="Source\loadShader.cpp" />
     <ClCompile Include="Source\lua.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\materialComponents.cpp" />
@@ -205,6 +208,7 @@
     <ClCompile Include="Source\particleLogic.cpp" />
     <ClCompile Include="Source\particleSystem.cpp" />
     <ClCompile Include="Source\physicsSystem.cpp" />
+    <ClCompile Include="Source\pipeline.cpp" />
     <ClCompile Include="Source\platform.cpp" />
     <ClCompile Include="Source\raytracer.cpp" />
     <ClCompile Include="Source\reflections.cpp" />
@@ -220,13 +224,17 @@
     <ClCompile Include="Source\semaphores.cpp" />
     <ClCompile Include="Source\shadows.cpp" />
     <ClCompile Include="Source\skeletalComponents.cpp" />
+    <ClCompile Include="Source\slangShader.cpp" />
     <ClCompile Include="Source\spir-v.cpp" />
+    <ClCompile Include="Source\swapchain.cpp" />
     <ClCompile Include="Source\synchorinzation.cpp" />
     <ClCompile Include="Source\systemScheduler.cpp" />
+    <ClCompile Include="Source\textureImages.cpp" />
     <ClCompile Include="Source\transformationMathematics.cpp" />
     <ClCompile Include="Source\transformComponents.cpp" />
     <ClCompile Include="Source\transformSystem.cpp" />
     <ClCompile Include="Source\velocityComponents.cpp" />
+    <ClCompile Include="Source\vertexData.cpp" />
     <ClCompile Include="Source\virtualTexturing.cpp" />
     <ClCompile Include="Source\vulkanQueue.cpp" />
     <ClCompile Include="Source\vulkanWrapper.cpp" />
@@ -261,12 +269,14 @@
     <ClInclude Include="Source\colliderComponents.h" />
     <ClInclude Include="Source\collision.h" />
     <ClInclude Include="Source\commandList.h" />
+    <ClInclude Include="Source\commandPool.h" />
     <ClInclude Include="Source\componentManager.h" />
     <ClInclude Include="Source\computeShader.h" />
     <ClInclude Include="Source\coreServices.h" />
     <ClInclude Include="Source\culling.h" />
     <ClInclude Include="Source\cullingSystem.h" />
     <ClInclude Include="Source\debugMessenger.h" />
+    <ClInclude Include="Source\depthAttachment.h" />
     <ClInclude Include="Source\descriptorPool.h" />
     <ClInclude Include="Source\device.h" />
     <ClInclude Include="Source\directedAcyclicGraph.h" />
@@ -287,6 +297,7 @@
     <ClInclude Include="Source\lightComponents.h" />
     <ClInclude Include="Source\lighting.h" />
     <ClInclude Include="Source\loader.h" />
+    <ClInclude Include="Source\loadShader.h" />
     <ClInclude Include="Source\lua.h" />
     <ClInclude Include="Source\materialComponents.h" />
     <ClInclude Include="Source\memoryAllocator.h" />
@@ -298,7 +309,12 @@
     <ClInclude Include="Source\particleLogic.h" />
     <ClInclude Include="Source\particleSystem.h" />
     <ClInclude Include="Source\physicsSystem.h" />
+    <ClInclude Include="Source\pipeline.h" />
     <ClInclude Include="Source\platform.h" />
+    <ClInclude Include="Source\shaderData.h" />
+    <ClInclude Include="Source\slangShader.h" />
+    <ClInclude Include="Source\textureImages.h" />
+    <ClInclude Include="Source\vertexData.h" />
     <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\raytracer.h" />
     <ClInclude Include="Source\reflections.h" />
@@ -327,6 +343,9 @@
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\workThief.h" />
     <ClInclude Include="Transform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\shaderData,cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
