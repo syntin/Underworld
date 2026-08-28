@@ -112,7 +112,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;F:\VMA;F:\tinyobjloader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
