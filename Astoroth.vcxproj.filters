@@ -108,6 +108,9 @@
     <Filter Include="Source Files\Src\Private\ECS">
       <UniqueIdentifier>{471a0b02-86d6-4a0f-b24b-bcedf0d6a467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Src\Private\Testing">
+      <UniqueIdentifier>{1149f88d-2721-4aaa-b7df-86c1bcf4987d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -359,18 +362,6 @@
     <ClCompile Include="Source\vulkanWrapper.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
-    <ClCompile Include="Source\debugMessenger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\extensions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\vulkanQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestECS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\swapchain.cpp">
       <Filter>Source Files\Src\Private\Objects</Filter>
     </ClCompile>
@@ -394,6 +385,18 @@
     </ClCompile>
     <ClCompile Include="Source\pipeline.cpp">
       <Filter>Source Files\Src\Private\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\debugMessenger.cpp">
+      <Filter>Source Files\Src\Private\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\extensions.cpp">
+      <Filter>Source Files\Src\Private\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\vulkanQueue.cpp">
+      <Filter>Source Files\Src\Private\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TestECS.cpp">
+      <Filter>Source Files\Src\Private\Testing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -643,16 +646,6 @@
     <ClInclude Include="Source\vulkanWrapper.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentManager.h" />
-    <ClInclude Include="ComponentPool.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="SceneGraph.h" />
-    <ClInclude Include="Source\debugMessenger.h" />
-    <ClInclude Include="Source\extensions.h" />
-    <ClInclude Include="Source\vulkanQueue.h" />
-    <ClInclude Include="Source\utils.h" />
-    <ClInclude Include="Transform.h" />
     <ClInclude Include="Source\depthAttachment.h">
       <Filter>Source Files\Headers\Public\Objects</Filter>
     </ClInclude>
@@ -676,6 +669,36 @@
     </ClInclude>
     <ClInclude Include="Source\pipeline.h">
       <Filter>Source Files\Headers\Public\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentPool.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\debugMessenger.h">
+      <Filter>Source Files\Headers\Public\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\extensions.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGraph.h">
+      <Filter>Source Files\Headers\Public\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source Files\Headers\Public\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\utils.h">
+      <Filter>Source Files\Headers\Public\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\vulkanQueue.h">
+      <Filter>Source Files\Headers\Public\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
