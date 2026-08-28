@@ -356,6 +356,15 @@
     <ClCompile Include="Source\vulkanWrapper.cpp">
       <Filter>Source Files\Src\Private\Initialization</Filter>
     </ClCompile>
+    <ClCompile Include="Source\vulkanQueue.cpp">
+      <Filter>Source Files\Src\Private\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\debugMessenger.cpp">
+      <Filter>Source Files\Src\Private\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\extensions.cpp">
+      <Filter>Source Files\Src\Private\Initialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h">
@@ -602,6 +611,15 @@
       <Filter>Source Files\Headers\Public\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\vulkanWrapper.h">
+      <Filter>Source Files\Headers\Public\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\vulkanQueue.h">
+      <Filter>Source Files\Headers\Public\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\debugMessenger.h">
+      <Filter>Source Files\Headers\Public\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\extensions.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
   </ItemGroup>
