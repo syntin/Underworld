@@ -35,12 +35,5 @@ void VulkanQueue::Initialize(VkInstance instance, Device& device)
         }
     }
     chk(SDL_Vulkan_GetPresentationSupport(instance, devices[device.GetDeviceIndex()], queueFamily));
-
-    const float qfpriorities{ 1.0f };
-    _queueCI.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-    _queueCI.queueFamilyIndex = queueFamily;
-    _queueCI.queueCount = 1;
-    _queueCI.pQueuePriorities = &qfpriorities;
-    VkQueue queue{};
-    vkGetDeviceQueue(device.GetDevice(), queueFamily, 0, &queue);
 }
+

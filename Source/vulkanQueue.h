@@ -15,4 +15,6 @@ public:
 
 private:
 	VkDeviceQueueCreateInfo _queueCI{};
+	VkPhysicalDevice _physicalDevice;
+	VkDevice _device;
 };

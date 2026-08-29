@@ -36,10 +36,11 @@ uint32_t Device::Initialize(VkInstance instance, Device device)
         .dynamicRendering = true,
     };
     
+    VkDeviceQueueCreateInfo qInfo = device.GetQueueCreateInfo();
     _deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
     _deviceCreateInfo.pNext = &enabledVk13Features,
     _deviceCreateInfo.queueCreateInfoCount = 1,
-    _deviceCreateInfo.pQueueCreateInfos = device.GetQueueCreateInfo(),
+    _deviceCreateInfo.pQueueCreateInfos = &qInfo,
     _deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size()),
     _deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data(),
     _deviceCreateInfo.pEnabledFeatures = &enabledVk10Features;

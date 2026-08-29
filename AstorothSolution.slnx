@@ -4,9 +4,13 @@
     <Platform Name="x86" />
   </Configurations>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <Project Path="../AstorothGameEngine/AstorothGameEngine.vcxproj" Id="e2f1b3c2-10e1-4c7d-967a-589ffa73f484" />
 =======
   <Project Path="../WishboneGame/WishboneGame.vcxproj" Id="4e39be26-44cd-47fc-af2e-cb5c78f2b057" />
 >>>>>>> 93051568bf556b0f932e7827e6e62418d656a844
+=======
+>>>>>>> 3c55bf838a6f76b5d80242331e65823e32cda6c9
   <Project Path="Astoroth.vcxproj" Id="b40a5112-1f56-4e29-8435-69eb0704568e" />
+  <Project Path="Game/Game.vcxproj" Id="8acc475a-2c4a-4ed5-9860-be4083dd0732" />
 </Solution>

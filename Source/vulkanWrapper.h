@@ -8,6 +8,18 @@
 #include "validationLayer.h"
 #include "extensions.h"
 #include "vulkanQueue.h"
+#include "swapchain.h"
+#include "depthAttachment.h"
+#include "mesh.h"
+#include "vertexData.h"
+#include "shaderData.h"
+#include "synchronization.h"
+#include "commandPool.h"
+#include "textureImages.h"
+#include "descriptor.h"
+#include "slangShader.h"
+#include "loadShader.h"
+#include "pipeline.h"
 
 
 class VulkanWrapper
@@ -32,4 +44,12 @@ private:
 	Extensions _extensions{};
 	Window _window{};
 	Device _device;
+	SwapChain _swapChain;
+	DepthAttachment _depthAttachment;
+	Mesh _mesh;
+	VertexData _vertexData;
+	ShaderData _shaderData;
+	Synchronization _synchronization;
+	CommandPool _commandPool;
+	TextureImages _textureImages;
 };

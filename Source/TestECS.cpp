@@ -5,7 +5,7 @@
 
 // test should print Entity position and the root should have 2 children
 
-int main()
+int TestECS()
 {
 	EntityManager entityManager;
 	ComponentManager components;
