@@ -112,26 +112,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> 93051568bf556b0f932e7827e6e62418d656a844
-=======
-      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;F:\VMA;F:\tinyobjloader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> 3c55bf838a6f76b5d80242331e65823e32cda6c9
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-<<<<<<< HEAD
-      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;D:\VulkanSDK\1.4.350.0\Helpers;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;sdl3.lib</AdditionalDependencies>
-=======
       <AdditionalLibraryDirectories>F:\VulkanSDK\1.4.357.0\Lib;F:\SDL\SDL3-3.4.14\lib;F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\lib-vc2026;F:\SDL\SDL3-3.4.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Vulkan-1.lib;SDL3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
->>>>>>> 93051568bf556b0f932e7827e6e62418d656a844
       <ImportLibrary>Vulkan-1.lib SDL3.lib glfw.lib</ImportLibrary>
     </Link>
     <Manifest>
@@ -147,25 +134,13 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> 93051568bf556b0f932e7827e6e62418d656a844
-=======
       <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> 3c55bf838a6f76b5d80242331e65823e32cda6c9
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-<<<<<<< HEAD
-      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\glfw-3.4.bin.WIN64\glfw-3.4.bin.WIN64\lib-vc2022;D:\VulkanSDK\1.4.350.0\Helpers;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;sdl3.lib</AdditionalDependencies>
-=======
       <AdditionalDependencies>Vulkan-1.lib;SDL3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
->>>>>>> 93051568bf556b0f932e7827e6e62418d656a844
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
