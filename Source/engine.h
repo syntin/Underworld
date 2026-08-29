@@ -6,11 +6,14 @@
 #include <GLFW/glfw3.h>
 
 
-class Engine_t
+class Engine
 {
 public:
-	Engine_t();
-	virtual ~Engine_t();
+	Engine();
+	virtual ~Engine();
+
+public:
+	void Inititalize();
 /*
 public:
 	void Run();

@@ -3,10 +3,10 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "Vulkan01\\x64\\Debug\\engine.obj",
+            "primary-output": "Astoroth\\x64\\Debug\\engine.obj",
             "outputs": [
-                "Vulkan01\\x64\\Debug\\engine.h.obj.dt.module.json",
-                "Vulkan01\\x64\\Debug\\engine.h.obj.dt.d.json"
+                "Astoroth\\x64\\Debug\\engine.h.obj.dt.module.json",
+                "Astoroth\\x64\\Debug\\engine.h.obj.dt.d.json"
             ],
             "requires": []
         }
