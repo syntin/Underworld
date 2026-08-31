@@ -1,27 +1,14 @@
 #pragma once
-#include <cmath>
-
-// We can change this out later if we use different vector/quat stuff
-// I just wanted to make this as simple as possible for right now
-
-struct Vec3
-{
-	float x = 0.0f;
-	float y = 0.0f;
-	float z = 0.0f;
-};
-
-struct Quat
-{
-	float x = 0.0f;
-	float y = 0.0f;
-	float z = 0.0f;
-	float w = 1.0f;
-};
+#include <glm/glm.hpp>
 
 struct Transform
 {
-	Vec3 position{ 0.0f, 0.0f, 0.0f };
-	Quat rotation{ 0.0f, 0.0f, 0.0f, 1.0f };
-	Vec3 scale{ 1.0f, 1.0f, 1.0f };
+	glm::vec3 position = glm::vec3(0.0f);
+	glm::vec3 rotation = glm::vec3(0.0f);
+	glm::vec3 scale = glm::vec3(1.0f);
+
+	glm::mat4 localMatrix = glm::mat4(1.0f);
+	glm::mat4 worldMatrix = glm::mat4(1.0f);
+
+	bool dirty = true;
 };
