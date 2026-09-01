@@ -203,5 +203,6 @@
     <ClInclude Include="Source\workThief.h" />
     <ClInclude Include="Source\SceneGraph.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="material.h" />
   </ItemGroup>
 </Project>

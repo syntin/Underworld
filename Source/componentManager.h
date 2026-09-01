@@ -3,6 +3,8 @@
 #include "ComponentPool.h"
 #include "Transform.h"
 #include "camera.h"
+#include "mesh.h"
+#include "material.h"
 
 class ComponentManager
 {
@@ -79,9 +81,84 @@ public:
 	{
 		return m_cameraPool.GetEntities();
 	}
-	// TO DO: Add more components
+
+	// Mesh
+	Mesh* AddMesh(Entity e, const Mesh& m)
+	{
+		return m_meshPool.AddComponent(e, m);
+	}
+
+	Mesh* GetMesh(Entity e)
+	{
+		return m_meshPool.GetComponent(e);
+	}
+
+	const Mesh* GetMesh(Entity e) const
+	{
+		return m_meshPool.GetComponent(e);
+	}
+
+	bool RemoveMesh(Entity e)
+	{
+		return m_meshPool.RemoveComponent(e);
+	}
+
+	bool HasMesh(Entity e) const
+	{
+		return m_meshPool.HasComponent(e);
+	}
+
+	std::vector<Mesh>& GetAllMeshes()
+	{
+		return m_meshPool.GetComponents();
+	}
+
+	std::vector<Entity>& GetMeshEntities()
+	{
+		return m_meshPool.GetEntities();
+	}
+
+	// Material
+	Material* AddMaterial(Entity e, const Material& m)
+	{
+		return m_materialPool.AddComponent(e, m);
+	}
+
+	Material* GetMaterial(Entity e)
+	{
+		return m_materialPool.GetComponent(e);
+	}
+
+	const Material* GetMaterial(Entity e) const
+	{
+		return m_materialPool.GetComponent(e);
+	}
+
+	bool RemoveMaterial(Entity e)
+	{
+		return m_materialPool.RemoveComponent(e);
+	}
+
+	bool HasMaterial(Entity e) const
+	{
+		return m_materialPool.HasComponent(e);
+	}
+
+	std::vector<Material>& GetAllMaterials()
+	{
+		return m_materialPool.GetComponents();
+	}
+
+	std::vector<Entity>& GetMaterialEntities()
+	{
+		return m_materialPool.GetEntities();
+	}
+
+	// TO DO: Add components as needed
 
 private:
 	ComponentPool<Transform> m_transformPool;
 	ComponentPool<Camera> m_cameraPool;
+	ComponentPool<Mesh> m_meshPool;
+	ComponentPool<Material> m_materialPool;
 };
