@@ -248,7 +248,6 @@
     <ClCompile Include="windowSize.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="material.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
     <ClInclude Include="Source\animationMathematics.h" />
@@ -305,6 +304,7 @@
     <ClInclude Include="Source\loadShader.h" />
     <ClInclude Include="Source\logicalDevice.h" />
     <ClInclude Include="Source\lua.h" />
+    <ClInclude Include="Source\material.h" />
     <ClInclude Include="Source\materialComponents.h" />
     <ClInclude Include="Source\memoryAllocator.h" />
     <ClInclude Include="Source\memoryPool.h" />
