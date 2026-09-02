@@ -98,7 +98,7 @@
     <ClCompile Include="Source\vulkanWrapper.cpp" />
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
-    <ClCompile Include="TestECS.cpp" />
+    <ClCompile Include="Source\TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h" />
@@ -204,5 +204,6 @@
     <ClInclude Include="Source\workThief.h" />
     <ClInclude Include="Source\SceneGraph.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\velocity.h" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 #include "camera.h"
 #include "mesh.h"
 #include "material.h"
+#include "velocity.h"
+#include "healthComponents.h"
 
 class ComponentManager
 {
@@ -76,7 +78,7 @@ public:
 	{
 		return m_cameraPool.GetComponents();
 	}
-	
+
 	std::vector<Entity>& GetCameraEntities()
 	{
 		return m_cameraPool.GetEntities();
@@ -154,6 +156,69 @@ public:
 		return m_materialPool.GetEntities();
 	}
 
+	// Velocity
+	Velocity* AddVelocity(Entity e, const Velocity& v)
+	{
+		return m_velocityPool.AddComponent(e, v);
+	}
+
+	Velocity* GetVelocity(Entity e)
+	{
+		return m_velocityPool.GetComponent(e);
+	}
+
+	bool HasVelocity(Entity e) const
+	{
+		return m_velocityPool.HasComponent(e);
+	}
+
+	bool RemoveVelocity(Entity e)
+	{
+		return m_velocityPool.RemoveComponent(e);
+	}
+
+	std::vector<Velocity>& GetAllVelocities()
+	{
+		return m_velocityPool.GetComponents();
+	}
+
+	std::vector<Entity>& GetVelocityEntities()
+	{
+		return m_velocityPool.GetEntities();
+	}
+
+	// Health
+
+	Health* AddHealth(Entity e, const Health& h)
+	{
+		return m_healthPool.AddComponent(e, h);
+	}
+
+	Health* GetHealth(Entity e)
+	{
+		return m_healthPool.GetComponent(e);
+	}
+
+	bool HasHealth(Entity e) const
+	{
+		return m_healthPool.HasComponent(e);
+	}
+
+	bool RemoveHealth(Entity e)
+	{
+		return m_healthPool.RemoveComponent(e);
+	}
+
+	std::vector<Health>& GetAllHealth()
+	{
+		return m_healthPool.GetComponents();
+	}
+
+	std::vector<Entity>& GetHealthEntities()
+	{
+		return m_healthPool.GetEntities();
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -161,4 +226,6 @@ private:
 	ComponentPool<Camera> m_cameraPool;
 	ComponentPool<ECS::Mesh> m_meshPool;
 	ComponentPool<Material> m_materialPool;
+	ComponentPool<Velocity> m_velocityPool;
+	ComponentPool<Health> m_healthPool;
 };

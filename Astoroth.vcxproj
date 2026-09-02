@@ -269,6 +269,7 @@
     <ClCompile Include="Source\swapchain.cpp" />
     <ClCompile Include="Source\synchorinzation.cpp" />
     <ClCompile Include="Source\systemScheduler.cpp" />
+    <ClCompile Include="Source\TestECS.cpp" />
     <ClCompile Include="Source\textureImages.cpp" />
     <ClCompile Include="Source\transformationMathematics.cpp" />
     <ClCompile Include="Source\transformComponents.cpp" />
@@ -280,7 +281,6 @@
     <ClCompile Include="Source\vulkanWrapper.cpp" />
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
-    <ClCompile Include="TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\aiComponents.h" />
@@ -357,6 +357,7 @@
     <ClInclude Include="Source\slangShader.h" />
     <ClInclude Include="Source\textureImages.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\velocity.h" />
     <ClInclude Include="Source\vertexData.h" />
     <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\raytracer.h" />
