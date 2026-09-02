@@ -2,6 +2,8 @@
 
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_vulkan.h>
 #include "window.h"
 #include "debugMessenger.h"
 #include "instance.h"
@@ -52,4 +54,11 @@ private:
 	Synchronization _synchronization;
 	CommandPool _commandPool;
 	TextureImages _textureImages;
+	Descriptor _descriptor;
+	SlangShader _slangShader;
+	LoadShader _loadShader;
+	Pipeline _pipeline;
+
+private:
+	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
 };

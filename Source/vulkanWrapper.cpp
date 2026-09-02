@@ -1,8 +1,5 @@
-#include <vulkan/vulkan.h>
 #include "vulkanWrapper.h"
 #include "utils.h"
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_vulkan.h>
 
 
 VulkanWrapper::VulkanWrapper()
@@ -46,6 +43,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 
 void VulkanWrapper::RunRenderLoop()
 {
+	/*
 	uint64_t lastTime{ SDL_GetTicks() };
 	bool quit{ false };
 	while (!quit) {
@@ -75,7 +73,7 @@ void VulkanWrapper::RunRenderLoop()
 				.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
 				.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED,
 				.newLayout = VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL,
-				.image = swapchainImages[imageIndex],
+				.image = outputBarriers[imageIndex],
 				.subresourceRange{.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, .levelCount = 1, .layerCount = 1 }
 			},
 			VkImageMemoryBarrier2{
@@ -86,11 +84,15 @@ void VulkanWrapper::RunRenderLoop()
 				.dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
 				.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED,
 				.newLayout = VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL,
-				.image = depthImage,
+				.image = outputBarriers[1],
 				.subresourceRange{.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT, .levelCount = 1, .layerCount = 1 }
 			}
 		};
-		VkDependencyInfo barrierDependencyInfo{ .sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO, .imageMemoryBarrierCount = 2, .pImageMemoryBarriers = outputBarriers.data() };
+		VkDependencyInfo barrierDependencyInfo{
+			.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO,
+			.imageMemoryBarrierCount = 2,
+			.pImageMemoryBarriers = outputBarriers.data()
+		};
 		vkCmdPipelineBarrier2(cb, &barrierDependencyInfo);
 		VkRenderingAttachmentInfo colorAttachmentInfo{
 			.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
@@ -100,14 +102,15 @@ void VulkanWrapper::RunRenderLoop()
 			.storeOp = VK_ATTACHMENT_STORE_OP_STORE,
 			.clearValue{.color{ 0.0f, 0.0f, 0.0f, 1.0f }}
 		};
-		VkRenderingAttachmentInfo depthAttachmentInfo{
-			.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
-			.imageView = depthImageView,
-			.imageLayout = VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL,
-			.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
-			.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
-			.clearValue = {.depthStencil = {1.0f,  0}}
-		};
+		VkImageView depthImageView;
+		VkRenderingAttachmentInfo depthAttachmentInfo;
+		depthAttachmentInfo.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO;
+		depthAttachmentInfo.imageView = depthImageView;
+		depthAttachmentInfo.imageLayout = VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL;
+		depthAttachmentInfo.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		depthAttachmentInfo.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		depthAttachmentInfo.clearValue = { .depthStencil = {1.0f,  0} };
+
 		VkRenderingInfo renderingInfo{
 			.sType = VK_STRUCTURE_TYPE_RENDERING_INFO,
 			.renderArea{.extent{.width = static_cast<uint32_t>(windowSize.x), .height = static_cast<uint32_t>(windowSize.y) }},
@@ -232,7 +235,7 @@ void VulkanWrapper::RunRenderLoop()
 			VkImageViewCreateInfo viewCI{ .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO, .image = depthImage, .viewType = VK_IMAGE_VIEW_TYPE_2D, .format = depthFormat, .subresourceRange = {.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT, .levelCount = 1, .layerCount = 1 } };
 			chk(vkCreateImageView(device, &viewCI, nullptr, &depthImageView));
 		}
-	}
+	}*/
 }
 
 void VulkanWrapper::Destroy()
