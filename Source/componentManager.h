@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "ComponentPool.h"
+#include "componentPool.h"
 #include "Transform.h"
 #include "camera.h"
 #include "mesh.h"
