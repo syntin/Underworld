@@ -112,7 +112,11 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;D:\KTX-Software\other_include;D:\GLM\glm;D:\volk;D:\SDL3\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -124,6 +128,12 @@
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
+    <Lib>
+      <AdditionalDependencies>vulkan-1.lib;sdl3.lib;glfw3.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\KTX-Software\lib;D:\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -134,8 +144,12 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;D:\KTX-Software\other_include;D:\GLM\glm;D:\volk;D:\SDL3\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +159,12 @@
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
+    <Lib>
+      <AdditionalDependencies>vulkan-1.lib;sdl3.lib;glfw3.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\KTX-Software\lib;D:\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\aiComponents.cpp" />
@@ -245,9 +265,9 @@
     <ClCompile Include="Source\window.cpp" />
     <ClCompile Include="Source\workThief.cpp" />
     <ClCompile Include="TestECS.cpp" />
-    <ClCompile Include="windowSize.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sceneGraph.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
     <ClInclude Include="Source\animationMathematics.h" />
@@ -317,11 +337,9 @@
     <ClInclude Include="Source\physicsSystem.h" />
     <ClInclude Include="Source\pipeline.h" />
     <ClInclude Include="Source\platform.h" />
-    <ClInclude Include="Source\SceneGraph.h" />
     <ClInclude Include="Source\shaderData.h" />
     <ClInclude Include="Source\slangShader.h" />
     <ClInclude Include="Source\textureImages.h" />
-    <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\vertexData.h" />
     <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\raytracer.h" />
@@ -349,7 +367,9 @@
     <ClInclude Include="Source\virtualTexting.h" />
     <ClInclude Include="Source\vulkanWrapper.h" />
     <ClInclude Include="Source\window.h" />
+    <ClInclude Include="Source\windowSize.h" />
     <ClInclude Include="Source\workThief.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

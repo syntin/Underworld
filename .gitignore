@@ -52,3 +52,5 @@ ipch/
 Astoroth.exe
 Astoroth.pdb
 Astoroth.ilk
+/Astoroth.vcxproj
+/Astoroth.vcxproj.filters
