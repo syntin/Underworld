@@ -14,7 +14,7 @@ DebugMessenger::~DebugMessenger()
 
 }
 
-void DebugMessenger::SetupDebugMessenger()
+void DebugMessenger::Initialize()
 {
 	uint32_t glfwExtensionCount = 0;
 	const char** glfwExtensions;

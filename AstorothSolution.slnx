@@ -4,4 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="Astoroth.vcxproj" Id="b40a5112-1f56-4e29-8435-69eb0704568e" />
+  <Project Path="Game/Game.vcxproj" Id="8acc475a-2c4a-4ed5-9860-be4083dd0732" />
 </Solution>

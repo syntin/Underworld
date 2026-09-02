@@ -4,6 +4,9 @@
 #include <SDL3/SDL.h>
 #include "utils.h"
 #include <Windows.h>
+#include <cassert>
+#include "utils.h"
+#include "windowSize.h"
 
  
 
@@ -41,6 +44,20 @@ void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPST
 
 	ShowWindow(_hWnd, nCmdShow);
 	RunMessageLoop();
+}
+
+void CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize)
+{
+	SDL_Window* window = SDL_CreateWindow("How to Vulkan", 1280u, 720u, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE);
+	assert(window);
+	chk(SDL_Vulkan_CreateSurface(window, vkInstance, nullptr, &surface));
+	chk(SDL_GetWindowSize(window, &windowSize.x, &windowSize.y));
+	VkSurfaceCapabilitiesKHR surfaceCaps{};
+	chk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(devices[deviceIndex], surface, &surfaceCaps));
+	VkExtent2D swapchainExtent{ surfaceCaps.currentExtent };
+	if (surfaceCaps.currentExtent.width == 0xFFFFFFFF) {
+		swapchainExtent = { .width = static_cast<uint32_t>(windowSize.x()), .height = static_cast<uint32_t>(windowSize.y()) };
+	}
 }
 
 void Window::CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)

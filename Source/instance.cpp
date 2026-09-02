@@ -1,12 +1,13 @@
 #include "instance.h"
+#include <GLFW/glfw3.h>
 #include "utils.h"
 #include <vector>
 #include <iostream>
-#include <vulkan/vulkan.h>
+#include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 
 VulkanInstance::VulkanInstance() :
-	_instance()
+	_instance(VK_NULL_HANDLE)
 {
 
 }
@@ -16,27 +17,26 @@ VulkanInstance::~VulkanInstance()
 
 }
 
-void VulkanInstance::CreateInstance()
+void VulkanInstance::Initialize()
 {
 	if (enableValidationLayers && !CheckValidationLayerSupport())
 	{
 		throw std::runtime_error("Validation layers requested but not available");
 	}
 
-	VkApplicationInfo appInfo{};
-	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = "Astoroth Engine";
-	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-	appInfo.pEngineName = "Astoroth Engine";
-	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-	appInfo.apiVersion = VK_API_VERSION_1_3;
+	VkApplicationInfo appInfo{
+		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
+		.pApplicationName = "Astoroth Engine",
+		.applicationVersion = VK_MAKE_VERSION(1, 0, 0),
+		.pEngineName = "Astoroth Engine",
+		.engineVersion = VK_MAKE_VERSION(1, 0, 0),
+		.apiVersion = VK_API_VERSION_1_3
+	};
 
-	uint32_t instanceExtensionsCount{ 0 };
-	char const* const* instanceExtensions{ SDL_Vulkan_GetInstanceExtensions(&instanceExtensionsCount) };
-
-	VkInstanceCreateInfo createInfo{};
-	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	createInfo.pApplicationInfo = &appInfo;
+	VkInstanceCreateInfo createInfo{
+		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+		.pApplicationInfo = &appInfo
+	};
 
 	if (enableValidationLayers)
 	{
@@ -47,17 +47,15 @@ void VulkanInstance::CreateInstance()
 	{
 		createInfo.enabledLayerCount = 0;
 	}
-
-	VkPhysicalDevice physicalDevice{};
-	uint32_t deviceIndex = 0;
-	VkPhysicalDeviceProperties2 deviceProperties{ .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2 };
-	vkGetPhysicalDeviceProperties2(physicalDevice, &deviceProperties);
-	std::cout << "Selected device: " << deviceProperties.properties.deviceName << "\n";
+	createInfo.enabledExtensionCount = _extensions.GetExtensionsCount();
+	createInfo.ppEnabledExtensionNames = _extensions.Data();
 
 	if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
 	{
 		throw std::runtime_error("Failed to create Vulkan Instance");
 	}
+
+	uint32_t deviceCount = _device.Initialize(_instance, _device);
 }
 
 void VulkanInstance::DestroyInstance()
@@ -87,9 +85,7 @@ bool VulkanInstance::CheckValidationLayerSupport()
 		}
 
 		if (!layerFound) {
-			//fucker not finding the match!!
-			//return false;
-			return true;
+			return false;
 		}
 	}
 

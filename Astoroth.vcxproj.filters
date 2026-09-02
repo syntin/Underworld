@@ -1,112 +1,107 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Headers">
-      <UniqueIdentifier>{f6394fda-a277-4941-8501-bd8b8908c7c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders">
-      <UniqueIdentifier>{5932c199-b5d6-4418-8334-3c8ad084ac57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Icons">
-      <UniqueIdentifier>{869a9f9e-8bef-4eb6-9d20-386622dac6d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Images">
-      <UniqueIdentifier>{d3f7fdb5-f5f6-403d-9f5c-624ef375f1d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\OBJ_Files">
-      <UniqueIdentifier>{5543e66e-a1d2-4930-9d8b-04bd3db7dfb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public">
-      <UniqueIdentifier>{2f514595-5927-458a-b65f-82c83d6c348a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Private">
-      <UniqueIdentifier>{46c6d660-4cc2-435a-acb7-7ab7552a9e12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Global">
-      <UniqueIdentifier>{7f7e6c84-dcc8-4d4b-828a-7d74eec86387}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src">
-      <UniqueIdentifier>{5e3a9835-73df-48cb-a850-d25a0c214b76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Public">
-      <UniqueIdentifier>{3b72cbe0-b9a9-400b-91a5-7beb62412f83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private">
-      <UniqueIdentifier>{09a31c5d-c8d8-42d6-bf80-3527667e7094}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Global">
-      <UniqueIdentifier>{56297b05-6040-4841-ad83-5a0c057f22ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Components">
-      <UniqueIdentifier>{d45eca45-9a1a-4727-86ea-129ce9895934}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Systems">
-      <UniqueIdentifier>{c0655e4b-6ef0-4147-bb65-1f4f070521d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Synchronization">
-      <UniqueIdentifier>{89dd5c2c-e473-4336-b025-421e27f196f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Objects">
-      <UniqueIdentifier>{38189020-8a6a-4ef6-a373-d5fa28a958f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Scripting">
-      <UniqueIdentifier>{18296752-e58d-4f7e-bf6e-3fe7bd263ff5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Rendering">
-      <UniqueIdentifier>{9e527f11-08a1-4b35-a6b0-ba5f3fb352b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Core">
-      <UniqueIdentifier>{6025d84f-5128-46af-be55-e9e96ce0f0f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Mathematics and Physics">
-      <UniqueIdentifier>{a2d022b6-ac3f-4d38-b1f8-218555fd4997}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Memory">
-      <UniqueIdentifier>{a5d95fab-774a-43ed-89e6-0211bccd188b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Core">
-      <UniqueIdentifier>{8af2978c-6d95-4a3c-a6e1-eb87dd6aa7d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Components">
-      <UniqueIdentifier>{31dfcadd-9570-4819-9180-a1c1a6541a9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Mathematics and Physics">
-      <UniqueIdentifier>{10838aef-c9ce-4d70-8acb-02bf958518cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Memory">
-      <UniqueIdentifier>{c5347596-c92a-413d-82b2-af1826b81f54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Rendering">
-      <UniqueIdentifier>{020e0bdb-db6c-4883-893c-bfaa0de2ef0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Scripting">
-      <UniqueIdentifier>{39bf94e8-0ec4-4eb5-a3ed-b36dd7a2f69b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Objects">
-      <UniqueIdentifier>{928dbfe0-a520-4dc8-9d53-895908fc77e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Synchronization">
-      <UniqueIdentifier>{b0c48569-acf5-42c3-80ce-5aad69d11011}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Systems">
-      <UniqueIdentifier>{054dacbc-fa4c-443c-bc07-8fb29d2c3fc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Headers\Public\Initialization">
-      <UniqueIdentifier>{fca32e70-6fba-471b-ad91-ea2173f9342a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Src\Private\Initialization">
-      <UniqueIdentifier>{885fe369-0087-4ce1-9f52-7115b64212f6}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Source\aiComponents.cpp" />
+    <ClCompile Include="Source\aiSystem.cpp" />
+    <ClCompile Include="Source\animationMathematics.cpp" />
+    <ClCompile Include="Source\animationStateComponents.cpp" />
+    <ClCompile Include="Source\animationSystem.cpp" />
+    <ClCompile Include="Source\assetPipeline.cpp" />
+    <ClCompile Include="Source\assetRegistry.cpp" />
+    <ClCompile Include="Source\assetStreamer.cpp" />
+    <ClCompile Include="Source\asyncStreaming.cpp" />
+    <ClCompile Include="Source\audio.cpp" />
+    <ClCompile Include="Source\audioComponents.cpp" />
+    <ClCompile Include="Source\audioSystem.cpp" />
+    <ClCompile Include="Source\bindlessRender.cpp" />
+    <ClCompile Include="Source\buffer.cpp" />
+    <ClCompile Include="Source\cache.cpp" />
+    <ClCompile Include="Source\camera.cpp" />
+    <ClCompile Include="Source\cameraComponents.cpp" />
+    <ClCompile Include="Source\cameraSystem.cpp" />
+    <ClCompile Include="Source\colliderComponents.cpp" />
+    <ClCompile Include="Source\collision.cpp" />
+    <ClCompile Include="Source\commandList.cpp" />
+    <ClCompile Include="Source\commandPool.cpp" />
+    <ClCompile Include="Source\componentManager.cpp" />
+    <ClCompile Include="Source\computerShader.cpp" />
+    <ClCompile Include="Source\coreServices.cpp" />
+    <ClCompile Include="Source\culling.cpp" />
+    <ClCompile Include="Source\cullingSystem.cpp" />
+    <ClCompile Include="Source\debugMessenger.cpp" />
+    <ClCompile Include="Source\depthAttachment.cpp" />
+    <ClCompile Include="Source\descriptor.cpp" />
+    <ClCompile Include="Source\descriptorPool.cpp" />
+    <ClCompile Include="Source\device.cpp" />
+    <ClCompile Include="Source\directedAcyclicGraph.cpp" />
+    <ClCompile Include="Source\engine.cpp" />
+    <ClCompile Include="Source\entityComponentSystem.cpp" />
+    <ClCompile Include="Source\environmentMap.cpp" />
+    <ClCompile Include="Source\extensions.cpp" />
+    <ClCompile Include="Source\fences.cpp" />
+    <ClCompile Include="Source\frameGraph.cpp" />
+    <ClCompile Include="Source\frameStack.cpp" />
+    <ClCompile Include="Source\gpuPipeline.cpp" />
+    <ClCompile Include="Source\guid.cpp" />
+    <ClCompile Include="Source\healthComponents.cpp" />
+    <ClCompile Include="Source\import.cpp" />
+    <ClCompile Include="Source\instance.cpp" />
+    <ClCompile Include="Source\jobSystem.cpp" />
+    <ClCompile Include="Source\levelLoader.cpp" />
+    <ClCompile Include="Source\lightComponents.cpp" />
+    <ClCompile Include="Source\lighting.cpp" />
+    <ClCompile Include="Source\loader.cpp" />
+    <ClCompile Include="Source\loadShader.cpp" />
+    <ClCompile Include="Source\logicalDevice.cpp" />
+    <ClCompile Include="Source\lua.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\materialComponents.cpp" />
+    <ClCompile Include="Source\memoruAllocator.cpp" />
+    <ClCompile Include="Source\memoryPool.cpp" />
+    <ClCompile Include="Source\mesh.cpp" />
+    <ClCompile Include="Source\meshlets.cpp" />
+    <ClCompile Include="Source\movementsSystem.cpp" />
+    <ClCompile Include="Source\nvme.cpp" />
+    <ClCompile Include="Source\particleLogic.cpp" />
+    <ClCompile Include="Source\particleSystem.cpp" />
+    <ClCompile Include="Source\physicsSystem.cpp" />
+    <ClCompile Include="Source\pipeline.cpp" />
+    <ClCompile Include="Source\platform.cpp" />
+    <ClCompile Include="Source\raytracer.cpp" />
+    <ClCompile Include="Source\reflections.cpp" />
+    <ClCompile Include="Source\renderer.cpp" />
+    <ClCompile Include="Source\renderGraph.cpp" />
+    <ClCompile Include="Source\renderMeshComponents.cpp" />
+    <ClCompile Include="Source\renderPrepSystem.cpp" />
+    <ClCompile Include="Source\resourceBarriers.cpp" />
+    <ClCompile Include="Source\sawapchain.cpp" />
+    <ClCompile Include="Source\scene.cpp" />
+    <ClCompile Include="Source\sceneComposer.cpp" />
+    <ClCompile Include="Source\scriptSystem.cpp" />
+    <ClCompile Include="Source\semaphores.cpp" />
+    <ClCompile Include="Source\shaderData.cpp" />
+    <ClCompile Include="Source\shadows.cpp" />
+    <ClCompile Include="Source\skeletalComponents.cpp" />
+    <ClCompile Include="Source\slangShader.cpp" />
+    <ClCompile Include="Source\spir-v.cpp" />
+    <ClCompile Include="Source\swapchain.cpp" />
+    <ClCompile Include="Source\synchorinzation.cpp" />
+    <ClCompile Include="Source\systemScheduler.cpp" />
+    <ClCompile Include="Source\textureImages.cpp" />
+    <ClCompile Include="Source\transformationMathematics.cpp" />
+    <ClCompile Include="Source\transformComponents.cpp" />
+    <ClCompile Include="Source\transformSystem.cpp" />
+    <ClCompile Include="Source\velocityComponents.cpp" />
+    <ClCompile Include="Source\vertexData.cpp" />
+    <ClCompile Include="Source\virtualTexturing.cpp" />
+    <ClCompile Include="Source\vulkanQueue.cpp" />
+    <ClCompile Include="Source\vulkanWrapper.cpp" />
+    <ClCompile Include="Source\window.cpp" />
+    <ClCompile Include="Source\workThief.cpp" />
+    <ClCompile Include="Source\TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files\Src\Global</Filter>
     </ClCompile>
@@ -622,5 +617,111 @@
     <ClInclude Include="Source\extensions.h">
       <Filter>Source Files\Headers\Public\Initialization</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Source\aiComponents.h" />
+    <ClInclude Include="Source\aiSystem.h" />
+    <ClInclude Include="Source\animationMathematics.h" />
+    <ClInclude Include="Source\animationStateComponents.h" />
+    <ClInclude Include="Source\animationSystem.h" />
+    <ClInclude Include="Source\assetPipeline.h" />
+    <ClInclude Include="Source\assetRegistry.h" />
+    <ClInclude Include="Source\assetStreamer.h" />
+    <ClInclude Include="Source\asyncStreaming.h" />
+    <ClInclude Include="Source\audio.h" />
+    <ClInclude Include="Source\audioComponents.h" />
+    <ClInclude Include="Source\audioSystem.h" />
+    <ClInclude Include="Source\bindlessRender.h" />
+    <ClInclude Include="Source\buffer.h" />
+    <ClInclude Include="Source\cache.h" />
+    <ClInclude Include="Source\camera.h" />
+    <ClInclude Include="Source\cameraComponents.h" />
+    <ClInclude Include="Source\cameraSystem.h" />
+    <ClInclude Include="Source\colliderComponents.h" />
+    <ClInclude Include="Source\collision.h" />
+    <ClInclude Include="Source\commandList.h" />
+    <ClInclude Include="Source\commandPool.h" />
+    <ClInclude Include="Source\componentManager.h" />
+    <ClInclude Include="Source\componentPool.h" />
+    <ClInclude Include="Source\computeShader.h" />
+    <ClInclude Include="Source\coreServices.h" />
+    <ClInclude Include="Source\culling.h" />
+    <ClInclude Include="Source\cullingSystem.h" />
+    <ClInclude Include="Source\debugMessenger.h" />
+    <ClInclude Include="Source\depthAttachment.h" />
+    <ClInclude Include="Source\descriptor.h" />
+    <ClInclude Include="Source\descriptorPool.h" />
+    <ClInclude Include="Source\device.h" />
+    <ClInclude Include="Source\directedAcyclicGraph.h" />
+    <ClInclude Include="Source\engine.h" />
+    <ClInclude Include="Source\entity.h" />
+    <ClInclude Include="Source\entityComponentSystem.h" />
+    <ClInclude Include="Source\entityManager.h" />
+    <ClInclude Include="Source\environmentMap.h" />
+    <ClInclude Include="Source\extensions.h" />
+    <ClInclude Include="Source\fences.h" />
+    <ClInclude Include="Source\frameGraph.h" />
+    <ClInclude Include="Source\frameStack.h" />
+    <ClInclude Include="Source\gpuPipeline.h" />
+    <ClInclude Include="Source\guid.h" />
+    <ClInclude Include="Source\healthComponents.h" />
+    <ClInclude Include="Source\import.h" />
+    <ClInclude Include="Source\instance.h" />
+    <ClInclude Include="Source\jobSystem.h" />
+    <ClInclude Include="Source\levelLoader.h" />
+    <ClInclude Include="Source\lightComponents.h" />
+    <ClInclude Include="Source\lighting.h" />
+    <ClInclude Include="Source\loader.h" />
+    <ClInclude Include="Source\loadShader.h" />
+    <ClInclude Include="Source\logicalDevice.h" />
+    <ClInclude Include="Source\lua.h" />
+    <ClInclude Include="Source\material.h" />
+    <ClInclude Include="Source\materialComponents.h" />
+    <ClInclude Include="Source\memoryAllocator.h" />
+    <ClInclude Include="Source\memoryPool.h" />
+    <ClInclude Include="Source\mesh.h" />
+    <ClInclude Include="Source\meshlets.h" />
+    <ClInclude Include="Source\movementSystem.h" />
+    <ClInclude Include="Source\nvme.h" />
+    <ClInclude Include="Source\particleLogic.h" />
+    <ClInclude Include="Source\particleSystem.h" />
+    <ClInclude Include="Source\physicsSystem.h" />
+    <ClInclude Include="Source\pipeline.h" />
+    <ClInclude Include="Source\platform.h" />
+    <ClInclude Include="Source\shaderData.h" />
+    <ClInclude Include="Source\slangShader.h" />
+    <ClInclude Include="Source\textureImages.h" />
+    <ClInclude Include="Source\vertexData.h" />
+    <ClInclude Include="Source\vulkanQueue.h" />
+    <ClInclude Include="Source\raytracer.h" />
+    <ClInclude Include="Source\reflections.h" />
+    <ClInclude Include="Source\renderer.h" />
+    <ClInclude Include="Source\renderGraph.h" />
+    <ClInclude Include="Source\renderMeshComponents.h" />
+    <ClInclude Include="Source\renderPrepSystem.h" />
+    <ClInclude Include="Source\resourceBarriers.h" />
+    <ClInclude Include="Source\scene.h" />
+    <ClInclude Include="Source\sceneComposer.h" />
+    <ClInclude Include="Source\scriptSystem.h" />
+    <ClInclude Include="Source\semaphores.h" />
+    <ClInclude Include="Source\shadows.h" />
+    <ClInclude Include="Source\skeletalComponents.h" />
+    <ClInclude Include="Source\spir-v.h" />
+    <ClInclude Include="Source\swapchain.h" />
+    <ClInclude Include="Source\synchronization.h" />
+    <ClInclude Include="Source\systemScheduler.h" />
+    <ClInclude Include="Source\transformationMathematics.h" />
+    <ClInclude Include="Source\transformComponents.h" />
+    <ClInclude Include="Source\transformSystem.h" />
+    <ClInclude Include="Source\utils.h" />
+    <ClInclude Include="Source\velocityComponents.h" />
+    <ClInclude Include="Source\virtualTexting.h" />
+    <ClInclude Include="Source\vulkanWrapper.h" />
+    <ClInclude Include="Source\window.h" />
+    <ClInclude Include="Source\windowSize.h" />
+    <ClInclude Include="Source\workThief.h" />
+    <ClInclude Include="Source\SceneGraph.h" />
+    <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\velocity.h" />
+>>>>>>> 932cff45debb381f728ecea216068e4fea6977b9
   </ItemGroup>
 </Project>

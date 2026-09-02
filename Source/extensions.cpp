@@ -1,5 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_vulkan.h>
 #include <iostream>
 #include <stdio.h>
 #include <cstdint>
@@ -16,6 +18,12 @@ Extensions::Extensions()
 Extensions::~Extensions()
 {
 
+}
+
+void Extensions::Initialize()
+{
+	CheckExtensions();
+	GetRequiredExtensions();
 }
 
 void Extensions::CheckExtensions()
@@ -35,13 +43,7 @@ void Extensions::CheckExtensions()
 }
 
 
-void Extensions::GetRequiredExtensions() {
-	unsigned int glfwExtensionCount = 0;
-	const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-	_extensions = vector<const char*>(glfwExtensions, glfwExtensions + glfwExtensionCount);
-
-	if (enableValidationLayers) {
-		_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-	}
+void Extensions::GetRequiredExtensions()
+{
+	_extensions = SDL_Vulkan_GetInstanceExtensions(&_extensionsCount);
 }

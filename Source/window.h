@@ -1,5 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_vulkan.h>
 #include <Windows.h>
 
 class Window
@@ -10,6 +12,7 @@ public:
 
 public:
 	void CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
+	void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	HWND GetHWnd() { return _hWnd; }
 
 protected:
