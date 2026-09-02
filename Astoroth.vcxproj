@@ -112,7 +112,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,7 +135,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -304,6 +304,7 @@
     <ClInclude Include="Source\loadShader.h" />
     <ClInclude Include="Source\logicalDevice.h" />
     <ClInclude Include="Source\lua.h" />
+    <ClInclude Include="Source\material.h" />
     <ClInclude Include="Source\materialComponents.h" />
     <ClInclude Include="Source\memoryAllocator.h" />
     <ClInclude Include="Source\memoryPool.h" />
