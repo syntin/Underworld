@@ -83,17 +83,17 @@ public:
 	}
 
 	// Mesh
-	Mesh* AddMesh(Entity e, const Mesh& m)
+	ECS::Mesh* AddMesh(Entity e, const ECS::Mesh& m)
 	{
 		return m_meshPool.AddComponent(e, m);
 	}
 
-	Mesh* GetMesh(Entity e)
+	ECS::Mesh* GetMesh(Entity e)
 	{
 		return m_meshPool.GetComponent(e);
 	}
 
-	const Mesh* GetMesh(Entity e) const
+	const ECS::Mesh* GetMesh(Entity e) const
 	{
 		return m_meshPool.GetComponent(e);
 	}
@@ -108,7 +108,7 @@ public:
 		return m_meshPool.HasComponent(e);
 	}
 
-	std::vector<Mesh>& GetAllMeshes()
+	std::vector<ECS::Mesh>& GetAllMeshes()
 	{
 		return m_meshPool.GetComponents();
 	}
@@ -159,6 +159,6 @@ public:
 private:
 	ComponentPool<Transform> m_transformPool;
 	ComponentPool<Camera> m_cameraPool;
-	ComponentPool<Mesh> m_meshPool;
+	ComponentPool<ECS::Mesh> m_meshPool;
 	ComponentPool<Material> m_materialPool;
 };

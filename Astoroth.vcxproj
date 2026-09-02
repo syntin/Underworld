@@ -112,18 +112,27 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;F:\KTX-Software\lib\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
-=======
-      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;D:\KTX-Software\other_include;D:\GLM\glm;D:\volk;D:\SDL3\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
+      <AdditionalIncludeDirectories>
+      F:\VulkanSDK\1.4.357.0\Include;
+      F:\SDL\SDL3-3.4.14\include;
+      F:\glfw\include;
+      F:\KTX-Software\lib\include;
+      $(SolutionDir)External\glm;
+      $(SolutionDir)External\Vulkan\Include;
+      %(AdditionalIncludeDirectories)
+    </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>F:\VulkanSDK\1.4.357.0\Lib;F:\SDL\SDL3-3.4.14\lib;F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\lib-vc2026;F:\SDL\SDL3-3.4.14\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      F:\VulkanSDK\1.4.357.0\Lib;
+      F:\SDL\SDL3-3.4.14\lib;
+      F:\glfw-3.5.1.bin.WIN64\glfw-3.5.1.bin.WIN64\lib-vc2026;
+      F:\SDL\SDL3-3.4.14\lib\x64;
+      %(AdditionalLibraryDirectories)
+    </AdditionalLibraryDirectories>
       <AdditionalDependencies>Vulkan-1.lib;SDL3.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>Vulkan-1.lib SDL3.lib glfw.lib</ImportLibrary>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -132,7 +141,12 @@
       <AdditionalDependencies>vulkan-1.lib;sdl3.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\KTX-Software\lib;D:\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      F:\VulkanSDK\1.4.357.0\Lib;
+      F:\KTX-Software\lib;
+      F:\GLFW\lib-vc2022;
+      %(AdditionalLibraryDirectories)
+    </AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,12 +158,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>F:\VulkanSDK\1.4.357.0\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\Vulkan\Include;F:\SDL\SDL3-3.4.14\include;F:\glfw\include;%(AdditionalIncludeDirectories);$(SolutionDir)External\glm;$(SolutionDir)External\Vulkan\Include</AdditionalIncludeDirectories>
-=======
-      <AdditionalIncludeDirectories>D:\VulkanSDK\1.4.350.0\Include;D:\GLFW\include;D:\KTX-Software\other_include;D:\GLM\glm;D:\volk;D:\SDL3\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
+      <AdditionalIncludeDirectories>
+    F:\VulkanSDK\1.4.357.0\Include;
+    F:\SDL\SDL3-3.4.14\include;
+    F:\glfw\include;
+    $(SolutionDir)External\glm;
+    $(SolutionDir)External\Vulkan\Include;
+    %(AdditionalIncludeDirectories)
+</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -267,7 +283,6 @@
     <ClCompile Include="TestECS.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sceneGraph.h" />
     <ClInclude Include="Source\aiComponents.h" />
     <ClInclude Include="Source\aiSystem.h" />
     <ClInclude Include="Source\animationMathematics.h" />
@@ -337,9 +352,11 @@
     <ClInclude Include="Source\physicsSystem.h" />
     <ClInclude Include="Source\pipeline.h" />
     <ClInclude Include="Source\platform.h" />
+    <ClInclude Include="Source\SceneGraph.h" />
     <ClInclude Include="Source\shaderData.h" />
     <ClInclude Include="Source\slangShader.h" />
     <ClInclude Include="Source\textureImages.h" />
+    <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\vertexData.h" />
     <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\raytracer.h" />
@@ -369,7 +386,6 @@
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\windowSize.h" />
     <ClInclude Include="Source\workThief.h" />
-    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

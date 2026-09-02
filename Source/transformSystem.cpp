@@ -1,8 +1,9 @@
 #include "transformSystem.h"
 #include "componentManager.h"
 #include "transformationMathematics.h"
+#include "SceneGraph.h"
 
-void TransformSystem::Update(ComponentManager& components)
+void TransformSystem::Update(ComponentManager& components, SceneGraph& graph)
 {
 	auto& entities = components.GetTransformEntities();
 
@@ -11,13 +12,30 @@ void TransformSystem::Update(ComponentManager& components)
 		Transform* t = components.GetTransform(entity);
 		if (!t) continue;
 
-		if (!t->dirty)
+		bool hierarchDirty = graph.IsDirty(entity);
+
+		// Skip if nothing changed
+		if (!t->dirty && !hierarchDirty)
 			continue;
 
-		t->localMatrix = CalculateLocalMatrix(*t);
+		// Recompute local matrix if needed
+		if (t->dirty)
+			t->localMatrix = CalculateLocalMatrix(*t);
 
-		t->worldMatrix = t->localMatrix;
+		// Combine with parent world matrix if parent exists
+		Entity parent = graph.GetParent(entity);
+		if (parent.index != 0 && components.HasTransform(parent))
+		{
+			Transform* pt = components.GetTransform(parent);
+			t->worldMatrix = pt->worldMatrix * t->localMatrix;
+		}
+		else
+		{
+			t->worldMatrix = t->localMatrix;
+		}
 
+		//clear dirty flags
 		t->dirty = false;
+		graph.ClearDirty(entity);
 	}
 }

@@ -5,5 +5,5 @@ class EntityManger;
 class TransformSystem
 {
 public:
-	void Update(ComponentManager& components);
+	void Update(ComponentManager& components, SceneGraph& graph);
 };

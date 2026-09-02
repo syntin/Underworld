@@ -15,6 +15,9 @@ public:
 
 		m_parent[child.index] = parent;
 		m_children[parent.index].push_back(child);
+
+		// Mark dirty
+		m_dirty[child.index] = true;
 	}
 
 	void RemoveParent(Entity child)
@@ -36,6 +39,9 @@ public:
 				break;
 			}
 		}
+
+		// Mark dirty
+		m_dirty[child.index] = true;
 	}
 
 	Entity GetParent(Entity child) const
@@ -57,8 +63,21 @@ public:
 		return it->second;
 	}
 
+	bool IsDirty(Entity e) const
+	{
+		auto it = m_dirty.find(e.index);
+		if (it == m_dirty.end())
+			return false;
+		return it->second;
+	}
+
+	void ClearDirty(Entity e)
+	{
+		m_dirty[e.index] = false;
+	}
 
 private:
 	std::unordered_map<uint32_t, Entity> m_parent;
 	std::unordered_map<uint32_t, std::vector<Entity>> m_children;
+	std::unordered_map<uint32_t, bool > m_dirty;
 };
