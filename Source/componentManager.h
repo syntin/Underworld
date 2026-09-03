@@ -7,6 +7,7 @@
 #include "material.h"
 #include "velocity.h"
 #include "healthComponents.h"
+#include "colliderComponents.h"
 
 class ComponentManager
 {
@@ -219,6 +220,31 @@ public:
 		return m_healthPool.GetEntities();
 	}
 
+	// Collider
+	Collider* AddCollider(Entity e, const Collider& c)
+	{
+		return m_colliderPool.AddComponent(e, c);
+	}
+
+	Collider* GetCollider(Entity e)
+	{
+		return m_colliderPool.GetComponent(e);
+	}
+
+	bool HasCollider(Entity e) const
+	{
+		return m_colliderPool.HasComponent(e);
+	}
+
+	bool RemoveCollider(Entity e)
+	{
+		return m_colliderPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetColliderEntities()
+	{
+		return m_colliderPool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -228,4 +254,5 @@ private:
 	ComponentPool<Material> m_materialPool;
 	ComponentPool<Velocity> m_velocityPool;
 	ComponentPool<Health> m_healthPool;
+	ComponentPool<Collider> m_colliderPool;
 };

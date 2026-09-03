@@ -4,7 +4,7 @@
 #include "Entity.h"
 
 // This is kinda minimal but will work, we shouldn't need to upgrade it
-// until we need stuff like dirty flags and depth ordering
+// until we need stuff like depth ordering
 
 class SceneGraph
 {

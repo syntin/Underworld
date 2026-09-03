@@ -202,6 +202,7 @@
     <ClCompile Include="Source\cameraComponents.cpp" />
     <ClCompile Include="Source\cameraSystem.cpp" />
     <ClCompile Include="Source\colliderComponents.cpp" />
+    <ClCompile Include="Source\colliderSystem.cpp" />
     <ClCompile Include="Source\collision.cpp" />
     <ClCompile Include="Source\commandList.cpp" />
     <ClCompile Include="Source\commandPool.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Source\gpuPipeline.cpp" />
     <ClCompile Include="Source\guid.cpp" />
     <ClCompile Include="Source\healthComponents.cpp" />
+    <ClCompile Include="Source\healthSystem.cpp" />
     <ClCompile Include="Source\import.cpp" />
     <ClCompile Include="Source\instance.cpp" />
     <ClCompile Include="Source\jobSystem.cpp" />
@@ -302,6 +304,7 @@
     <ClInclude Include="Source\cameraComponents.h" />
     <ClInclude Include="Source\cameraSystem.h" />
     <ClInclude Include="Source\colliderComponents.h" />
+    <ClInclude Include="Source\colliderSystem.h" />
     <ClInclude Include="Source\collision.h" />
     <ClInclude Include="Source\commandList.h" />
     <ClInclude Include="Source\commandPool.h" />
@@ -329,6 +332,7 @@
     <ClInclude Include="Source\gpuPipeline.h" />
     <ClInclude Include="Source\guid.h" />
     <ClInclude Include="Source\healthComponents.h" />
+    <ClInclude Include="Source\healthSystem.h" />
     <ClInclude Include="Source\import.h" />
     <ClInclude Include="Source\instance.h" />
     <ClInclude Include="Source\jobSystem.h" />
