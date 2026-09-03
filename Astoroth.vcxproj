@@ -383,7 +383,6 @@
     <ClInclude Include="Source\utils.h" />
     <ClInclude Include="Source\velocityComponents.h" />
     <ClInclude Include="Source\virtualTexting.h" />
-    <ClInclude Include="Source\vulkanQueue.h" />
     <ClInclude Include="Source\vulkanWrapper.h" />
     <ClInclude Include="Source\window.h" />
     <ClInclude Include="Source\windowSize.h" />
