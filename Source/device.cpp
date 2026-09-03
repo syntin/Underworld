@@ -52,18 +52,3 @@ uint32_t Device::Initialize(VkInstance instance, Device device)
 
 	return deviceCount;
 }
-
-Device::Device()
-{
-
-}
-
-Device::~Device()
-{
-
-}
-
-void Device::Initialize()
-{
-
-}
