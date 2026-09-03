@@ -209,5 +209,6 @@
     <ClInclude Include="Source\workThief.h" />
     <ClInclude Include="Source\healthSystem.h" />
     <ClInclude Include="Source\colliderSystem.h" />
+    <ClInclude Include="Source\scriptComponent.h" />
   </ItemGroup>
 </Project>

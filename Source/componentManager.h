@@ -8,6 +8,8 @@
 #include "velocity.h"
 #include "healthComponents.h"
 #include "colliderComponents.h"
+#include "lightComponents.h"
+#include "scriptComponent.h"
 
 class ComponentManager
 {
@@ -245,6 +247,59 @@ public:
 	{
 		return m_colliderPool.GetEntities();
 	}
+
+	// Light
+	Light* AddLight(Entity e, const Light& l)
+	{
+		return m_lightPool.AddComponent(e, l);
+	}
+
+	Light* GetLight(Entity e)
+	{
+		return m_lightPool.GetComponent(e);
+	}
+
+	bool HasLight(Entity e) const
+	{
+		return m_lightPool.HasComponent(e);
+	}
+
+	bool RemoveLight(Entity e)
+	{
+		return m_lightPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetLightEntities()
+	{
+		return m_lightPool.GetEntities();
+	}
+
+	// Script
+	Script* AddScript(Entity e, const Script& s)
+	{
+		return m_scriptPool.AddComponent(e, s);
+	}
+
+	Script* GetScript(Entity e)
+	{
+		return m_scriptPool.GetComponent(e);
+	}
+
+	bool HasScript(Entity e) const
+	{
+		return m_scriptPool.HasComponent(e);
+	}
+
+	bool RemoveScript(Entity e)
+	{
+		return m_scriptPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetScriptEntities()
+	{
+		return m_scriptPool.GetEntities();
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -255,4 +310,6 @@ private:
 	ComponentPool<Velocity> m_velocityPool;
 	ComponentPool<Health> m_healthPool;
 	ComponentPool<Collider> m_colliderPool;
+	ComponentPool<Light> m_lightPool;
+	ComponentPool<Script> m_scriptPool;
 };

@@ -357,6 +357,7 @@
     <ClInclude Include="Source\pipeline.h" />
     <ClInclude Include="Source\platform.h" />
     <ClInclude Include="Source\SceneGraph.h" />
+    <ClInclude Include="Source\scriptComponent.h" />
     <ClInclude Include="Source\shaderData.h" />
     <ClInclude Include="Source\slangShader.h" />
     <ClInclude Include="Source\textureImages.h" />
