@@ -16,7 +16,9 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    chk(SDL_Init(SDL_INIT_VIDEO));
+    chk(SDL_InitSubSystem(SDL_INIT_VIDEO));
+	_SDLWindow = SDL_CreateWindow("Underworld",
+		WIDTH, HEIGHT. SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZEABLE)
     chk(SDL_Vulkan_LoadLibrary(NULL));
 
     _vulkanInstance.Initialize();
@@ -244,4 +246,24 @@ void VulkanWrapper::Destroy()
 {
     HWND hWnd = _window.GetHWnd();
     DestroyWindow(hWnd);
+}
+
+void VulkanWrapper::Run() {
+	_running = true;
+	while (_running) {
+		SDL_Event event{0};
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_EVENT_QUIT) {
+				running = false;
+				break;
+			}
+			else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
+				_width = event.window.data1;
+				_height = event.window.data2;
+				break;
+			}
+		}
+
+		Render();
+	}
 }

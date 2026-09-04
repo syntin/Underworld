@@ -3,6 +3,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 #include <Windows.h>
+#include <vector>
+#include "windowSize.h"
 
 class Window
 {
@@ -12,7 +14,8 @@ public:
 
 public:
 	void CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
-	void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
+	void CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize);
+	//void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	HWND GetHWnd() { return _hWnd; }
 
 protected:
@@ -34,6 +37,9 @@ protected:
 
 private:
 	GLFWwindow* _glfwWindow;
+	SDL_Window* _sdlWindow;
+	std::vector<VkPhysicalDevice> _physicalDevice;
+	uint32_t _deviceIndex = 0;
 	HWND _hWnd;
 };
 
