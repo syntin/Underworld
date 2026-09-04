@@ -10,6 +10,7 @@
 #include "colliderComponents.h"
 #include "lightComponents.h"
 #include "scriptComponent.h"
+#include "audio.h"
 
 class ComponentManager
 {
@@ -51,7 +52,6 @@ public:
 	}
 
 	// Camera
-
 	Camera* AddCamera(Entity e, const Camera& c)
 	{
 		return m_cameraPool.AddComponent(e, c);
@@ -191,7 +191,6 @@ public:
 	}
 
 	// Health
-
 	Health* AddHealth(Entity e, const Health& h)
 	{
 		return m_healthPool.AddComponent(e, h);
@@ -300,6 +299,32 @@ public:
 		return m_scriptPool.GetEntities();
 	}
 
+	//Audio
+	Audio* AddAudio(Entity e, const Audio& a)
+	{
+		return m_audioPool.AddComponent(e, a);
+	}
+
+	Audio* GetAudio(Entity e)
+	{
+		return m_audioPool.GetComponent(e);
+	}
+
+	bool HasAudio(Entity e) const
+	{
+		return m_audioPool.HasComponent(e);
+	}
+
+	bool RemoveAudio(Entity e)
+	{
+		return m_audioPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetAudioEntities()
+	{
+		return m_audioPool.GetEntities();
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -312,4 +337,5 @@ private:
 	ComponentPool<Collider> m_colliderPool;
 	ComponentPool<Light> m_lightPool;
 	ComponentPool<Script> m_scriptPool;
+	ComponentPool<Audio> m_audioPool;
 };
