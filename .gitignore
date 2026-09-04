@@ -167,3 +167,5 @@ Astoroth.ilk
 /CMakeFiles/CMakeConfigureLog.yaml
 /CMakeFiles/4.3.2/CompilerIdC
 /.idea
+/Astoroth/x64/Debug/device.h.obj.dt.module.json.command
+/Astoroth/x64/Debug/engine.h.obj.dt.d.json
