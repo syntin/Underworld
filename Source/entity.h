@@ -19,3 +19,5 @@ struct Entity
 		return !(*this == other);
 	}
 };
+
+static const Entity INVALID_ENTITY = { 0, 0 };

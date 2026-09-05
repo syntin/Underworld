@@ -9,5 +9,8 @@ struct Animation
 	float speed = 1.0f;			// fps
 	bool loop = true;			
 
+	Entity clipEntity = INVALID_ENTITY;
+
 	bool dirty = true;
+
 };
