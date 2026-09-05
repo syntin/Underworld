@@ -17,6 +17,10 @@ public:
 	void CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize);
 	//void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	HWND GetHWnd() { return _hWnd; }
+	GLFWwindow* GetGLFWWindow() { return _glfwWindow; }
+	SDL_Window* GetSDLWindow() { return _sdlWindow; }
+	GLFWwindow* SetGLFWWindow(GLFWwindow* glfwWindow) { _glfwWindow = glfwWindow; }
+	SDL_Window* SetSDLWindow(SDL_Window* sdlWindow) { _sdlWindow = sdlWindow; }
 
 protected:
 	void CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);

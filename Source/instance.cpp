@@ -19,43 +19,6 @@ VulkanInstance::~VulkanInstance()
 
 void VulkanInstance::Initialize()
 {
-	if (enableValidationLayers && !CheckValidationLayerSupport())
-	{
-		throw std::runtime_error("Validation layers requested but not available");
-	}
-
-	VkApplicationInfo appInfo{
-		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
-		.pApplicationName = "Astoroth Engine",
-		.applicationVersion = VK_MAKE_VERSION(1, 0, 0),
-		.pEngineName = "Astoroth Engine",
-		.engineVersion = VK_MAKE_VERSION(1, 0, 0),
-		.apiVersion = VK_API_VERSION_1_3
-	};
-
-	VkInstanceCreateInfo createInfo{
-		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-		.pApplicationInfo = &appInfo
-	};
-
-	if (enableValidationLayers)
-	{
-		createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-		createInfo.ppEnabledLayerNames = validationLayers.data();
-	}
-	else
-	{
-		createInfo.enabledLayerCount = 0;
-	}
-	createInfo.enabledExtensionCount = _extensions.GetExtensionsCount();
-	createInfo.ppEnabledExtensionNames = _extensions.Data();
-
-	if (vkCreateInstance(&createInfo, nullptr, &_instance) != VK_SUCCESS)
-	{
-		throw std::runtime_error("Failed to create Vulkan Instance");
-	}
-
-	uint32_t deviceCount = _device.Initialize(_instance, _device);
 }
 
 void VulkanInstance::DestroyInstance()

@@ -17,9 +17,9 @@ VulkanWrapper::~VulkanWrapper()
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     chk(SDL_InitSubSystem(SDL_INIT_VIDEO));
-	_SDLWindow = SDL_CreateWindow("Underworld",
-		WIDTH, HEIGHT. SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZEABLE)
-    chk(SDL_Vulkan_LoadLibrary(NULL));
+	_window.SetSDLWindow(SDL_CreateWindow("Underworld",
+		WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
+	SDL_Vulkan_LoadLibrary(NULL);
 
     _vulkanInstance.Initialize();
     _device.Initialize(_vulkanInstance.GetInstance(), _device);

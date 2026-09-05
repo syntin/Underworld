@@ -1,4 +1,7 @@
 #include "depthAttachment.h"
+#include <vulkan/vulkan.h>
+#include <vector>
+#include <cassert>
 
 DepthAttachment::DepthAttachment()
 {
