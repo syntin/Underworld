@@ -3,7 +3,7 @@
 
 class ComponentManager;
 
-class AnimationSystem
+class AnimationClipSystem
 {
 public:
 	void Update(ComponentManager& components, float deltaTime);

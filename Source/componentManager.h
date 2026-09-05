@@ -10,6 +10,10 @@
 #include "colliderComponents.h"
 #include "lightComponents.h"
 #include "scriptComponent.h"
+#include "audio.h"
+#include "animationStateComponents.h"
+#include "skeletalComponents.h"
+#include "animationClip.h"
 
 class ComponentManager
 {
@@ -51,7 +55,6 @@ public:
 	}
 
 	// Camera
-
 	Camera* AddCamera(Entity e, const Camera& c)
 	{
 		return m_cameraPool.AddComponent(e, c);
@@ -191,7 +194,6 @@ public:
 	}
 
 	// Health
-
 	Health* AddHealth(Entity e, const Health& h)
 	{
 		return m_healthPool.AddComponent(e, h);
@@ -300,6 +302,110 @@ public:
 		return m_scriptPool.GetEntities();
 	}
 
+	//Audio
+	Audio* AddAudio(Entity e, const Audio& a)
+	{
+		return m_audioPool.AddComponent(e, a);
+	}
+
+	Audio* GetAudio(Entity e)
+	{
+		return m_audioPool.GetComponent(e);
+	}
+
+	bool HasAudio(Entity e) const
+	{
+		return m_audioPool.HasComponent(e);
+	}
+
+	bool RemoveAudio(Entity e)
+	{
+		return m_audioPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetAudioEntities()
+	{
+		return m_audioPool.GetEntities();
+	}
+
+	// Animation
+	Animation* AddAnimation(Entity e, const Animation& a)
+	{
+		return m_animationPool.AddComponent(e, a);
+	}
+	
+	Animation* GetAnimation(Entity e)
+	{
+		return m_animationPool.GetComponent(e);
+	}
+
+	bool HasAnimation(Entity e) const
+	{
+		return m_animationPool.HasComponent(e);
+	}
+
+	bool RemoveAnimation(Entity e)
+	{
+		return m_animationPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetAnimationEntities()
+	{
+		return m_animationPool.GetEntities();
+	}
+
+	// Skeleton
+	Skeleton* AddSkeleton(Entity e, const Skeleton& s)
+	{
+		return m_skeletonPool.AddComponent(e, s);
+	}
+
+	Skeleton* GetSkeleton(Entity e)
+	{
+		return m_skeletonPool.GetComponent(e);
+	}
+
+	bool HasSkeleton(Entity e) const
+	{
+		return m_skeletonPool.HasComponent(e);
+	}
+
+	bool RemoveSkeleton(Entity e)
+	{
+		return m_skeletonPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetSkeletonEntities()
+	{
+		return m_skeletonPool.GetEntities();
+	}
+
+	//AnimationClip
+	AnimationClip* AddAnimationClip(Entity e, const AnimationClip& clip)
+	{
+		return m_animationClipPool.AddComponent(e, clip);
+	}
+
+	AnimationClip* GetAnimationClip(Entity e)
+	{
+		return m_animationClipPool.GetComponent(e);
+	}
+
+	bool HasAnimationClip(Entity e) const
+	{
+		return m_animationClipPool.HasComponent(e);
+	}
+
+	bool RemoveAnimationClip(Entity e)
+	{
+		return m_animationClipPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetAnimationClipEntities()
+	{
+		return m_animationClipPool.GetEntities();
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -312,4 +418,8 @@ private:
 	ComponentPool<Collider> m_colliderPool;
 	ComponentPool<Light> m_lightPool;
 	ComponentPool<Script> m_scriptPool;
+	ComponentPool<Audio> m_audioPool;
+	ComponentPool<Animation> m_animationPool;
+	ComponentPool<Skeleton> m_skeletonPool;
+	ComponentPool<AnimationClip> m_animationClipPool;
 };

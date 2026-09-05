@@ -3,7 +3,8 @@
 
 class ComponentManager;
 
-class AudioSystem
+class SkeletonSystem
 {
+public:
 	void Update(ComponentManager& components);
 };
