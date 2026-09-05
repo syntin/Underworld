@@ -14,6 +14,7 @@
 #include "animationStateComponents.h"
 #include "skeletalComponents.h"
 #include "animationClip.h"
+#include "animator.h"
 
 class ComponentManager
 {
@@ -333,7 +334,7 @@ public:
 	{
 		return m_animationPool.AddComponent(e, a);
 	}
-	
+
 	Animation* GetAnimation(Entity e)
 	{
 		return m_animationPool.GetComponent(e);
@@ -406,6 +407,33 @@ public:
 		return m_animationClipPool.GetEntities();
 	}
 
+	// Animator
+	Animator* AddAnimator(Entity e, const Animator& a)
+	{
+		return m_animatorPool.AddComponent(e, a);
+	}
+
+	Animator* GetAnimator(Entity e)
+	{
+		return m_animatorPool.GetComponent(e);
+	}
+
+	bool HasAnimator(Entity e) const
+	{
+		return m_animatorPool.HasComponent(e);
+	}
+
+	bool RemoveAnimator(Entity e)
+	{
+		return m_animatorPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetAnimatorEntities()
+	{
+		return m_animatorPool.GetEntities();
+	}
+
+
 	// TO DO: Add components as needed
 
 private:
@@ -422,4 +450,5 @@ private:
 	ComponentPool<Animation> m_animationPool;
 	ComponentPool<Skeleton> m_skeletonPool;
 	ComponentPool<AnimationClip> m_animationClipPool;
+	ComponentPool<Animator> m_animatorPool;
 };
