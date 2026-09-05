@@ -13,7 +13,7 @@ public:
 	virtual ~Device();
 
 public:
-	uint32_t Initialize(VkInstance& instance, Extensions extension);
+	uint32_t Initialize(VkInstance& instance, Extensions& extensions);
 	std::vector<VkPhysicalDevice>& GetDevices() { return _devices; }
 	VkDevice& GetPhysicalDevice() { return _physicalDevice; }
 

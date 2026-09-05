@@ -10,7 +10,7 @@ public:
 
 public:
 	void Initialize();
-	uint32_t GetExtensionsCount() { return _extensionsCount; }
+	uint32_t GetExtensionsCount() { return _extensionCount; }
 	char const* const* Data() { return _extensions;  }
 
 private:

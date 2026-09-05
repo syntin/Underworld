@@ -17,7 +17,7 @@ VulkanInstance::~VulkanInstance()
 	DestroyInstance();
 }
 
-bool VulkanInstance::Initialize(VkApplicationInfo* appInfo)
+bool VulkanInstance::Initialize(VkApplicationInfo* appInfo, std::vector<const char*> &requestedExtensions)
 {
 	// Not much to do here since it is initialized in VOLKLoader,
 	// but we can check for validation layer support here

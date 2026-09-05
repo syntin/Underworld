@@ -34,7 +34,8 @@ public:
 
 public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
-	void RunRenderLoop();
+	void Run();
+	void Render();
 
 protected:
 	void Destroy();
@@ -64,4 +65,7 @@ private:
 
 private:
 	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
+	bool _running = true;
+	VkDevice _vulkanDevice = nullptr;
+	VkDevice _device = nullptr;
 };

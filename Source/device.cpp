@@ -13,10 +13,11 @@ Device::~Device()
 
 }
 
-uint32_t Device::Initialize(VkInstance& instance, Extensions extension)
+uint32_t Device::Initialize(VkInstance& instance, Extensions& extensions)
 {
 	chk(vkEnumeratePhysicalDevices(instance, &_deviceCount, nullptr));
-	GetPhysicalDevice().resize((const size_t) _deviceCount);
+    //VkDevice physicalDevice = GetPhysicalDevice();
+    //physicalDevice.resize((const size_t)_deviceCount);
 	chk(vkEnumeratePhysicalDevices(instance, &_deviceCount, _devices.data()));
 
     VkPhysicalDeviceFeatures enabledVk10Features{ .samplerAnisotropy = VK_TRUE };
@@ -33,7 +34,7 @@ uint32_t Device::Initialize(VkInstance& instance, Extensions extension)
         .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_3_FEATURES,
         .pNext = &enabledVk12Features,
         .synchronization2 = true,
-        .dynamicRendering = true,
+        .dynamicRendering = true
     };
     
     VkDeviceQueueCreateInfo qInfo
