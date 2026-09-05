@@ -6,26 +6,50 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 
-VulkanInstance::VulkanInstance() :
-	_instance(VK_NULL_HANDLE)
+VulkanInstance::VulkanInstance()
 {
 
 }
 
 VulkanInstance::~VulkanInstance()
 {
-
+	// God forbid nobody called this
+	DestroyInstance();
 }
 
-void VulkanInstance::Initialize()
+bool VulkanInstance::Initialize(VkApplicationInfo* appInfo)
 {
+	// Not much to do here since it is initialized in VOLKLoader,
+	// but we can check for validation layer support here
+	if(CheckValidationLayerSupport() == false)
+	{
+		throw std::runtime_error("Validation layers requested, but not available!");
+	}
+
+	VkInstanceCreateInfo instCreateInfo
+	{
+		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+		.pNext = &debugCallbackInstance,
+		.pApplicationInfo = appInfo,
+		.enabledLayerCount = static_cast<uint32_t>(requestedLayers.size()),
+		.ppEnabledLayerName = requestedLayers.data(),
+		.enabledExtensionCount = static_cast<uint32_t>(requestedExtensions.size()),
+		.ppEnabledExtensionNames = requestedExtensions.data()
+	};
+
+	if(vkCreateInstance(&instCreateInfo, nullptr, &_vulkanInstance) != VK_SUCCESS)
+	{
+		throw std::runtime_error("Failed to create Vulkan instance!");
+		return false;
+	}
 }
 
 void VulkanInstance::DestroyInstance()
 {
-	if (_instance)
+	if (_vulkanInstance != nullptr)
 	{
-		vkDestroyInstance(_instance, nullptr);
+		vkDestroyInstance(_vulkanInstance, nullptr);
+		_vulkanInstance = nullptr;
 	}
 }
 

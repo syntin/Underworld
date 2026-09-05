@@ -1,5 +1,6 @@
-#include "device.h"
 #include <vector>
+#include "device.h"
+#include "extensions.h"
 #include "utils.h"
 
 Device::Device()
@@ -12,13 +13,11 @@ Device::~Device()
 
 }
 
-uint32_t Device::Initialize(VkInstance instance, Device device)
+uint32_t Device::Initialize(VkInstance& instance, Extensions extension)
 {
-    /*
-	uint32_t deviceCount{ 0 };
-	chk(vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr));
-	device.resize((const size_t) deviceCount);
-	chk(vkEnumeratePhysicalDevices(instance, &deviceCount, _devices.data()));
+	chk(vkEnumeratePhysicalDevices(instance, &_deviceCount, nullptr));
+	GetPhysicalDevice().resize((const size_t) _deviceCount);
+	chk(vkEnumeratePhysicalDevices(instance, &_deviceCount, _devices.data()));
 
     VkPhysicalDeviceFeatures enabledVk10Features{ .samplerAnisotropy = VK_TRUE };
     const std::vector<const char*> deviceExtensions{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
@@ -37,19 +36,21 @@ uint32_t Device::Initialize(VkInstance instance, Device device)
         .dynamicRendering = true,
     };
     
-    VkDeviceQueueCreateInfo qInfo = device.GetQueueCreateInfo();
-    _deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-    _deviceCreateInfo.pNext = &enabledVk13Features,
-    _deviceCreateInfo.queueCreateInfoCount = 1,
-    _deviceCreateInfo.pQueueCreateInfos = &qInfo,
-    _deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size()),
-    _deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data(),
-    _deviceCreateInfo.pEnabledFeatures = &enabledVk10Features;
-    chk(vkCreateDevice(_devices[_deviceIndex], &_deviceCreateInfo, nullptr, &_device));
+    VkDeviceQueueCreateInfo qInfo
+    {
+        .sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+        .pNext = &enabledVk13Features,
+        .queueCreateInfoCount = 1,
+        .pQueueCreateInfos = &qInfo,
+        .enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size()),
+        .ppEnabledExtensionNames = extensions.data(),
+        .pEnabledFeatures = &enabledVk10Features
+    };
+    chk(vkCreateDevice(_devices[_deviceIndex], &qInfo, nullptr, &_physicalDevice));
 
 	VkPhysicalDeviceProperties2 deviceProperties{ .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2 };
 	vkGetPhysicalDeviceProperties2(_devices[_deviceIndex], &deviceProperties);
 	std::cout << "Selected device: " << deviceProperties.properties.deviceName << "\n";
-    */
+
 	return _deviceCount;
 }

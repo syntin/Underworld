@@ -13,16 +13,14 @@ public:
 	virtual ~Device();
 
 public:
-	void Initialize();
-	uint32_t Initialize(VkInstance instance, Device device);
+	uint32_t Initialize(VkInstance& instance, Extensions extension);
 	std::vector<VkPhysicalDevice>& GetDevices() { return _devices; }
-	VkDevice GetPhysicalDevice() { return _physicalDevice; }
+	VkDevice& GetPhysicalDevice() { return _physicalDevice; }
 
 	uint32_t GetDeviceIndex() { return _deviceIndex; }
 
 private:
 	std::vector<VkPhysicalDevice> _devices;
-
 	uint32_t _deviceIndex = 0;
 	uint32_t _deviceCount = 0;
 	VkDevice _physicalDevice;

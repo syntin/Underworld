@@ -17,16 +17,31 @@ VulkanWrapper::~VulkanWrapper()
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     chk(SDL_InitSubSystem(SDL_INIT_VIDEO));
-	_window.SetSDLWindow(SDL_CreateWindow("Underworld",
-		WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
+	_window.SetSDLWindow(SDL_CreateWindow("Underworld", WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
 	SDL_Vulkan_LoadLibrary(NULL);
 
-    _vulkanInstance.Initialize();
-    _device.Initialize(_vulkanInstance.GetInstance(), _device);
+	// This will call a couple of Initialization functions in the proper order
+    _volkLoader.Initialize(_vulkanInstance);
+
+	VkApplicationInfo appInfo
+	{
+		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
+		.pApplicationName = "Astoroth Engine",
+		.applicationVersion = VK_MAKE_VERSION(1, 0, 0),
+		.pEngineName = "Astoroth Engine",
+		.engineVersion = VK_MAKE_VERSION(1, 0, 0),
+		.apiVersion = VulkanVersion
+	};
+
+
+
+
+
+	_device.Initialize(_vulkanInstance.GetInstance(), _device);
     _queue.Initialize(_vulkanInstance.GetInstance(), _device);
+
 	_debugMessenger.Initialize();
 	_extensions.Initialize();
-	_window.CreateSDLwindow(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
     _swapChain.Initialize();
     _depthAttachment.Initialize();
     _mesh.Initialize();

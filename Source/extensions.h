@@ -13,13 +13,31 @@ public:
 	uint32_t GetExtensionsCount() { return _extensionsCount; }
 	char const* const* Data() { return _extensions;  }
 
-protected:
-	void GetRequiredExtensions();
-	void CheckExtensions();
-
 private:
 	std::vector<const char*> _extensionVector;
-	uint32_t _extensionsCount = 0;
+	uint32_t _extensionCount = 0;
 	char const* const* _extensions = nullptr;
+
+public:
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+		VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+		VkDebugUtilsMessageTypeFlagsEXT messageType,
+		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+		void* pUserData);
+
 };
+
+VKAPI_ATTR VkBool32 VKAPI_CALL Extensions::debugCallback(
+	VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+	VkDebugUtilsMessageTypeFlagsEXT messageType,
+	const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+	void* pUserData)
+{
+	if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+	{
+		std::cerr << "Validation Layer: " << pCallbackData->pMessage << std::endl;
+	}
+	return VK_FALSE;
+}
+
 

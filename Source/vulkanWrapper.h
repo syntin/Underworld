@@ -22,6 +22,9 @@
 #include "slangShader.h"
 #include "loadShader.h"
 #include "pipeline.h"
+#include "volkLoader.h"
+#include "instance.h"
+#include "extensions.h"
 
 class VulkanWrapper
 {
@@ -32,19 +35,20 @@ public:
 public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void RunRenderLoop();
-	VkInstance GetInstance() { return _vulkanInstance.GetInstance(); }
-	VulkanInstance GetInstanceObject() { return _vulkanInstance; }
 
 protected:
 	void Destroy();
 
 private:
-	VulkanInstance _vulkanInstance;
-	VulkanQueue _queue;
+	VulkanInstance _vulkanInstance{};
+	VolkLoader _volkLoader{};
+	Extensions _extensions{};
+
+	VulkanQueue _queue{};
 	DebugMessenger _debugMessenger{};
 	Extensions _extensions{};
 	Window _window{};
-	Device _device;
+	Device _device{};
 	SwapChain _swapChain;
 	DepthAttachment _depthAttachment;
 	Mesh _mesh;
