@@ -10,7 +10,7 @@ ShaderData::~ShaderData()
 
 }
 
-ShaderData::Initialize()
+bool ShaderData::Initialize()
 {
 	for (auto i = 0; i < maxFramesInFlight; i++) {
 		VkBufferCreateInfo uBufferCI{ .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO, .size = sizeof(ShaderData), .usage = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT };

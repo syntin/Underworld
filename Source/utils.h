@@ -87,4 +87,9 @@ VkResult CreateDebugUtilsMessengerEXT(VkInstance instance,
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
+constexpr static uint32_t VulkanVersion = VK_API_VERSION_1_4;
+constexpr static uint32_t MaxFramesInFlight{ 2 };
+constexpr static VkFormat swapChainFormat{ VK_FORMAT_B8G8R8A8_SRGB };
+constexpr static VkFormat depthFormat{ VK_FORMAT_D32_SFLOAT };
+
 

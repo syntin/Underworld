@@ -23,7 +23,6 @@
 #include "loadShader.h"
 #include "pipeline.h"
 
-
 class VulkanWrapper
 {
 public:
