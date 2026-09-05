@@ -14,9 +14,10 @@ Device::~Device()
 
 uint32_t Device::Initialize(VkInstance instance, Device device)
 {
+    /*
 	uint32_t deviceCount{ 0 };
 	chk(vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr));
-	_devices.resize((const size_t) deviceCount);
+	device.resize((const size_t) deviceCount);
 	chk(vkEnumeratePhysicalDevices(instance, &deviceCount, _devices.data()));
 
     VkPhysicalDeviceFeatures enabledVk10Features{ .samplerAnisotropy = VK_TRUE };
@@ -49,6 +50,6 @@ uint32_t Device::Initialize(VkInstance instance, Device device)
 	VkPhysicalDeviceProperties2 deviceProperties{ .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2 };
 	vkGetPhysicalDeviceProperties2(_devices[_deviceIndex], &deviceProperties);
 	std::cout << "Selected device: " << deviceProperties.properties.deviceName << "\n";
-
-	return deviceCount;
+    */
+	return _deviceCount;
 }

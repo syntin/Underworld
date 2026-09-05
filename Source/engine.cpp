@@ -11,11 +11,7 @@ Engine::~Engine()
 
 }
 
-<<<<<<< HEAD
-void Engine::Inititalize()
-=======
 void Engine::Initialize()
->>>>>>> 932cff45debb381f728ecea216068e4fea6977b9
 {
 
 }
@@ -23,10 +19,7 @@ void Engine::Initialize()
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 932cff45debb381f728ecea216068e4fea6977b9
 /*
 const int WIDTH = 800;
 const int HEIGHT = 600;

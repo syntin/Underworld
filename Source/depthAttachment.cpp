@@ -15,6 +15,7 @@ DepthAttachment::~DepthAttachment()
 
 void DepthAttachment::Initialize()
 {
+	/*
 	std::vector<VkFormat> depthFormatList{ VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT };
 	VkFormat depthFormat{ VK_FORMAT_UNDEFINED };
 	for (VkFormat& format : depthFormatList) {
@@ -42,4 +43,5 @@ void DepthAttachment::Initialize()
 	chk(vmaCreateImage(allocator, &depthImageCI, &allocCI, &depthImage, &depthImageAllocation, nullptr));
 	VkImageViewCreateInfo depthViewCI{ .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO, .image = depthImage, .viewType = VK_IMAGE_VIEW_TYPE_2D, .format = depthFormat, .subresourceRange{.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT, .levelCount = 1, .layerCount = 1 } };
 	chk(vkCreateImageView(device, &depthViewCI, nullptr, &depthImageView));
+	*/
 }

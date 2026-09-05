@@ -29,7 +29,7 @@ bool VolkLoader::Initialize()
 		.applicationVersion = VK_MAKE_VERSION(1, 0, 0),
 		.pEngineName = "Astoroth Engine",
 		.engineVersion = VK_MAKE_VERSION(1, 0, 0),
-		.apiVersion = VulkanVersion;
+		.apiVersion = VulkanVersion
 	};
 
 	uint32_t instExtCount = 0;
@@ -52,7 +52,7 @@ bool VolkLoader::Initialize()
 	VkDebugUtilsMessengerCreateInfoEXT debugInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
-		.messageSacurity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+		.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
 			VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
 			VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,
 		.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
