@@ -14,6 +14,6 @@ class HealthComponents
 {
 public:
 	HealthComponents();
-	void ~HealthComponents();
+	virtual ~HealthComponents();
 };
 

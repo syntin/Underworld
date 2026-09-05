@@ -47,6 +47,7 @@ void HealthSystem::Update(ComponentManager& components)
 }
 
 // for future, we don't need it now but later we will
+// Who doesn't need like 5000 death sequences?
 // void HealthSystem::OnDeath(Entity e)
 // {
 //		// remove components
