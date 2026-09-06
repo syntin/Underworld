@@ -40,8 +40,8 @@ protected:
 	}
 
 private:
-	GLFWwindow* _glfwWindow;
-	SDL_Window* _sdlWindow;
+	GLFWwindow* _glfwWindow = nullptr;
+	SDL_Window* _sdlWindow = nullptr;
 	std::vector<VkPhysicalDevice> _physicalDevice;
 	uint32_t _deviceIndex = 0;
 	HWND _hWnd;

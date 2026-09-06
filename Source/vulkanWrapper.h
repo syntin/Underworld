@@ -25,6 +25,8 @@
 #include "volkLoader.h"
 #include "instance.h"
 #include "extensions.h"
+#include "surface.h"
+#include "vma.h"
 
 class VulkanWrapper
 {
@@ -36,36 +38,41 @@ public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void Run();
 	void Render();
+	bool InitializeVulkan();
 
 protected:
 	void Destroy();
 
 private:
-	VulkanInstance _vulkanInstance{};
+	VulkanInstance _instance{};
+	Window _window{};
+	Surface _surface{};
+	Device _physicalDevice{};
+	VulkanQueue _graphicsQueue{};
+	Vma _vma;
+	SwapChain _swapChain;
+	ShaderData _shaderData;
+	Pipeline _pipeline;
+	Synchronization _synchronization;
+	CommandPool _commandPool;
+
+/*
 	VolkLoader _volkLoader{};
 	Extensions _extensions{};
-
-	VulkanQueue _queue{};
 	DebugMessenger _debugMessenger{};
 	Extensions _extensions{};
-	Window _window{};
-	Device _device{};
-	SwapChain _swapChain;
 	DepthAttachment _depthAttachment;
 	Mesh _mesh;
 	VertexData _vertexData;
-	ShaderData _shaderData;
-	Synchronization _synchronization;
-	CommandPool _commandPool;
 	TextureImages _textureImages;
 	Descriptor _descriptor;
 	SlangShader _slangShader;
 	LoadShader _loadShader;
-	Pipeline _pipeline;
+*/
 
 private:
 	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
 	bool _running = true;
-	VkDevice _vulkanDevice = nullptr;
-	VkDevice _device = nullptr;
+	//VkDevice _vulkanDevice = nullptr;
+	//VkDevice _device = nullptr;
 };

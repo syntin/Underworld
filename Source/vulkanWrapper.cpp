@@ -1,5 +1,9 @@
 #include "vulkanWrapper.h"
 #include <Windows.h>
+#define VOLK_IMPLEMENTATION
+#include <Volk/volk.h>
+#define VMA_IMPLEMENTATION
+#include <vma/vk_mem_alloc.h>
 #include "utils.h"
 
 
@@ -16,50 +20,92 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    chk(SDL_InitSubSystem(SDL_INIT_VIDEO));
-	_window.SetSDLWindow(SDL_CreateWindow("Underworld", WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
-	SDL_Vulkan_LoadLibrary(NULL);
+	SDL_InitSubSystem(SDL_INIT_VIDEO);
+	_window.SetSDLWindow(SDL_CreateWindow("Vulkan Learning", WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
 
-	// This will call a couple of Initialization functions in the proper order
-    _volkLoader.Initialize(_vulkanInstance);
-
-	VkApplicationInfo appInfo
+	if (!_window.GetSDLWindow())
 	{
-		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
-		.pApplicationName = "Astoroth Engine",
-		.applicationVersion = VK_MAKE_VERSION(1, 0, 0),
-		.pEngineName = "Astoroth Engine",
-		.engineVersion = VK_MAKE_VERSION(1, 0, 0),
-		.apiVersion = VulkanVersion
-	};
+		showError("Error creating window", _window.GetSDLWindow());
+		return;
+	}
+
+	if (!InitializeVulkan())
+	{
+	}
+}
+
+bool VulkanWrapper::InitializeVulkan()
+{
+	if (!_instance.Create())
+	{
+		showError("Couldn't create a vulkan instance");
+		return false;
+	}
+
+	if (!_surface.Create())
+	{
+		showError("Couldn't create window surface");
+		return false;
+	}
+
+	if (!_physicalDevice.FindPhysicalDevice())
+	{
+		showError("Unable to find an appropriate physical device");
+		return false;
+	}
+
+	if (!_graphicsQueue.FindGraphicsQueue())
+	{
+		showError("Unable to find a compatible graphics queue");
+		return false;
+	}
+
+	if (!_physicalDevice.Create())
+	{
+		showError("Couldn't create the logical GPU device");
+		return false;
+	}
+
+	if (!_vma.Initialize())
+	{
+		showError("Unable to create Vulkan Memory Allocator");
+		return false;
+	}
+
+	if (!_swapchain.Create(width, height))
+	{
+		showError("Unable to create swapchain");
+		return false;
+	}
+
+	if (!_shaders.Create())
+	{
+		showError("Error creating shader modules");
+		return false;
+	}
+
+	if (_pipeline.Create(); !_pipeline)
+	{
+		showError("Unable to initialize the graphics pipeline");
+		return false;
+	}
 
 
 
 
+	if (!createSyncResources())
+	{
+		showError("Couldn't create the sync related resources");
+		return false;
+	}
 
-	_device.Initialize(_vulkanInstance.GetInstance(), _device);
-    _queue.Initialize(_vulkanInstance.GetInstance(), _device);
+	if (!createCommandBuffers())
+	{
+		showError("Couldn't create command buffer objects");
+		return false;
+	}
 
-	_debugMessenger.Initialize();
-	_extensions.Initialize();
-    _swapChain.Initialize();
-    _depthAttachment.Initialize();
-    _mesh.Initialize();
-    _vertexData.Initialize();
-    _shaderData.Initialize();
-    _synchronization.Initialize();
-    _commandPool.Initialize();
-
-    _textureImages.Initialize();
-    _descriptor.Initialize();
-    _slangShader.Initialize();
-    _loadShader.Initialize();
-    _pipeline.Initialize();
-
-    RunRenderLoop();
-
-	// When RenderLoop exits, we need to clean up resources
-    Destroy();
+	return true;
 }
 
 void VulkanWrapper::Run()

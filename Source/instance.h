@@ -10,8 +10,8 @@ public:
 	virtual ~VulkanInstance();
 
 public:
-	bool Initialize(VkApplicationInfo* appInfo);
-	void DestroyInstance();
+	bool Create();
+	void Destroy();
 
 public:
 	VkInstance& GetInstance() { return _vulkanInstance; }

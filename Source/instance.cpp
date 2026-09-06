@@ -17,31 +17,48 @@ VulkanInstance::~VulkanInstance()
 	DestroyInstance();
 }
 
-bool VulkanInstance::Initialize(VkApplicationInfo* appInfo, std::vector<const char*> &requestedExtensions)
+bool VulkanInstance::Create()
 {
-	// Not much to do here since it is initialized in VOLKLoader,
-	// but we can check for validation layer support here
-	if(CheckValidationLayerSupport() == false)
+	// Initialize Volk and load Vk function pointers
+	if (volkInitialize() != VK_SUCCESS)
 	{
-		throw std::runtime_error("Validation layers requested, but not available!");
+		showError("Error initializing Volk");
+		return false;
 	}
+
+	// Create the vulkan application instance
+	VkApplicationInfo appInfo
+	{
+		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
+		.pApplicationName = "My First Triangle",
+		.apiVersion = VulkanVersion,
+	};
+
+	uint32_t instExtCount = 0;
+	const char* const* extensions = SDL_Vulkan_GetInstanceExtensions(&instExtCount);
+
+	std::vector<const char*> requestedLayers
+	{
+		"VK_LAYER_KHRONOS_validation"
+	};
 
 	VkInstanceCreateInfo instCreateInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-		.pNext = &debugCallbackInstance,
-		.pApplicationInfo = appInfo,
+		.pApplicationInfo = &appInfo,
 		.enabledLayerCount = static_cast<uint32_t>(requestedLayers.size()),
-		.ppEnabledLayerName = requestedLayers.data(),
-		.enabledExtensionCount = static_cast<uint32_t>(requestedExtensions.size()),
-		.ppEnabledExtensionNames = requestedExtensions.data()
+		.ppEnabledLayerNames = requestedLayers.data(),
+		.enabledExtensionCount = instExtCount,
+		.ppEnabledExtensionNames = extensions
 	};
 
-	if(vkCreateInstance(&instCreateInfo, nullptr, &_vulkanInstance) != VK_SUCCESS)
+	if (vkCreateInstance(&instCreateInfo, nullptr, &vulkanInstance) != VK_SUCCESS)
 	{
-		throw std::runtime_error("Failed to create Vulkan instance!");
 		return false;
 	}
+
+	volkLoadInstance(vulkanInstance);
+	return true;
 }
 
 void VulkanInstance::DestroyInstance()
