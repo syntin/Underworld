@@ -27,6 +27,7 @@
 #include "extensions.h"
 #include "surface.h"
 #include "vma.h"
+#include "graphicsQueue.h"
 
 class VulkanWrapper
 {
@@ -48,13 +49,13 @@ private:
 	Window _window{};
 	Surface _surface{};
 	Device _physicalDevice{};
-	VulkanQueue _graphicsQueue{};
-	Vma _vma;
-	SwapChain _swapChain;
-	ShaderData _shaderData;
-	Pipeline _pipeline;
-	Synchronization _synchronization;
-	CommandPool _commandPool;
+	GraphicsQueue _graphicsQueue{};
+	Vma _vma{};
+	SwapChain _swapChain{};
+	ShaderData _shaderData{};
+	Pipeline _pipeline{};
+	Synchronization _synchronization{};
+	CommandPool _commandPool{};
 
 /*
 	VolkLoader _volkLoader{};

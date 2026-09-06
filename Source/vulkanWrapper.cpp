@@ -38,70 +38,71 @@ bool VulkanWrapper::InitializeVulkan()
 {
 	if (!_instance.Create())
 	{
-		showError("Couldn't create a vulkan instance");
+		showError("Couldn't create a vulkan instance", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_surface.Create())
+	if (!_surface.Create(_instance.GetInstance(), _window.GetSDLWindow()))
 	{
-		showError("Couldn't create window surface");
+		showError("Couldn't create window surface", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_physicalDevice.FindPhysicalDevice())
+	if (!_physicalDevice.FindPhysicalDevice(_instance.GetInstance(), &(_surface.GetSurface()), _window.GetSDLWindow()))
 	{
-		showError("Unable to find an appropriate physical device");
+		showError("Unable to find an appropriate physical device", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_graphicsQueue.FindGraphicsQueue())
+	if (!_graphicsQueue.FindGraphicsQueue(_surface.Data(), reinterpret_cast<Device*>(_physicalDevice.GetPhysicalDevice())))
 	{
-		showError("Unable to find a compatible graphics queue");
+		showError("Unable to find a compatible graphics queue", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_physicalDevice.Create())
+	if (!_physicalDevice.CreateDevice(_physicalDevice.GetPhysicalDevice(), _graphicsQueue.GetGraphicsQueue(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _window.GetSDLWindow()))
 	{
-		showError("Couldn't create the logical GPU device");
+		showError("Couldn't create the logical GPU device", _window.GetSDLWindow());
 		return false;
 	}
 
 	if (!_vma.Initialize())
 	{
-		showError("Unable to create Vulkan Memory Allocator");
+		showError("Unable to create Vulkan Memory Allocator", _window.GetSDLWindow());
 		return false;
 	}
 
+
+
+
+
 	if (!_swapchain.Create(width, height))
 	{
-		showError("Unable to create swapchain");
+		showError("Unable to create swapchain", _window.GetSDLWindow());
 		return false;
 	}
 
 	if (!_shaders.Create())
 	{
-		showError("Error creating shader modules");
+		showError("Error creating shader modules", _window.GetSDLWindow());
 		return false;
 	}
 
 	if (_pipeline.Create(); !_pipeline)
 	{
-		showError("Unable to initialize the graphics pipeline");
+		showError("Unable to initialize the graphics pipeline", _window.GetSDLWindow());
 		return false;
 	}
 
-
-
-
 	if (!createSyncResources())
 	{
-		showError("Couldn't create the sync related resources");
+		showError("Couldn't create the sync related resources", _window.GetSDLWindow());
 		return false;
 	}
 
 	if (!createCommandBuffers())
 	{
-		showError("Couldn't create command buffer objects");
+		showError("Couldn't create command buffer objects", _window.GetSDLWindow());
 		return false;
 	}
 

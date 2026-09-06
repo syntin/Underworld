@@ -34,6 +34,8 @@ public:
 		void* pUserData);
 };
 
+
+
 VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInstance::debugCallbackInstance(
 	VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
 	VkDebugUtilsMessageTypeFlagsEXT messageType,

@@ -2,7 +2,10 @@
 #include <GLFW/glfw3.h>
 #include "utils.h"
 #include <vector>
-#include <iostream>
+#define VOLK_IMPLEMENTATION
+#include <Volk/volk.h>
+#define VMA_IMPLEMENTATION
+#include <vma/vk_mem_alloc.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 
@@ -14,7 +17,7 @@ VulkanInstance::VulkanInstance()
 VulkanInstance::~VulkanInstance()
 {
 	// God forbid nobody called this
-	DestroyInstance();
+	Destroy();
 }
 
 bool VulkanInstance::Create()
@@ -35,9 +38,9 @@ bool VulkanInstance::Create()
 	};
 
 	uint32_t instExtCount = 0;
-	const char* const* extensions = SDL_Vulkan_GetInstanceExtensions(&instExtCount);
+	const char *const *extensions = SDL_Vulkan_GetInstanceExtensions(&instExtCount);
 
-	std::vector<const char*> requestedLayers
+	std::vector<const char *> requestedLayers
 	{
 		"VK_LAYER_KHRONOS_validation"
 	};
@@ -52,16 +55,16 @@ bool VulkanInstance::Create()
 		.ppEnabledExtensionNames = extensions
 	};
 
-	if (vkCreateInstance(&instCreateInfo, nullptr, &vulkanInstance) != VK_SUCCESS)
+	if (vkCreateInstance(&instCreateInfo, nullptr, &_vulkanInstance) != VK_SUCCESS)
 	{
 		return false;
 	}
 
-	volkLoadInstance(vulkanInstance);
+	volkLoadInstance(_vulkanInstance);
 	return true;
 }
 
-void VulkanInstance::DestroyInstance()
+void VulkanInstance::Destroy()
 {
 	if (_vulkanInstance != nullptr)
 	{

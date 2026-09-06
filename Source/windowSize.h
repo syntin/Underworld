@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "utils.h"
 
 class WindowSize
 {
@@ -19,6 +20,6 @@ public:
 	uint32_t GetHeight() { return _height; }
 
 private:
-	uint32_t _width;
-	uint32_t _height;
+	uint32_t _width = WIDTH;
+	uint32_t _height = HEIGHT;
 };
