@@ -48,19 +48,20 @@ bool VulkanWrapper::InitializeVulkan()
 		return false;
 	}
 
-	if (!_physicalDevice.FindPhysicalDevice(_instance.GetInstance(), &(_surface.GetSurface()), _window.GetSDLWindow()))
+	if (!_device.FindPhysicalDevice(_instance.GetInstance(), &(_surface.GetSurface()), _window.GetSDLWindow()))
 	{
 		showError("Unable to find an appropriate physical device", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_graphicsQueue.FindGraphicsQueue(_surface.Data(), reinterpret_cast<Device*>(_physicalDevice.GetPhysicalDevice())))
+	if (!_graphicsQueue.FindGraphicsQueue(_surface.Data(), reinterpret_cast<Device*>(_device.GetPhysicalDevice())))
 	{
 		showError("Unable to find a compatible graphics queue", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_physicalDevice.Create(_physicalDevice.GetPhysicalDevice(), _graphicsQueue.GetGraphicsQueue(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _window.GetSDLWindow()))
+	VkPhysicalDevice physicalDevice = _device.GetPhysicalDevice();
+	if (!_device.Create(&physicalDevice, _graphicsQueue.GetGraphicsQueue(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _window.GetSDLWindow()))
 	{
 		showError("Couldn't create the logical GPU device", _window.GetSDLWindow());
 		return false;
@@ -79,13 +80,13 @@ bool VulkanWrapper::InitializeVulkan()
 	}
 
 
-	if (!_shaders.Create())
+	if (!_shader.Create(_device))
 	{
 		showError("Error creating shader modules", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (_pipeline.Create(); !_pipeline)
+	if (_pipeline.Create(_device, _window, _swapChain, _shader); !_pipeline.GetPipeline())
 	{
 		showError("Unable to initialize the graphics pipeline", _window.GetSDLWindow());
 		return false;
@@ -117,7 +118,7 @@ void VulkanWrapper::Run()
 		{
 			if (event.type == SDL_EVENT_QUIT)
 			{
-				running = false;
+				_running = false;
 				break;
 			}
 			else if (event.type == SDL_EVENT_WINDOW_RESIZED)

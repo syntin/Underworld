@@ -9,19 +9,18 @@
 #include "instance.h"
 #include "validationLayer.h"
 #include "extensions.h"
-#include "vulkanQueue.h"
+//#include "vulkanQueue.h"
 #include "swapchain.h"
 #include "depthAttachment.h"
 #include "mesh.h"
 #include "vertexData.h"
-#include "shaderData.h"
+#include "shader.h"
 #include "synchronization.h"
 #include "commandPool.h"
 #include "textureImages.h"
 #include "descriptor.h"
 #include "slangShader.h"
-#include "loadShader.h"
-#include "pipeline.h"
+#include "graphicsPipeline.h"
 #include "volkLoader.h"
 #include "instance.h"
 #include "extensions.h"
@@ -52,8 +51,8 @@ private:
 	GraphicsQueue _graphicsQueue{};
 	Vma _vma{};
 	SwapChain _swapChain{};
-	ShaderData _shaderData{};
-	Pipeline _pipeline{};
+	Shader _shader{};
+	GraphicsPipeline _pipeline{};
 	Synchronization _synchronization{};
 	CommandPool _commandPool{};
 
