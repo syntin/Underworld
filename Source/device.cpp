@@ -62,7 +62,7 @@ VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR& 
 	return physicalDevice;
 }
 
-bool Device::CreateDevice(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_t gfxQueueFamIdx, SDL_Window* window)
+bool Device::Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_t gfxQueueFamIdx, SDL_Window* window)
 {
 	float queuePriority = 1.0f;
 	std::vector<uint32_t> queueFamiles{ gfxQueueFamIdx };
@@ -123,7 +123,7 @@ bool Device::CreateDevice(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, u
 		.pEnabledFeatures = nullptr // features struct chain is set in pNext
 	};
 
-	if (vkCreateDevice(*physicalDevice, &devCreateInfo, nullptr, (VkDevice*) physicalDevice) != VK_SUCCESS)
+	if (vkCreateDevice(*physicalDevice, &devCreateInfo, nullptr, (VkDevice*) _logicalDevice) != VK_SUCCESS)
 	{
 		return false;
 	}

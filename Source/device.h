@@ -17,19 +17,21 @@ public:
 
 public:
 	VkPhysicalDevice FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface, SDL_Window* window);
-	bool CreateDevice(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_t gfxQueueFamIdx, SDL_Window* window);
+	bool Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_t gfxQueueFamIdx, SDL_Window* window);
 	std::vector<VkPhysicalDevice>& GetDevices() { return _devices; }
 
 public:
 	uint32_t GetDeviceIndex() { return _deviceIndex; }
 	uint32_t GetDeviceCount() { return _deviceCount; }
 	VkPhysicalDevice* GetPhysicalDevice() { return &_physicalDevice; }
+	VkDevice* GetLogicalDevice() { return &_logicalDevice; }
 
 private:
 	std::vector<VkPhysicalDevice> _devices;
 	uint32_t _deviceIndex = 0;
 	uint32_t _deviceCount = 0;
 	VkPhysicalDevice _physicalDevice = nullptr;
+	VkDevice _logicalDevice = nullptr;
 	VkFormat _swapchainFormat = VK_FORMAT_B8G8R8A8_SRGB;
 };
 

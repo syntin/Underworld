@@ -1,5 +1,8 @@
 #pragma once
 
+#include "device.h"
+#include "instance.h"
+
 class Vma
 {
 public:
@@ -7,5 +10,8 @@ public:
 	virtual ~Vma();
 
 public:
-	Initialize();
+	bool Initialize(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkInstance instance);
+
+private:
+	VmaAllocator _allocator = nullptr;
 };

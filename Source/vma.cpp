@@ -1,29 +1,30 @@
+#include <vulkan/vulkan.h>
+#include <vma/vk_mem_alloc.h>
 #include "vma.h"
-#include "utils.h"
+#include "logicalDevice.h"
+#include "PhysicalDevice.h"
+#include "instance.h"
 
 Vma::Vma()
 {
-
 }
 
 Vma::~Vma()
 {
-
 }
 
-Vma::Initialize()
+bool Vma::Initialize(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkInstance instance)
 {
-	VmaVulkanFunctions vkFunctions{
-		.vkGetInstanceProcAddr = vkGetInstanceProcAddr,
-		.vkGetDeviceProcAddr = vkGetDeviceProcAddr,
-		.vkCreateImage = vkCreateImage
-	};
-	VmaAllocatorCreateInfo allocatorCI{
-		.flags = VMA_ALLOCATOR_CREATE_BUFFER_DEVICE_ADDRESS_BIT,
-		.physicalDevice = devices[deviceIndex],
-		.device = device,
-		.pVulkanFunctions = &vkFunctions,
-		.instance = instance
-	};
-	chk(vmaCreateAllocator(&allocatorCI, &allocator));
+	VmaAllocatorCreateInfo allocatorInfo = {};
+	allocatorInfo.physicalDevice = physicalDevice; // Set this to your physical device
+	allocatorInfo.device = logicalDevice;         // Set this to your logical device
+	allocatorInfo.instance = instance;       // Set this to your Vulkan instance
+	VmaAllocator allocator;
+	VkResult result = vmaCreateAllocator(&allocatorInfo, &allocator);
+	if (result != VK_SUCCESS)
+	{
+		return false;
+	}
+	_allocator = allocator;
+	return true;
 }
