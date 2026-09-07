@@ -41,6 +41,7 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 
 void BindlessRender::Render()
 {
+	/*
 	// first check if our swapchain is still valid
 	if (requireSwapchainRecreate)
 	{
@@ -281,5 +282,6 @@ void BindlessRender::Render()
 	};
 
 	vkQueuePresentKHR(gfxQueue, &presentInfo);
+	*/
 }
 

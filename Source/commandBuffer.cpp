@@ -1,6 +1,8 @@
 // Author: RC
 
 #include "commandBuffer.h"
+#include "device.h"
+#include "window.h"
 
 CommandBuffer::CommandBuffer()
 {
@@ -10,7 +12,7 @@ CommandBuffer::~CommandBuffer()
 {
 }
 
-bool CommandBuffer::CreateCommandBuffers(VkDevice device, uint32_t gfxQueueFamIdx, std::array<FrameResources, MaxFramesInFlight>& frameResources)
+bool CommandBuffer::CreateCommandBuffers(Device device, Window window, uint32_t gfxQueueFamIdx, std::array<FrameResources, MaxFramesInFlight>& frameResources)
 {
 	for (FrameResources& res : _syncro.GetFrameResources())
 	{
@@ -20,9 +22,9 @@ bool CommandBuffer::CreateCommandBuffers(VkDevice device, uint32_t gfxQueueFamId
 			.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
 			.queueFamilyIndex = gfxQueueFamIdx
 		};
-		if (vkCreateCommandPool(device, &poolInfo, nullptr, &res._commandPool) != VK_SUCCESS)
+		if (vkCreateCommandPool(device.GetLogicalDevice(), &poolInfo, nullptr, &res._commandPool) != VK_SUCCESS)
 		{
-			showError("Unable to create command buffer pool");
+			showError("Unable to create command buffer pool", window.GetSDLWindow());
 			return false;
 		}
 
@@ -35,9 +37,9 @@ bool CommandBuffer::CreateCommandBuffers(VkDevice device, uint32_t gfxQueueFamId
 			.commandBufferCount = 1,
 		};
 
-		if (vkAllocateCommandBuffers(device, &cmdAllocInfo, &res._commandBuffer) != VK_SUCCESS)
+		if (vkAllocateCommandBuffers(device.GetLogicalDevice(), &cmdAllocInfo, &res._commandBuffer) != VK_SUCCESS)
 		{
-			showError("Unable to allocate command buffer");
+			showError("Unable to allocate command buffer", window.GetSDLWindow());
 			return false;
 		}
 	}

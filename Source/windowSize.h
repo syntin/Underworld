@@ -21,6 +21,8 @@ public:
 	void SetHeight(uint32_t height) { _height = height; }
 	uint32_t GetWidth() { return _width; }
 	uint32_t GetHeight() { return _height; }
+	uint32_t* GetWidthPtr() { return &_width; }
+	uint32_t* GetHeightPtr() { return &_height; }
 
 private:
 	uint32_t _width = WIDTH;

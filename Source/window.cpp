@@ -53,9 +53,9 @@ void Window::CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, Window
 	SDL_Window* window = SDL_CreateWindow("How to Vulkan", 1280u, 720u, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE);
 	assert(window);
 	chk(SDL_Vulkan_CreateSurface(window, vkInstance, nullptr, &surface));
-	chk(SDL_GetWindowSize(window, &windowSize.x(), &windowSize.y()));
+	chk(SDL_GetWindowSize(window, (int*) windowSize.GetWidthPtr(), (int*) windowSize.GetHeightPtr()));
 	VkSurfaceCapabilitiesKHR surfaceCaps{};
-	PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice.at(_deviceIndex), surface, &surfaceCaps);
+	//PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice.at(_deviceIndex), surface, &surfaceCaps);
 	//vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice[_deviceIndex], surface, &surfaceCaps);
 	VkExtent2D swapchainExtent{ surfaceCaps.currentExtent };
 	if (surfaceCaps.currentExtent.width == 0xFFFFFFFF) {

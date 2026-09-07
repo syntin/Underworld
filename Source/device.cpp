@@ -131,7 +131,7 @@ bool Device::Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_
 	}
 
 	// grab the VkQueue object finally
-	vkGetDeviceQueue((*physicalDevice).GetDevice(), gfxQueueFamIdx, 0, &gfxQueue);
+	vkGetDeviceQueue(_logicalDevice, gfxQueueFamIdx, 0, gfxQueue);
 	if (!gfxQueue)
 	{
 		showError("Couldn't get the graphics queue", window);

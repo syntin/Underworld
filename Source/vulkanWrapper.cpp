@@ -100,7 +100,7 @@ bool VulkanWrapper::InitializeVulkan()
 		return false;
 	}
 
-	if (!_commandBuffer.CreateCommandBuffers(_device.GetLogicalDevice(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _synchronization.GetFrameResources()))
+	if (!_commandBuffer.CreateCommandBuffers(_device, _window, _graphicsQueue.GetGraphicsQueueFamilyIndex(), _synchronization.GetFrameResources()))
 	{
 		showError("Couldn't create command buffer objects", _window.GetSDLWindow());
 		return false;

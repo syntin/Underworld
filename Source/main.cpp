@@ -7,6 +7,8 @@
 #include "utils.h"
 #include "vulkanWrapper.h"
 
+#pragma ignore(C4005)
+
 #define WIN32_LEAN_AND_MEAN
 
 #ifndef APIENTRY
@@ -17,6 +19,7 @@
     #endif
     #define GL_APIENTRY_DEFINED
 #endif // APIENTRY
+
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
@@ -35,7 +38,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     // Initialize Vulkan
     wrapper.InitializeVulkan(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
-    wrapper.RunRenderLoop();
+    //wrapper.RunRenderLoop();
     
     return 0;
 }

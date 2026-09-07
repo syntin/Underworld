@@ -5,6 +5,8 @@
 #include <vulkan/vulkan.h>
 #include "device.h"
 #include "window.h"
+#include <array>
+#include <algorithm>
 
 struct FrameResources
 {
@@ -23,14 +25,13 @@ public:
 public:
 	bool Initialize(Device device, Window window);
 	VkSemaphore GetTimelineSemaphore() { return _timelineSemaphore; }
-	FrameResources* _frameResources[MaxFramesInFlight];
-	//std::array<FrameResources, MaxFramesInFlight> GetFrameResources() { return _frameResources; }
+	std::array<FrameResources, MaxFramesInFlight> GetFrameResources() { return _frameResources; }
 
 protected:
 	bool CreateSyncResources(Device device, Window window);
 
 private:
 	VkSemaphore _timelineSemaphore = nullptr;
-	//std::array<FrameResources, MaxFramesInFlight> FrameResources;
+	std::array<FrameResources, MaxFramesInFlight> _frameResources{ {} };
 };
 
