@@ -1,7 +1,8 @@
+//DB & RC
 #pragma once
 #include <cstdint>
 #include <glm/glm.hpp>
-
+//DB
 namespace ECS {
 
 struct Mesh
@@ -26,7 +27,7 @@ struct Mesh
 	};
 
 }
-
+//RC
 class Mesh {
 public:
 	Mesh();

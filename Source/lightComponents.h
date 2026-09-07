@@ -1,6 +1,9 @@
+//DB & RC
+
 #pragma once
 #include <glm/glm.hpp>
 
+//DB
 enum class LightType
 {
 	Directional,
@@ -21,6 +24,8 @@ struct Light
 	bool dirty = true;
 };
 
+
+//RC
 class LightComponents
 {
 public:
