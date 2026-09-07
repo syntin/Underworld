@@ -51,7 +51,7 @@ static inline void chk(bool result)
 		exit(result);
 	}
 }
-static inline void showError(const std::string& errorMessasge, SDL_Window* window)
+static inline void showError(const std::string& errorMessasge, SDL_Window* window = nullptr)
 {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorMessasge.c_str(), window);
 }

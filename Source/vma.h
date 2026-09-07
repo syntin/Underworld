@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vulkan/vulkan.h>
+#include <Volk/volk.h>
+#include <vma/vk_mem_alloc.h>
 #include "device.h"
 #include "instance.h"
 
@@ -11,6 +14,7 @@ public:
 
 public:
 	bool Initialize(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkInstance instance);
+	VmaAllocator GetAllocator() { return _allocator; }
 
 private:
 	VmaAllocator _allocator = nullptr;

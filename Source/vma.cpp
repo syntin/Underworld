@@ -1,8 +1,9 @@
 #include <vulkan/vulkan.h>
+#include <Volk/volk.h>
 #include <vma/vk_mem_alloc.h>
 #include "vma.h"
 #include "logicalDevice.h"
-#include "PhysicalDevice.h"
+#include "Device.h"
 #include "instance.h"
 
 Vma::Vma()
@@ -15,16 +16,22 @@ Vma::~Vma()
 
 bool Vma::Initialize(VkPhysicalDevice physicalDevice, VkDevice logicalDevice, VkInstance instance)
 {
-	VmaAllocatorCreateInfo allocatorInfo = {};
-	allocatorInfo.physicalDevice = physicalDevice; // Set this to your physical device
-	allocatorInfo.device = logicalDevice;         // Set this to your logical device
-	allocatorInfo.instance = instance;       // Set this to your Vulkan instance
-	VmaAllocator allocator;
-	VkResult result = vmaCreateAllocator(&allocatorInfo, &allocator);
-	if (result != VK_SUCCESS)
+	VmaVulkanFunctions vmaFuncInfo{};
+	VmaAllocatorCreateInfo vmaAllocInfo
+	{
+		.flags = VMA_ALLOCATOR_CREATE_BUFFER_DEVICE_ADDRESS_BIT,
+		.physicalDevice = physicalDevice,
+		.device = logicalDevice,
+		.pVulkanFunctions = &vmaFuncInfo,
+		.instance = instance,
+		.vulkanApiVersion = VK_MAKE_VERSION(1, 0, 0)
+	};
+
+	vmaImportVulkanFunctionsFromVolk(&vmaAllocInfo, &vmaFuncInfo);
+
+	if (vmaCreateAllocator(&vmaAllocInfo, &_allocator) != VK_SUCCESS)
 	{
 		return false;
 	}
-	_allocator = allocator;
 	return true;
 }

@@ -48,7 +48,7 @@ private:
 	VulkanInstance _instance{};
 	Window _window{};
 	Surface _surface{};
-	Device _physicalDevice{};
+	Device _device{};
 	GraphicsQueue _graphicsQueue{};
 	Vma _vma{};
 	SwapChain _swapChain{};

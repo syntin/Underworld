@@ -23,8 +23,8 @@ public:
 public:
 	uint32_t GetDeviceIndex() { return _deviceIndex; }
 	uint32_t GetDeviceCount() { return _deviceCount; }
-	VkPhysicalDevice* GetPhysicalDevice() { return &_physicalDevice; }
-	VkDevice* GetLogicalDevice() { return &_logicalDevice; }
+	VkPhysicalDevice GetPhysicalDevice() { return _physicalDevice; }
+	VkDevice GetLogicalDevice() { return _logicalDevice; }
 
 private:
 	std::vector<VkPhysicalDevice> _devices;

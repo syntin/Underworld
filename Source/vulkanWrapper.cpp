@@ -60,27 +60,24 @@ bool VulkanWrapper::InitializeVulkan()
 		return false;
 	}
 
-	if (!_physicalDevice.CreateDevice(_physicalDevice.GetPhysicalDevice(), _graphicsQueue.GetGraphicsQueue(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _window.GetSDLWindow()))
+	if (!_physicalDevice.Create(_physicalDevice.GetPhysicalDevice(), _graphicsQueue.GetGraphicsQueue(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _window.GetSDLWindow()))
 	{
 		showError("Couldn't create the logical GPU device", _window.GetSDLWindow());
 		return false;
 	}
 
-	if (!_vma.Initialize())
+	if (!_vma.Initialize(_device.GetPhysicalDevice(), _device.GetLogicalDevice(), _instance.GetInstance()))
 	{
 		showError("Unable to create Vulkan Memory Allocator", _window.GetSDLWindow());
 		return false;
 	}
 
-
-
-
-
-	if (!_swapchain.Create(width, height))
+	if (!_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(), WIDTH, HEIGHT))
 	{
 		showError("Unable to create swapchain", _window.GetSDLWindow());
 		return false;
 	}
+
 
 	if (!_shaders.Create())
 	{
@@ -99,6 +96,7 @@ bool VulkanWrapper::InitializeVulkan()
 		showError("Couldn't create the sync related resources", _window.GetSDLWindow());
 		return false;
 	}
+
 
 	if (!createCommandBuffers())
 	{
