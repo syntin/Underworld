@@ -17,6 +17,7 @@ public:
 public:
 	VkPipeline Create(Device& device, Window window, SwapChain swapChain, Shader shader);
 	VkPipeline GetPipeline() { return _pipeline; }
+	VkPipelineLayout GetPipelineLayout(){ return _pipelineLayout; }
 
 private:
 	VkPipelineLayout _pipelineLayout{ VK_NULL_HANDLE };

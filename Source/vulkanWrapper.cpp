@@ -92,14 +92,13 @@ bool VulkanWrapper::InitializeVulkan()
 		return false;
 	}
 
-	if (!createSyncResources())
+	if (!_synchronization.Initialize(_device, _window))
 	{
 		showError("Couldn't create the sync related resources", _window.GetSDLWindow());
 		return false;
 	}
 
-
-	if (!createCommandBuffers())
+	if (!_commandBuffer.CreateCommandBuffers(_device.GetLogicalDevice(), _graphicsQueue.GetGraphicsQueueFamilyIndex(), _synchronization.GetFrameResources()))
 	{
 		showError("Couldn't create command buffer objects", _window.GetSDLWindow());
 		return false;
@@ -129,7 +128,7 @@ void VulkanWrapper::Run()
 			}
 		}
 
-		Render();
+		_bindlessRender.Render();
 	}
 }
 
@@ -141,70 +140,97 @@ void VulkanWrapper::Render()
 void VulkanWrapper::Destroy()
 {
 	// wait in case resources are in use
-	vkDeviceWaitIdle(_device);
+	vkDeviceWaitIdle(_device.GetLogicalDevice());
 
 	// frame / sync object cleanup
-	if (_timelineSemaphore)
+	if (_synchronization.GetTimelineSemaphore())
 	{
-		vkDestroySemaphore(_device, _timelineSemaphore, nullptr);
+		vkDestroySemaphore(_device.GetLogicalDevice(), _synchronization.GetTimelineSemaphore(), nullptr);
 	}
 	for (auto& res : _frameResources)
 	{
-		vkDestroySemaphore(_vulkanDevice, res.imageAcquiredSemaphore, nullptr);
-		vkDestroyCommandPool(_vulkanDevice, res.commandPool, nullptr); // destroys buffers implicitly
+		vkDestroySemaphore(_device.GetLogicalDevice(), res.imageAcquiredSemaphore, nullptr);
+		vkDestroyCommandPool(_device.GetLogicalDevice(), res.commandPool, nullptr); // destroys buffers implicitly
 	}
 
 	// pipeline cleanup
-	if (_pipelineLayout)
+	if (_pipeline.GetPipeline())
 	{
-		vkDestroyPipelineLayout(device, _pipelineLayout, nullptr);
-	}
-	if (_pipeline)
-	{
-		vkDestroyPipeline(device, _pipeline, nullptr);
+		vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
+		vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
 	}
 
 	// cleanup shaders
-	if (_vertShader)
+	if (_shader.GetVertShader())
 	{
-		vkDestroyShaderModule(device, _vertShader, nullptr);
+		vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
 	}
-	if (_fragShader)
+	if (_shader.GetFragShader())
 	{
-		vkDestroyShaderModule(device, _fragShader, nullptr);
+		vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
 	}
 
 	// cleanup swapchain
 	destroySwapchain();
 
 	// VMA
-	if (_vmaAllocator)
+	if (_vma.GetAllocator())
 	{
-		vmaDestroyAllocator(_vmaAllocator);
+		vmaDestroyAllocator(_vma.GetAllocator());
 	}
 
 	// cleanup Vulkan
-	if (_surface)
+	if (_surface.GetSurface())
 	{
-		vkDestroySurfaceKHR(_vulkanInstance, _surface, nullptr);
+		vkDestroySurfaceKHR(_instance.GetInstance(), _surface.GetSurface(), nullptr);
 	}
-	if (_device)
+	if (_device.GetLogicalDevice())
 	{
-		vkDestroyDevice(_device, nullptr);
+		vkDestroyDevice(_device.GetLogicalDevice(), nullptr);
 	}
-	if (_vulkanInstance)
+	if (_instance.GetInstance())
 	{
-		vkDestroyInstance(_vulkanInstance, nullptr);
+		vkDestroyInstance(_instance.GetInstance(), nullptr);
 	}
 	volkFinalize();
 
 	// cleanup SDL
-	if (_SDLwindow)
+	if (_window.GetSDLWindow())
 	{
-		SDL_DestroyWindow(_SDLwindow);
+		SDL_DestroyWindow(_window.GetSDLWindow());
 	}
 	SDL_Quit();
 }
+
+void VulkanWrapper::DestroySwapchain()
+{
+	for (VkImageView swapchainImgView : _swapChain.GetDepthImageView())
+	{
+		vkDestroyImageView(_device.GetLogicalDevice(), swapchainImgView, nullptr);
+	}
+	_swapChain.GetSwapChainImageViews().clear();
+
+	// destroy render-complete ssemaphores
+	for (VkSemaphore& semaphore : renderCompleteSemaphores)
+	{
+		vkDestroySemaphore(_device.GetLogicalDevice(), semaphore, nullptr);
+	}
+	renderCompleteSemaphores.clear();
+
+	if (_swapChain.GetSwapChain())
+	{
+		vkDestroySwapchainKHR(_device.GetLogicalDevice(), _swapChain.GetSwapChain(), nullptr);
+	}
+
+	// destroy the depth buffer along with the swapchain
+	if (depthImageView)
+	{
+		vkDestroyImageView(_device.GetLogicalDevice(), depthImageView, nullptr);
+		vmaDestroyImage(_vma.GetAllocator(), depthImage, depthImageAllocation);
+		depthImageView = nullptr;
+	}
+}
+
 
 void VulkanWrapper::Run() {
 	_running = true;
@@ -212,12 +238,12 @@ void VulkanWrapper::Run() {
 		SDL_Event event{0};
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_EVENT_QUIT) {
-				running = false;
+				_running = false;
 				break;
 			}
 			else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
-				_width = event.window.data1;
-				_height = event.window.data2;
+				_newWidth = event.window.data1;
+				_newHeight = event.window.data2;
 				break;
 			}
 		}

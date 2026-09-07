@@ -16,7 +16,7 @@
 #include "vertexData.h"
 #include "shader.h"
 #include "synchronization.h"
-#include "commandPool.h"
+#include "commandBuffer.h"
 #include "textureImages.h"
 #include "descriptor.h"
 #include "slangShader.h"
@@ -27,6 +27,8 @@
 #include "surface.h"
 #include "vma.h"
 #include "graphicsQueue.h"
+#include "bindlessRender.h"
+
 
 class VulkanWrapper
 {
@@ -42,6 +44,7 @@ public:
 
 protected:
 	void Destroy();
+	void DestroySwapchain();
 
 private:
 	VulkanInstance _instance{};
@@ -54,7 +57,16 @@ private:
 	Shader _shader{};
 	GraphicsPipeline _pipeline{};
 	Synchronization _synchronization{};
-	CommandPool _commandPool{};
+	CommandBuffer _commandBuffer{};
+	BindlessRender _bindlessRender{};
+
+private:
+	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
+	bool _running = true;
+	uint32_t _newWidth = WIDTH;
+	uint32_t _newHeight = HEIGHT;
+};
+
 
 /*
 	VolkLoader _volkLoader{};
@@ -69,10 +81,3 @@ private:
 	SlangShader _slangShader;
 	LoadShader _loadShader;
 */
-
-private:
-	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
-	bool _running = true;
-	//VkDevice _vulkanDevice = nullptr;
-	//VkDevice _device = nullptr;
-};

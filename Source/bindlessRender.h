@@ -11,6 +11,7 @@ public:
 public:
 	VkPhysicalDeviceDescriptorIndexingFeatures QueryDeviceForBindlessSupport();
 	void CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorIndexingFeatures indexingFeatures, VkDevice vulkanDevice);
+	void Render();
 
 private:
 	bool _bindlessSupported = false;

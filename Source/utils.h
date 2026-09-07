@@ -31,18 +31,8 @@ static inline void chk(VkResult result)
 		exit(result);
 	}
 }
-/*
-static inline void chkSwapchain(VkResult result) {
-	if (result < VK_SUCCESS) {
-		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-			updateSwapchain = true;
-			return;
-		}
-		std::cerr << "Vulkan call returned an error (" << result << ")\n";
-		exit(result);
-	}
-}
-*/
+
+
 static inline void chk(bool result)
 {
 	if (!result)
@@ -57,37 +47,6 @@ static inline void showError(const std::string& errorMessasge, SDL_Window* windo
 }
 
 
-/*
-static VKAPI_ATTR uint32_t VKAPI_CALL debugCallback(
-	VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-	VkDebugUtilsMessageTypeFlagsEXT messageType,
-	const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-	void* pUserData)
-{
-	if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
-	{
-		fprintf(stderr, "Shitty Error: %s\n", pCallbackData->pMessage);
-	}
-
-	return VK_FALSE;
-}
-
-VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, 
-	const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, 
-	const VkAllocationCallbacks* pAllocator, 
-	VkDebugUtilsMessengerEXT* pDebugMessenger)
-{
-	auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-	if (func != nullptr)
-	{
-		return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-	}
-	else
-	{
-		return VK_ERROR_EXTENSION_NOT_PRESENT;
-	}
-}
-*/
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
