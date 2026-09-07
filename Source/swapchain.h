@@ -19,7 +19,7 @@ public:
 public:
 	uint32_t GetWidth() { return _swapchainWidth; }
 	uint32_t GetHeight() { return _swapchainHeight; }
-	VkFormat GetSwapChainFormat() { return _swapchainFormat; }
+	VkFormat* GetSwapChainFormat() { return &_swapchainFormat; }
 	VkSwapchainKHR GetSwapChain() { return _swapchain; }
 	std::vector<VkImage> GetSwapChainImages() { return _swapchainImages; }
 	std::vector<VkImageView> GetSwapChainImageViews() { return _swapchainImageViews; }
