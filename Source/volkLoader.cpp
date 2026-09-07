@@ -1,3 +1,5 @@
+// Author: RC
+
 #include <stdexcept>
 #include <stdio.h>
 #include <Volk/volk.h>

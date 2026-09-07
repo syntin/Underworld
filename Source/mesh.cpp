@@ -12,6 +12,7 @@ Mesh::~Mesh()
 
 void Mesh::Initialize()
 {
+	/*
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
@@ -38,4 +39,5 @@ void Mesh::Initialize()
 	chk(vmaCreateBuffer(allocator, &bufferCI, &vBufferAllocCI, &vBuffer, &vBufferAllocation, &vBufferAllocInfo));
 	memcpy(vBufferAllocInfo.pMappedData, vertices.data(), vBufSize);
 	memcpy(((char*)vBufferAllocInfo.pMappedData) + vBufSize, indices.data(), iBufSize);
+	*/
 }

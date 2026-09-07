@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "surface.h"
 
 Surface::Surface()

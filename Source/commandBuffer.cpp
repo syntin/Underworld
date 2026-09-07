@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "commandBuffer.h"
 
 CommandBuffer::CommandBuffer()

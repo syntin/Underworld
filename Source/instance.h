@@ -1,4 +1,7 @@
+// Author: RC
+
 #pragma once
+
 #include <vulkan/vulkan.h>
 #include "extensions.h"
 #include "device.h"

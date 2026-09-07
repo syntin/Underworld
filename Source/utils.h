@@ -1,9 +1,15 @@
+// Author: RC
+
 #pragma once
 
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
 #include <iostream>
+#include <SDL3/SDL.h>
+
+#define VK_NO_PROTOTYPES
+#include <vulkan/vulkan.h>
 
 #pragma warning(disable: 4005)
 #pragma warning(disable: 4098)
@@ -41,7 +47,7 @@ static inline void chk(bool result)
 		exit(result);
 	}
 }
-static inline void showError(const std::string& errorMessasge, SDL_Window* window = nullptr)
+static inline void showError(const std::string& errorMessasge, SDL_Window* window)
 {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorMessasge.c_str(), window);
 }

@@ -1,3 +1,5 @@
+// Author: RC
+
 #include <vector>
 #include "device.h"
 #include "extensions.h"

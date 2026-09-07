@@ -1,3 +1,5 @@
+// Author: RC
+
 #pragma once
 
 class SlangShader
@@ -10,5 +12,5 @@ public:
 	void Initialize();
 
 private:
-	SlangShader _slang;
+//	SlangShader _slang;
 };

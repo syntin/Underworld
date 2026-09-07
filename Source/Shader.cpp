@@ -1,7 +1,12 @@
+// Author: RC
+
 #include "shader.h"
 #include "utils.h"
 
 #include <SDL3/SDL.h>
+#ifndef VK_NO_PROTOTYPES
+	#define VK_NO_PROTOTYPES
+#endif
 #include <vulkan/vulkan.h>
 #ifdef VOLK_IMPLEMENTATION
 	#include <Volk/volk.h>

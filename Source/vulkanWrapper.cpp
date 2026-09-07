@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "vulkanWrapper.h"
 #include <Windows.h>
 #define VOLK_IMPLEMENTATION
@@ -171,7 +173,7 @@ void VulkanWrapper::Destroy()
 	}
 
 	// cleanup swapchain
-	destroySwapchain();
+	DestroySwapchain();
 
 	// VMA
 	if (_vma.GetAllocator())
@@ -204,6 +206,7 @@ void VulkanWrapper::Destroy()
 
 void VulkanWrapper::DestroySwapchain()
 {
+	/*
 	for (VkImageView swapchainImgView : _swapChain.GetDepthImageView())
 	{
 		vkDestroyImageView(_device.GetLogicalDevice(), swapchainImgView, nullptr);
@@ -229,6 +232,7 @@ void VulkanWrapper::DestroySwapchain()
 		vmaDestroyImage(_vma.GetAllocator(), depthImage, depthImageAllocation);
 		depthImageView = nullptr;
 	}
+	*/
 }
 
 

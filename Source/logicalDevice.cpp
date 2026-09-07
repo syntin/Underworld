@@ -15,7 +15,8 @@ void LogicalDevice::Initialize(Device& device)
 {
 	VkQueue queue{};
 	uint32_t queueFamily = 0;
-	vkGetDeviceQueue(device.GetDevice(), queueFamily, 0, &queue);
+	
+	vkGetDeviceQueue(device.GetLogicalDevice(), queueFamily, 0, &queue);
 
 	const float qfpriorities{ 1.0f };
 	VkDeviceQueueCreateInfo queueCI{
@@ -49,6 +50,7 @@ void LogicalDevice::Initialize(Device& device)
 		.ppEnabledExtensionNames = deviceExtensions.data(),
 		.pEnabledFeatures = &enabledVk10Features
 	};
-	chk(vkCreateDevice(_physicalDevice, &deviceCI, nullptr, &(device.GetDevice())));
-	vkGetDeviceQueue(device.GetDevice(), queueFamily, 0, &_queue);
+	VkDevice vkDevice = device.GetLogicalDevice();
+	chk(vkCreateDevice(_physicalDevice, &deviceCI, nullptr, &vkDevice));
+	vkGetDeviceQueue(device.GetLogicalDevice(), queueFamily, 0, &_queue);
 }

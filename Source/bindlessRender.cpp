@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "bindlessRender.h"
 #include "descriptorPool.h"
 #include "utils.h"

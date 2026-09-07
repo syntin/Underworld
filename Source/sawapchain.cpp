@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "swapchain.h"
 #include <Volk/volk.h>
 #include <vma/vk_mem_alloc.h>

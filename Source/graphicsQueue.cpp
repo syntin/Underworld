@@ -1,3 +1,5 @@
+// Author: RC
+
 #include <vulkan/vulkan.h>
 #include <SDL3/SDL_vulkan.h>
 #include <iostream>

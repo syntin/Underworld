@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "synchronization.h"
 #include "utils.h"
 

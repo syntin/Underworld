@@ -1,4 +1,7 @@
+// Author: RC
+
 #pragma once
+
 #include <cstdint>
 #include "utils.h"
 

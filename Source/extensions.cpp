@@ -28,7 +28,7 @@ void Extensions::Initialize()
 		VK_EXT_DEBUG_UTILS_EXTENSION_NAME
 	};
 
-	for (int i = 0; i < _extensionCount; ++i)
+	for (uint32_t i = 0; i < _extensionCount; ++i)
 	{
 		requestedExtensions.push_back(_extensions[i]);
 	}

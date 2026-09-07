@@ -1,4 +1,7 @@
+// Author: RC
+
 #pragma once
+
 #include <vulkan/vulkan.h>
 #include "device.h"
 #include "window.h"
@@ -20,13 +23,14 @@ public:
 public:
 	bool Initialize(Device device, Window window);
 	VkSemaphore GetTimelineSemaphore() { return _timelineSemaphore; }
-	std::array<FrameResources, MaxFramesInFlight> GetFrameResources() { return _frameResources; }
+	FrameResources* _frameResources[MaxFramesInFlight];
+	//std::array<FrameResources, MaxFramesInFlight> GetFrameResources() { return _frameResources; }
 
 protected:
 	bool CreateSyncResources(Device device, Window window);
 
 private:
 	VkSemaphore _timelineSemaphore = nullptr;
-	std::array<FrameResources, MaxFramesInFlight> _frameResources;
+	//std::array<FrameResources, MaxFramesInFlight> FrameResources;
 };
 

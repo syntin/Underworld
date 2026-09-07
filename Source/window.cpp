@@ -1,3 +1,5 @@
+// Author: RC
+
 #include "window.h"
 #include <vulkan/vulkan.h>
 #include <stdexcept>

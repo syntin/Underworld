@@ -1,3 +1,5 @@
+// Author: RC
+
 #pragma once
 
 #include <cstdint>
