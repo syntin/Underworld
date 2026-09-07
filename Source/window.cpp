@@ -1,5 +1,6 @@
 // Author: RC
 
+#define VK_USE_PLATFORM_WIN32_KHR
 #include "window.h"
 #include <vulkan/vulkan.h>
 #include <stdexcept>
@@ -10,7 +11,6 @@
 #include "utils.h"
 #include "windowSize.h"
 
- 
 
 Window::Window()
 {
@@ -55,10 +55,15 @@ void Window::CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, Window
 	chk(SDL_Vulkan_CreateSurface(window, vkInstance, nullptr, &surface));
 	chk(SDL_GetWindowSize(window, &windowSize.x(), &windowSize.y()));
 	VkSurfaceCapabilitiesKHR surfaceCaps{};
-	chk(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice[_deviceIndex], surface, &surfaceCaps));
+	PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice.at(_deviceIndex), surface, &surfaceCaps);
+	//vkGetPhysicalDeviceSurfaceCapabilitiesKHR(_physicalDevice[_deviceIndex], surface, &surfaceCaps);
 	VkExtent2D swapchainExtent{ surfaceCaps.currentExtent };
 	if (surfaceCaps.currentExtent.width == 0xFFFFFFFF) {
-		swapchainExtent = { .width = static_cast<uint32_t>(windowSize.x()), .height = static_cast<uint32_t>(windowSize.y()) };
+		swapchainExtent =
+		{
+			.width = static_cast<uint32_t>(windowSize.GetWidth()),
+			.height = static_cast<uint32_t>(windowSize.GetHeight())
+		};
 	}
 }
 
