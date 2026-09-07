@@ -12,10 +12,11 @@
 #include "validationLayer.h"
 #include "extensions.h"
 //#include "vulkanQueue.h"
+#include "graphicsQueue.h"
 #include "swapchain.h"
 #include "depthAttachment.h"
 #include "mesh.h"
-#include "vertexData.h"
+//#include "vertexData.h"
 #include "shader.h"
 #include "synchronization.h"
 #include "commandBuffer.h"
@@ -30,6 +31,7 @@
 #include "vma.h"
 #include "graphicsQueue.h"
 #include "bindlessRender.h"
+#include "device.h"
 
 
 class VulkanWrapper
