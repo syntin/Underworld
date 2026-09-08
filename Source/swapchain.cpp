@@ -6,6 +6,16 @@
 #include "device.h"
 #include "utils.h"
 
+SwapChain::SwapChain()
+{
+
+}
+
+SwapChain::~SwapChain()
+{
+
+}
+
 bool SwapChain::CreateInfoKHR(Device device, Surface surface)
 {
 	VkSurfaceCapabilitiesKHR surfaceCaps{};

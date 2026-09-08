@@ -233,24 +233,4 @@ void VulkanWrapper::DestroySwapchain()
 	*/
 }
 
-/*
-void VulkanWrapper::Run() {
-	_running = true;
-	while (_running) {
-		SDL_Event event{0};
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_EVENT_QUIT) {
-				_running = false;
-				break;
-			}
-			else if (event.type == SDL_EVENT_WINDOW_RESIZED) {
-				_newWidth = event.window.data1;
-				_newHeight = event.window.data2;
-				break;
-			}
-		}
 
-		Render();
-	}
-}
-*/
