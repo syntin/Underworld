@@ -25,7 +25,7 @@ bool VulkanInstance::Create()
 	// Initialize Volk and load Vk function pointers
 	if (volkInitialize() != VK_SUCCESS)
 	{
-		showError("Error initializing Volk");
+		showError("Error initializing Volk", nullptr);
 		return false;
 	}
 

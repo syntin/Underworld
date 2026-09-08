@@ -26,10 +26,10 @@ Shader::~Shader()
 VkShaderModule Shader::CreateShaderModule(VkDevice device, const std::string& fileName, shaderc_shader_kind kind) const
 {
 	const std::string shaderPath = "src/shaders/" + fileName;
-	const std::string src = readTextFile(shaderPath);
+	const std::string src = "";// readTextFile(shaderPath);
 	if (src.empty())
 	{
-		showError("Specified shader file doesn't exist: " + shaderPath);
+		showError("Specified shader file doesn't exist: " + shaderPath, nullptr);
 		return nullptr;
 	}
 
@@ -59,7 +59,7 @@ VkShaderModule Shader::CreateShaderModule(VkDevice device, const std::string& fi
 	VkShaderModule shaderModule = nullptr;
 	if (vkCreateShaderModule(device, &moduleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
 	{
-		showError("Error creating shader module");
+		showError("Error creating shader module", nullptr);
 		return nullptr;
 	}
 	return shaderModule;

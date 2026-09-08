@@ -1,13 +1,23 @@
+
 #include <Windows.h>
 #include <stdio.h>
 #include <WinBase.h>
-#include <vulkan/vulkan.h>
+
+#define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 0
+#define VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
+#define VK_NO_PROTOTYPES
+#include <volk/volk.h>
+#define SDL_IMPLEMENTATION
 #include <SDL3/SDL.h>
+#define GLFW_IMPLEMENTATION
 #include <GLFW/glfw3.h>
+#define VMA_IMPLEMENTATION
+#define STB_IMPLEMENTATION
+#define TINYOBJLOADER_IMPLEMENTATION
 #include "utils.h"
 #include "vulkanWrapper.h"
 
-#pragma warning(disable:C4005)
+#pragma warning(disable:C4005);
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -20,8 +30,6 @@
     #define GL_APIENTRY_DEFINED
 #endif // APIENTRY
 
-#define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 1
-#define VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {

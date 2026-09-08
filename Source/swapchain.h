@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <volk/volk.h>
 #include <SDL3/SDL.h>
 #include "surface.h"
 #include "device.h"

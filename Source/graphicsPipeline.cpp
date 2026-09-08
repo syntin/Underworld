@@ -156,7 +156,7 @@ VkPipeline GraphicsPipeline::Create(Device& device, Window window, SwapChain swa
 
 	if (vkCreateGraphicsPipelines(device.GetLogicalDevice(), nullptr, 1, &pipelineInfo, nullptr, &_pipeline) != VK_SUCCESS)
 	{
-		showError("Error creating the pipeline");
+		showError("Error creating the pipeline", window.GetSDLWindow());
 		return nullptr;
 	}
 	return _pipeline;
