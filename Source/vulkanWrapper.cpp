@@ -27,7 +27,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 		return;
 	}
 
-	if (!InitializeVulkan())
+	if (!SetupVulkan())
 	{
 		showError("Failed to initialize Vulkan", _window.GetSDLWindow());
 	}

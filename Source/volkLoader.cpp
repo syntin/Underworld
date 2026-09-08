@@ -14,7 +14,7 @@ VolkLoader::VolkLoader()
 
 VolkLoader::~VolkLoader()
 {
-	volkFinalize();
+	//volkFinalize();
 }
 
 bool VolkLoader::Initialize(VulkanInstance vulkanInstance, Extensions& extensions)
