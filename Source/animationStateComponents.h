@@ -5,10 +5,9 @@
 struct Animation
 {
 	std::string state = "Idle"; // curent animation/state
-	float frame = 0.0f;			// current frame
-	float frameCount = 1.0f;	// total frames in the animation
-	float speed = 1.0f;			// fps
-	bool loop = true;			
+	float time = 0.0f;		// current playback time in seconds
+	float speed = 1.0f;		// playback speed multiplier
+	bool loop = true;	
 
 	Entity clipEntity = INVALID_ENTITY;
 

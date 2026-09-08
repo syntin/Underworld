@@ -98,36 +98,71 @@ void BoneMatrixGatherer::Gather(ComponentManager& components, BoneMatrixList& ou
 		if (!skeleton || !anim || !animator)
 			continue;
 
-		// Advance animation time
-		anim->frame += anim->speed * dt;
-		float time = anim->frame / anim->speed; //seconds
-
-		// Get clip entity from Animator
+		// Find current clip
 		auto it = animator->clips.find(anim->state);
 		if (it == animator->clips.end())
 			continue;
 
-		Entity clipEntity = it->second;
-		AnimationClip* clip = components.GetAnimationClip(clipEntity);
-		if (!clip)
+		AnimationClip* currentClip = components.GetAnimationClip(it->second);
+		if (!currentClip)
 			continue;
 
-		// Wrap time for looping
-		float clipDuration = clip->duration;
-		if (clipDuration > 0.0f && clip->loop)
+		// Evaluate current clip
+		Skeleton tempCurrent = *skeleton; 
+		EvaluateClipAtTIme(*currentClip, tempCurrent, anim->time);
+
+		bool blending = !animator->nextState.empty();
+
+		Skeleton tempNext;
+		float blendFactor = 0.0f;
+
+		if (blending)
 		{
-			while (time > clipDuration)
-				time -= clipDuration;
+			// Find next clip
+			auto it2 = animator->clips.find(animator->nextState);
+			if (it2 != animator->clips.end())
+			{
+				AnimationClip* nextClip = components.GetAnimationClip(it2->second);
+				if (nextClip)
+				{
+					// Compute blend factor
+					blendFactor = animator->blendTimer / animator->blendTime;
+					blendFactor = glm::clamp(blendFactor, 0.0f, 1.0f);
+
+					// Evaluate next clip at time 0 (start of transition)
+					tempNext = *skeleton;
+					EvaluateClipAtTIme(*nextClip, tempNext, 0.0f);
+				}
+			}
 		}
 
-		// Evaluate clip into skeleton
-		EvaluateClipAtTIme(*clip, *skeleton, time);
+		// Blend bones
+		skeleton->skinMatrices.resize(skeleton->bones.size());
 
-		// Push into boneMatrixList
+		for (int i = 0; i < (int)skeleton->bones.size(); ++i)
+		{
+			glm::mat4 currentMat = tempCurrent.skinMatrices[i];
+
+			if (blending)
+			{
+				glm::mat4 nextMat = tempNext.skinMatrices[i];
+
+				// Linear blend of matrices
+				glm::mat4 blended = glm::mix(currentMat, nextMat, blendFactor);
+				skeleton->skinMatrices[i] = blended;
+			}
+			else
+			{
+				skeleton->skinMatrices[i] = currentMat;
+			}
+		}
+
+		// Output entry
 		BoneMatrixEntry entry;
 		entry.entity = e;
 		entry.matrices = skeleton->skinMatrices;
 
 		outList.entries.push_back(entry);
+
 	}
 }
