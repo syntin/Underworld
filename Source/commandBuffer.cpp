@@ -1,5 +1,6 @@
 // Author: RC
 
+#include <vulkan/vulkan.h>
 #include "commandBuffer.h"
 #include "device.h"
 #include "window.h"

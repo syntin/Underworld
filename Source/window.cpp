@@ -2,7 +2,6 @@
 
 #define VK_USE_PLATFORM_WIN32_KHR
 #include "window.h"
-#define VK_NO_PROTOTYPES
 #include <vulkan/vulkan.h>
 #include <stdexcept>
 #include "utils.h"

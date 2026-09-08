@@ -2,8 +2,6 @@
 
 #include <stdexcept>
 #include <stdio.h>
-#define VK_NO_PROTOTYPES
-#define VOLK_IMPLEMENTATION
 #include <Volk/volk.h>
 #include <SDL3/SDL_vulkan.h>
 #include "volkLoader.h"

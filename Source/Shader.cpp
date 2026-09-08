@@ -4,8 +4,6 @@
 #include "utils.h"
 
 #include <SDL3/SDL.h>
-#define VK_NO_PROTOTYPES
-#define VOLK_IMPLEMENTATION
 #include <Volk/volk.h>
 #ifdef VMA_IMPLEMENTATION
 	#include <vma/vk_mem_alloc.h>
