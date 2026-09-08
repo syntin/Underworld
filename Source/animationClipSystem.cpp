@@ -1,3 +1,4 @@
+//DB
 #include "animationClipSystem.h"
 #include "componentManager.h"
 #include <glm/gtx/quaternion.hpp>
@@ -30,9 +31,9 @@ void AnimationClipSystem::Update(ComponentManager& components, float deltaTime)
 			continue;
 
 		// Advance animation time
-		anim->frame += anim->speed * deltaTime;
+		anim->time += anim->speed * deltaTime;
 
-		float currentTime = anim->frame / anim->speed;
+		float currentTime = anim->time / anim->speed;
 
 		if (currentTime > clip->duration)
 		{

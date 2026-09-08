@@ -1,5 +1,4 @@
 #pragma once
-
 #include "componentManager.h"
 
 class EntityManger;

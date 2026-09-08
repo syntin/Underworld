@@ -1,6 +1,8 @@
+//RC & DB
 #pragma once
 #include <glm/glm.hpp>
 
+//RC
 class ColliderComponents
 {
 public:
@@ -11,6 +13,8 @@ public:
 	void Initialize();
 };
 
+
+//DB
 enum class ColliderType
 {
 	AABB,

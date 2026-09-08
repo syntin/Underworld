@@ -1,3 +1,4 @@
+//DB
 #pragma once
 #include "Entity.h"
 #include "componentPool.h"
@@ -19,6 +20,8 @@
 class ComponentManager
 {
 public:
+	ComponentManager();
+
 	//Transform
 	Transform* AddTransform(Entity e, const Transform& t)
 	{
@@ -91,6 +94,16 @@ public:
 		return m_cameraPool.GetEntities();
 	}
 
+	Entity GetActiveCamera() const
+	{
+		return m_activeCamera;
+	}
+
+	void SetActiveCamera(Entity e)
+	{
+		m_activeCamera = e;
+	}
+
 	// Mesh
 	ECS::Mesh* AddMesh(Entity e, const ECS::Mesh& m)
 	{
@@ -158,7 +171,17 @@ public:
 		return m_materialPool.GetComponents();
 	}
 
+	const std::vector<Material>& GetAllMaterials() const
+	{
+		return m_materialPool.GetComponents();
+	}
+
 	std::vector<Entity>& GetMaterialEntities()
+	{
+		return m_materialPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetMaterialEntities() const
 	{
 		return m_materialPool.GetEntities();
 	}
@@ -170,6 +193,11 @@ public:
 	}
 
 	Velocity* GetVelocity(Entity e)
+	{
+		return m_velocityPool.GetComponent(e);
+	}
+
+	const Velocity* GetVelocity(Entity e) const
 	{
 		return m_velocityPool.GetComponent(e);
 	}
@@ -189,7 +217,17 @@ public:
 		return m_velocityPool.GetComponents();
 	}
 
+	const std::vector<Velocity>& GetAllVelocities() const
+	{
+		return m_velocityPool.GetComponents();
+	}
+
 	std::vector<Entity>& GetVelocityEntities()
+	{
+		return m_velocityPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetVelocityEntities() const
 	{
 		return m_velocityPool.GetEntities();
 	}
@@ -201,6 +239,11 @@ public:
 	}
 
 	Health* GetHealth(Entity e)
+	{
+		return m_healthPool.GetComponent(e);
+	}
+
+	const Health* GetHealth(Entity e) const
 	{
 		return m_healthPool.GetComponent(e);
 	}
@@ -220,7 +263,17 @@ public:
 		return m_healthPool.GetComponents();
 	}
 
+	const std::vector<Health>& GetAllHealth() const
+	{
+		return m_healthPool.GetComponents();
+	}
+
 	std::vector<Entity>& GetHealthEntities()
+	{
+		return m_healthPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetHealthEntities() const
 	{
 		return m_healthPool.GetEntities();
 	}
@@ -232,6 +285,11 @@ public:
 	}
 
 	Collider* GetCollider(Entity e)
+	{
+		return m_colliderPool.GetComponent(e);
+	}
+
+	const Collider* GetCollider(Entity e) const
 	{
 		return m_colliderPool.GetComponent(e);
 	}
@@ -251,6 +309,11 @@ public:
 		return m_colliderPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetColliderEntities() const
+	{
+		return m_colliderPool.GetEntities();
+	}
+
 	// Light
 	Light* AddLight(Entity e, const Light& l)
 	{
@@ -258,6 +321,11 @@ public:
 	}
 
 	Light* GetLight(Entity e)
+	{
+		return m_lightPool.GetComponent(e);
+	}
+
+	const Light* GetLight(Entity e) const
 	{
 		return m_lightPool.GetComponent(e);
 	}
@@ -277,6 +345,11 @@ public:
 		return m_lightPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetLightEntities() const
+	{
+		return m_lightPool.GetEntities();
+	}
+
 	// Script
 	Script* AddScript(Entity e, const Script& s)
 	{
@@ -284,6 +357,11 @@ public:
 	}
 
 	Script* GetScript(Entity e)
+	{
+		return m_scriptPool.GetComponent(e);
+	}
+
+	const Script* GetScript(Entity e) const
 	{
 		return m_scriptPool.GetComponent(e);
 	}
@@ -303,6 +381,10 @@ public:
 		return m_scriptPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetScriptEntities() const
+	{
+		return m_scriptPool.GetEntities();
+	}
 	//Audio
 	Audio* AddAudio(Entity e, const Audio& a)
 	{
@@ -310,6 +392,11 @@ public:
 	}
 
 	Audio* GetAudio(Entity e)
+	{
+		return m_audioPool.GetComponent(e);
+	}
+
+	const Audio* GetAudio(Entity e) const
 	{
 		return m_audioPool.GetComponent(e);
 	}
@@ -329,6 +416,11 @@ public:
 		return m_audioPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetAudioEntities() const
+	{
+		return m_audioPool.GetEntities();
+	}
+
 	// Animation
 	Animation* AddAnimation(Entity e, const Animation& a)
 	{
@@ -336,6 +428,11 @@ public:
 	}
 
 	Animation* GetAnimation(Entity e)
+	{
+		return m_animationPool.GetComponent(e);
+	}
+
+	const Animation* GetAnimation(Entity e) const
 	{
 		return m_animationPool.GetComponent(e);
 	}
@@ -355,6 +452,11 @@ public:
 		return m_animationPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetAnimationEntities() const
+	{
+		return m_animationPool.GetEntities();
+	}
+
 	// Skeleton
 	Skeleton* AddSkeleton(Entity e, const Skeleton& s)
 	{
@@ -362,6 +464,11 @@ public:
 	}
 
 	Skeleton* GetSkeleton(Entity e)
+	{
+		return m_skeletonPool.GetComponent(e);
+	}
+
+	const Skeleton* GetSkeleton(Entity e) const
 	{
 		return m_skeletonPool.GetComponent(e);
 	}
@@ -381,6 +488,11 @@ public:
 		return m_skeletonPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetSkeletonEntities() const
+	{
+		return m_skeletonPool.GetEntities();
+	}
+
 	//AnimationClip
 	AnimationClip* AddAnimationClip(Entity e, const AnimationClip& clip)
 	{
@@ -388,6 +500,11 @@ public:
 	}
 
 	AnimationClip* GetAnimationClip(Entity e)
+	{
+		return m_animationClipPool.GetComponent(e);
+	}
+
+	const AnimationClip* GetAnimationClip(Entity e) const
 	{
 		return m_animationClipPool.GetComponent(e);
 	}
@@ -407,6 +524,11 @@ public:
 		return m_animationClipPool.GetEntities();
 	}
 
+	const std::vector<Entity>& GetAnimationClipEntities() const
+	{
+		return m_animationClipPool.GetEntities();
+	}
+
 	// Animator
 	Animator* AddAnimator(Entity e, const Animator& a)
 	{
@@ -414,6 +536,11 @@ public:
 	}
 
 	Animator* GetAnimator(Entity e)
+	{
+		return m_animatorPool.GetComponent(e);
+	}
+
+	const Animator* GetAnimator(Entity e) const
 	{
 		return m_animatorPool.GetComponent(e);
 	}
@@ -433,7 +560,10 @@ public:
 		return m_animatorPool.GetEntities();
 	}
 
-
+	const std::vector<Entity>& GetAnimatorEntities() const
+	{
+		return m_animatorPool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -451,4 +581,5 @@ private:
 	ComponentPool<Skeleton> m_skeletonPool;
 	ComponentPool<AnimationClip> m_animationClipPool;
 	ComponentPool<Animator> m_animatorPool;
+	Entity m_activeCamera;
 };

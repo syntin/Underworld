@@ -1,3 +1,4 @@
+//RC
 #include "colliderComponents.h"
 
 ColliderComponents::ColliderComponents()

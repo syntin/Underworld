@@ -1,3 +1,4 @@
+//RC
 #include "cameraComponents.h"
 
 CameraComponents::CameraComponents()

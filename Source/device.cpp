@@ -1,6 +1,7 @@
 // Author: RC
 
 #include <vector>
+#include <vulkan/vulkan.h>
 #include "device.h"
 #include "extensions.h"
 #include "utils.h"
