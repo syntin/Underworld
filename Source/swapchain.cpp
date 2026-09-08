@@ -33,7 +33,7 @@ bool SwapChain::CreateInfoKHR(Device device, Surface surface)
 
 	if (vkCreateSwapchainKHR(device.GetLogicalDevice(), &swapchainCreateInfo, nullptr, &_swapchain) != VK_SUCCESS)
 	{
-		showError("Error creating swapchain");
+		showError("Error creating swapchain", nullptr);
 		return false;
 	}
 	return true;

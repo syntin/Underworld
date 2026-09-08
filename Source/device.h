@@ -18,7 +18,7 @@ public:
 	virtual ~Device();
 
 public:
-	VkPhysicalDevice FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface, SDL_Window* window);
+	VkPhysicalDevice FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR* surface, SDL_Window* window);
 	bool Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_t gfxQueueFamIdx, SDL_Window* window);
 	std::vector<VkPhysicalDevice>& GetDevices() { return _devices; }
 

@@ -13,7 +13,7 @@ CommandBuffer::~CommandBuffer()
 {
 }
 
-bool CommandBuffer::CreateCommandBuffers(Device device, Window window, uint32_t gfxQueueFamIdx, std::array<FrameResources, MaxFramesInFlight>& frameResources)
+bool CommandBuffer::CreateCommandBuffers(Device device, Window window, uint32_t gfxQueueFamIdx, std::array<FrameResources, MaxFramesInFlight> frameResources)
 {
 	for (FrameResources& res : _syncro.GetFrameResources())
 	{

@@ -17,7 +17,7 @@
 #include "utils.h"
 #include "vulkanWrapper.h"
 
-#pragma warning(disable:C4005);
+#pragma warning(disable:4005)
 
 #define WIN32_LEAN_AND_MEAN
 

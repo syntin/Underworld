@@ -16,7 +16,7 @@ Device::~Device()
 
 }
 
-VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface, SDL_Window* window)
+VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR* surface, SDL_Window* window)
 {
 	uint32_t physDeviceCount = 0;
 	vkEnumeratePhysicalDevices(instance, &physDeviceCount, nullptr);
@@ -43,9 +43,9 @@ VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR& 
 
 	// ensure the desired swapchain format is supported
 	uint32_t formatCount = 0;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &formatCount, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, *surface, &formatCount, nullptr);
 	std::vector<VkSurfaceFormatKHR> surfaceFormats(formatCount);
-	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &formatCount, surfaceFormats.data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, *surface, &formatCount, surfaceFormats.data());
 
 	bool formatSupported = false;
 	for (const VkSurfaceFormatKHR& surfFormat : surfaceFormats)

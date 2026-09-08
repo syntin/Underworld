@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <Volk/volk.h>
 #include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
@@ -23,7 +24,7 @@ public:
 	GLFWwindow* GetGLFWWindow() { return _glfwWindow; }
 	SDL_Window* GetSDLWindow() { return _sdlWindow; }
 	GLFWwindow* SetGLFWWindow(GLFWwindow* glfwWindow) { _glfwWindow = glfwWindow; }
-	SDL_Window* SetSDLWindow(SDL_Window* sdlWindow) { _sdlWindow = sdlWindow; }
+	void SetSDLWindow(SDL_Window* sdlWindow) { _sdlWindow = sdlWindow; }
 
 protected:
 	void CreateBasicWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);

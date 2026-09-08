@@ -1,5 +1,5 @@
 #include "commandPool.h"
-#include <vulkan/vulkan.h>
+#include <Volk/volk.h>
 #include <vulkan/vulkan_core.h>
 #include <volk/volk.h>
 #include <SDL3/SDL.h>
@@ -7,7 +7,6 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
-#include <ktx.h>
 #define VMA_IMPLEMENTATION
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -16,10 +15,10 @@
 #include <glm/gtc/quaternion.hpp>
 #include "slang/slang.h"
 #include "slang/slang-com-ptr.h"
-#include <ktx.h>
-#include <ktxvulkan.h>
+//#include <ktx.h>
+//#include <ktxvulkan.h>
 #define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
+//#include <tiny_obj_loader.h>
 
 
 CommandPool::CommandPool()
@@ -34,6 +33,7 @@ CommandPool::~CommandPool()
 
 void CommandPool::Initialize()
 {
+	/*
 	VkCommandPoolCreateInfo commandPoolCI{ .sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO, .flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT, .queueFamilyIndex = queueFamily };
 	chk(vkCreateCommandPool(device, &commandPoolCI, nullptr, &commandPool));
 	VkCommandBufferAllocateInfo cbAllocCI{ .sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO, .commandPool = commandPool, .commandBufferCount = maxFramesInFlight };
@@ -215,4 +215,5 @@ void CommandPool::Initialize()
 		.layout = pipelineLayout
 	};
 	chk(vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineCI, nullptr, &pipeline));
+	*/
 }

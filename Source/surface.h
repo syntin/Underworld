@@ -16,6 +16,7 @@ public:
 public:
 	bool Create(VkInstance& instance, SDL_Window* window);
 	VkSurfaceKHR GetSurface() { return _surface; }
+	VkSurfaceKHR* GetSurfacePtr() { return &_surface; }
 	Surface* Data()
 	{
 		return this;

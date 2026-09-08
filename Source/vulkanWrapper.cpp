@@ -29,6 +29,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 
 	if (!InitializeVulkan())
 	{
+		showError("Failed to initialize Vulkan", _window.GetSDLWindow());
 	}
 }
 
@@ -46,7 +47,7 @@ bool VulkanWrapper::InitializeVulkan()
 		return false;
 	}
 
-	if (!_device.FindPhysicalDevice(_instance.GetInstance(), &(_surface.GetSurface()), _window.GetSDLWindow()))
+	if (!_device.FindPhysicalDevice(_instance.GetInstance(), _surface.GetSurfacePtr(), _window.GetSDLWindow()))
 	{
 		showError("Unable to find an appropriate physical device", _window.GetSDLWindow());
 		return false;
@@ -145,12 +146,13 @@ void VulkanWrapper::Destroy()
 	{
 		vkDestroySemaphore(_device.GetLogicalDevice(), _synchronization.GetTimelineSemaphore(), nullptr);
 	}
+	/*
 	for (auto& res : _frameResources)
 	{
 		vkDestroySemaphore(_device.GetLogicalDevice(), res.imageAcquiredSemaphore, nullptr);
 		vkDestroyCommandPool(_device.GetLogicalDevice(), res.commandPool, nullptr); // destroys buffers implicitly
 	}
-
+	*/
 	// pipeline cleanup
 	if (_pipeline.GetPipeline())
 	{
@@ -231,7 +233,7 @@ void VulkanWrapper::DestroySwapchain()
 	*/
 }
 
-
+/*
 void VulkanWrapper::Run() {
 	_running = true;
 	while (_running) {
@@ -251,3 +253,4 @@ void VulkanWrapper::Run() {
 		Render();
 	}
 }
+*/

@@ -32,6 +32,6 @@ protected:
 
 private:
 	VkSemaphore _timelineSemaphore = nullptr;
-	std::array<FrameResources, MaxFramesInFlight> _frameResources{ {} };
+	std::array<FrameResources, MaxFramesInFlight> _frameResources = {};
 };
 

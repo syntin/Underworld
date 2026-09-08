@@ -2,12 +2,11 @@
 
 #define VK_USE_PLATFORM_WIN32_KHR
 #include "window.h"
-#include <volk/volk.h>
-#include <stdexcept>
+#include "windowSize.h"
 #include "utils.h"
+#include <stdexcept>
 #include <Windows.h>
 #include <cassert>
-#include "windowSize.h"
 
 
 Window::Window()
