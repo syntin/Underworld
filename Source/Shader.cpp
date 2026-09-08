@@ -4,20 +4,15 @@
 #include "utils.h"
 
 #include <SDL3/SDL.h>
-#ifndef VK_NO_PROTOTYPES
-	#define VK_NO_PROTOTYPES
-#endif
-#include <vulkan/vulkan.h>
-#ifdef VOLK_IMPLEMENTATION
-	#include <Volk/volk.h>
-#endif
+#define VK_NO_PROTOTYPES
+#define VOLK_IMPLEMENTATION
+#include <Volk/volk.h>
 #ifdef VMA_IMPLEMENTATION
 	#include <vma/vk_mem_alloc.h>
 #endif
 
 #include <iostream>
 #include <fstream>
-#include <string>
 
 
 Shader::Shader()

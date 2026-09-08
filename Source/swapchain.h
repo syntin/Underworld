@@ -2,6 +2,7 @@
 
 #pragma once
 
+#define VK_NO_PROTOTYPES
 #include <vulkan/vulkan.h>
 #include <SDL3/SDL.h>
 #include "surface.h"

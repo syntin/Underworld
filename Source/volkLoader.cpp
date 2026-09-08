@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 #include <stdio.h>
+#define VK_NO_PROTOTYPES
+#define VOLK_IMPLEMENTATION
 #include <Volk/volk.h>
 #include <SDL3/SDL_vulkan.h>
 #include "volkLoader.h"
@@ -39,7 +41,7 @@ bool VolkLoader::Initialize(VulkanInstance vulkanInstance, Extensions& extension
 	// expects for its output parameter. Seems out of place but initialization needs to be called AFTER
 	// creation of the extensions
 	extensions.Initialize();
-	vulkanInstance.Initialize(&appInfo);
+	vulkanInstance.Create();
 	volkLoadInstance(vulkanInstance.GetInstance());
 	return true;
 }

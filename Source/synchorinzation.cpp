@@ -1,5 +1,6 @@
 // Author: RC
 
+#include <vulkan/vulkan.h>
 #include "synchronization.h"
 #include "utils.h"
 

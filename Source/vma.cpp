@@ -1,10 +1,6 @@
 // Author: RC
 
-#include <vulkan/vulkan.h>
-#include <Volk/volk.h>
-#include <vma/vk_mem_alloc.h>
 #include "vma.h"
-#include "logicalDevice.h"
 #include "Device.h"
 #include "instance.h"
 

@@ -2,7 +2,12 @@
 
 #pragma once
 
+#define VK_NO_PROTOTYPES
 #include <vulkan/vulkan.h>
+#define VOLK_IMPLEMENTATION
+#include <Volk/volk.h>
+#define VMA_IMPLEMENTATION
+#include <vma/vk_mem_alloc.h>
 #include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>

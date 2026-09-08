@@ -12,7 +12,7 @@ public:
 
 public:
 	bool Initialize(VulkanInstance vulkanInstance, Extensions& extensions);
-	VulkanInstance& GetVulkanInstance() { return _vulkanInstance; }
+	//VulkanInstance& GetVulkanInstance() { return _vulkanInstance; }
 
 public:
 	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallbackVolk(

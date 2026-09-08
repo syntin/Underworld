@@ -2,6 +2,7 @@
 
 #pragma once
 
+#define VK_NO_PROTOTYPES
 #include <vulkan/vulkan.h>
 #include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
