@@ -1,7 +1,7 @@
 // Author: RC
 
-#include "vulkanWrapper.h"
 #include <Windows.h>
+#include "vulkanWrapper.h"
 #include "utils.h"
 
 
@@ -33,7 +33,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 	}
 }
 
-bool VulkanWrapper::InitializeVulkan()
+bool VulkanWrapper::SetupVulkan()
 {
 	if (!_instance.Create())
 	{
@@ -77,7 +77,6 @@ bool VulkanWrapper::InitializeVulkan()
 		showError("Unable to create swapchain", _window.GetSDLWindow());
 		return false;
 	}
-
 
 	if (!_shader.Create(_device))
 	{
@@ -126,14 +125,13 @@ void VulkanWrapper::Run()
 				break;
 			}
 		}
-
-		_bindlessRender.Render();
+		Render();
 	}
 }
 
 void VulkanWrapper::Render()
 {
-
+	_bindlessRender.Render();
 }
 
 void VulkanWrapper::Destroy()

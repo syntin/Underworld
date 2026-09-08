@@ -187,6 +187,7 @@ void SwapChain::Destroy(Device device, Vma vma)
 	for (VkSemaphore& semaphore : _renderCompleteSemaphores)
 	{
 		vkDestroySemaphore(device.GetLogicalDevice(), semaphore, nullptr);
+		semaphore = nullptr;
 	}
 	_renderCompleteSemaphores.clear();
 

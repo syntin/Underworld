@@ -22,14 +22,20 @@
 #define WIN32_LEAN_AND_MEAN
 
 #undef APIENTRY
-#ifndef APIENTRY
-    #ifdef _WIN32
-        #define APIENTRY __stdcall
-    #else
-        #define APIENTRY 
-    #endif
-    #define GL_APIENTRY_DEFINED
-#endif // APIENTRY
+#ifdef _WIN32
+    #define APIENTRY WINAPI
+#else
+    #define APIENTRY __stdcall
+#endif
+
+/*
+#ifdef _WIN32
+#define APIENTRY __stdcall
+#else
+#define APIENTRY WINAPI
+#endif
+*/
+#define GL_APIENTRY_DEFINED
 
 
 

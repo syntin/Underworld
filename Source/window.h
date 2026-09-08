@@ -2,11 +2,11 @@
 
 #pragma once
 
+#include <Windows.h>
 #include <Volk/volk.h>
 #include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
-#include <Windows.h>
 #include <vector>
 #include "windowSize.h"
 

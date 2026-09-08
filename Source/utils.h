@@ -38,7 +38,6 @@ static inline void chk(VkResult result)
 	}
 }
 
-
 static inline void chk(bool result)
 {
 	if (!result)
@@ -52,6 +51,18 @@ static inline void showError(const std::string& errorMessasge, SDL_Window* windo
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorMessasge.c_str(), window);
 }
 
+static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+	VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+	VkDebugUtilsMessageTypeFlagsEXT messageType,
+	const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+	void* pUserData)
+{
+	if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+	{
+		std::cerr << "Validation Layer: " << pCallbackData->pMessage << std::endl;
+	}
+	return VK_FALSE;
+}
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;

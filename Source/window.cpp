@@ -1,11 +1,11 @@
 // Author: RC
 
+#include <Windows.h>
 #define VK_USE_PLATFORM_WIN32_KHR
 #include "window.h"
 #include "windowSize.h"
 #include "utils.h"
 #include <stdexcept>
-#include <Windows.h>
 #include <cassert>
 
 

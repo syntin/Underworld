@@ -46,7 +46,7 @@ void Extensions::Initialize()
 			VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT,
 		.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
 			VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT,
-		.pfnUserCallback = debugCallback
+		.pfnUserCallback = nullptr //debugCallback
 	};
 
 	vkEnumerateInstanceExtensionProperties(nullptr, &_extensionCount, nullptr);

@@ -44,10 +44,10 @@ public:
 public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void Run();
-	void Render();
-	bool InitializeVulkan();
 
 protected:
+	bool SetupVulkan();
+	void Render();
 	void Destroy();
 	void DestroySwapchain();
 
