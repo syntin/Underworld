@@ -31,9 +31,9 @@ void AnimationClipSystem::Update(ComponentManager& components, float deltaTime)
 			continue;
 
 		// Advance animation time
-		anim->time += anim->speed * deltaTime;
+		anim->frame += anim->speed * deltaTime;
 
-		float currentTime = anim->time / anim->speed;
+		float currentTime = anim->frame / anim->speed;
 
 		if (currentTime > clip->duration)
 		{
