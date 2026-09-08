@@ -16,6 +16,7 @@
 #include "skeletalComponents.h"
 #include "animationClip.h"
 #include "animator.h"
+#include "hierarchy.h"
 
 class ComponentManager
 {
@@ -564,6 +565,42 @@ public:
 	{
 		return m_animatorPool.GetEntities();
 	}
+
+	// Hierarchy
+	Hierarchy* AddHierarchy(Entity e, const Hierarchy& h)
+	{
+		return m_hierarchyPool.AddComponent(e, h);
+	}
+
+	Hierarchy* GetHierarchy(Entity e)
+	{
+		return m_hierarchyPool.GetComponent(e);
+	}
+
+	const Hierarchy* GetHierarchy(Entity e) const
+	{
+		return m_hierarchyPool.GetComponent(e);
+	}
+
+	bool HasHierarchy(Entity e) const
+	{
+		return m_hierarchyPool.HasComponent(e);
+	}
+
+	bool RemoveHierarchy(Entity e)
+	{
+		return m_hierarchyPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetHierarchyEntities()
+	{
+		return m_hierarchyPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetHierarchyEntities() const
+	{
+		return m_hierarchyPool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -581,5 +618,7 @@ private:
 	ComponentPool<Skeleton> m_skeletonPool;
 	ComponentPool<AnimationClip> m_animationClipPool;
 	ComponentPool<Animator> m_animatorPool;
+	ComponentPool<Hierarchy> m_hierarchyPool;
+
 	Entity m_activeCamera;
 };

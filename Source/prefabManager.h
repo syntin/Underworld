@@ -1,0 +1,29 @@
+//DB
+#pragma once
+#include <unordered_map>
+#include "prefab.h"
+#include "scene.h"
+#include "componentManager.h"
+#include "entityManager.h"
+
+class PrefabManager
+{
+public:
+	PrefabManager(Scene& scene, ComponentManager& components, EntityManager& entities);
+
+	// Create a prefab from an existing entity hierarchy
+	int CreatePrefab(Entity root);
+
+	// Instantiate a prefab into the scene
+	Entity Instantiate(int prefabID);
+
+private:
+	Scene& m_scene;
+	ComponentManager& m_components;
+	EntityManager& m_entities;
+
+	std::unordered_map<int, Prefab> m_prefabs;
+	int m_nextPrefabID = 1;
+
+	void CopyEntityComponents(Entity src, Entity dst);
+};
