@@ -3,142 +3,144 @@
 #include "prefabSerializer.h"
 
 PrefabManager::PrefabManager(Scene& scene, ComponentManager& components, EntityManager& entities)
-	: m_scene(scene), m_components(components), m_entities(entities)
-{
-}
+    : m_scene(scene), m_components(components), m_entities(entities)
+{}
 
 int PrefabManager::CreatePrefab(Entity root)
 {
-	Prefab prefab;
-	prefab.rootTemplate = root;
+    Prefab prefab;
+    prefab.rootTemplate = root;
 
-	std::vector<Entity> stack;
-	stack.push_back(root);
+    std::vector<Entity> stack;
+    stack.push_back(root);
 
-	while (!stack.empty())
-	{
-		Entity e = stack.back();
-		stack.pop_back();
+    while (!stack.empty())
+    {
+        Entity e = stack.back();
+        stack.pop_back();
 
-		PrefabEntity pe;
-		pe.hierarchy = *m_components.GetHierarchy(e);
+        PrefabEntity pe;
+        pe.hierarchy = *m_components.GetHierarchy(e);
 
-		prefab.entities[e] = pe;
+        // Store components into the prefab
+        if (m_components.HasTransform(e))
+            pe.components["Transform"] = *m_components.GetTransform(e);
 
-		//Push children
-		Hierarchy* h = m_components.GetHierarchy(e);
-		Entity child = h->firstChild;
-		while (child.IsValid())
-		{
-			stack.push_back(child);
-			Hierarchy* ch = m_components.GetHierarchy(child);
-			child = ch->nextSibling;
-		}
-	}
+        if (m_components.HasVelocity(e))
+            pe.components["Velocity"] = *m_components.GetVelocity(e);
 
-	int id = m_nextPrefabID++;
-	m_prefabs[id] = prefab;
-	return id;
+        if (m_components.HasHealth(e))
+            pe.components["Health"] = *m_components.GetHealth(e);
+
+        if (m_components.HasLight(e))
+            pe.components["Light"] = *m_components.GetLight(e);
+
+        if (m_components.HasCollider(e))
+            pe.components["Collider"] = *m_components.GetCollider(e);
+
+        if (m_components.HasMaterial(e))
+            pe.components["Material"] = *m_components.GetMaterial(e);
+
+        if (m_components.HasMesh(e))
+            pe.components["Mesh"] = *m_components.GetMesh(e);
+
+        if (m_components.HasAnimation(e))
+            pe.components["Animation"] = *m_components.GetAnimation(e);
+
+        prefab.entities[e] = pe;
+
+        // Push children
+        Hierarchy* h = m_components.GetHierarchy(e);
+        Entity child = h->firstChild;
+
+        while (child.IsValid())
+        {
+            stack.push_back(child);
+            Hierarchy* ch = m_components.GetHierarchy(child);
+            child = ch->nextSibling;
+        }
+    }
+
+    int id = m_nextPrefabID++;
+    m_prefabs[id] = prefab;
+    return id;
 }
 
 Entity PrefabManager::Instantiate(int prefabID)
 {
-	Prefab& prefab = m_prefabs[prefabID];
+    Prefab& prefab = m_prefabs[prefabID];
 
-	// Map template entities to new entities
-	std::unordered_map<Entity, Entity> map;
+    std::unordered_map<Entity, Entity> map;
 
-	// Create root
-	Entity newRoot = m_scene.CreateEntity();
-	map[prefab.rootTemplate] = newRoot;
+    // Create root
+    Entity newRoot = m_scene.CreateEntity();
+    map[prefab.rootTemplate] = newRoot;
 
-	// Create all children
-	for (auto& [templateEntity, pe] : prefab.entities)
-	{
-		if (templateEntity == prefab.rootTemplate)
-			continue;
+    // Create children
+    for (auto& [templateEntity, pe] : prefab.entities)
+    {
+        if (templateEntity == prefab.rootTemplate)
+            continue;
 
-		Entity parentTemplate = pe.hierarchy.parent;
-		Entity parentNew = map[parentTemplate];
+        Entity parentTemplate = pe.hierarchy.parent;
+        Entity parentNew = map[parentTemplate];
 
-		Entity newEntity = m_scene.CreateChildEntity(parentNew);
-		map[templateEntity] = newEntity;
-	}
+        Entity newEntity = m_scene.CreateChildEntity(parentNew);
+        map[templateEntity] = newEntity;
+    }
 
-	// Copy components
-	for (auto& [templateEntity, pe] : prefab.entities)
-	{
-		Entity newEntity = map[templateEntity];
-		CopyEntityComponents(templateEntity, newEntity);
-	}
+    // Apply serialized components
+    for (auto& [templateEntity, pe] : prefab.entities)
+    {
+        Entity newEntity = (templateEntity == prefab.rootTemplate)
+            ? newRoot
+            : map[templateEntity];
 
-	return newRoot;
+        CopyEntityComponents(pe, newEntity);
+    }
+
+    return newRoot;
 }
 
 void PrefabManager::Save(int prefabID, const std::string& path)
 {
-	PrefabSerializer::SavePrefab(m_prefabs[prefabID], path);
+    PrefabSerializer::SavePrefab(m_prefabs[prefabID], path);
 }
 
 int PrefabManager::Load(const std::string& path)
 {
-	Prefab prefab = PrefabSerializer::LoadPrefab(path);
-	int id = m_nextPrefabID++;
-	m_prefabs[id] = prefab;
-	return id;
+    Prefab prefab = PrefabSerializer::LoadPrefab(path);
+    int id = m_nextPrefabID++;
+    m_prefabs[id] = prefab;
+    return id;
 }
 
-void PrefabManager::CopyEntityComponents(Entity src, Entity dst)
+void PrefabManager::CopyEntityComponents(const PrefabEntity& pe, Entity dst)
 {
-	// Transform
-	if (m_components.HasTransform(src))
-		m_components.AddTransform(dst, *m_components.GetTransform(src));
+    for (auto& [name, comp] : pe.components)
+    {
+        if (name == "Transform" && std::holds_alternative<Transform>(comp))
+            m_components.AddTransform(dst, std::get<Transform>(comp));
 
-	// Mesh
-	if (m_components.HasMesh(src))
-		m_components.AddMesh(dst, *m_components.GetMesh(src));
+        else if (name == "Velocity" && std::holds_alternative<Velocity>(comp))
+            m_components.AddVelocity(dst, std::get<Velocity>(comp));
 
-	// Material
-	if (m_components.HasMaterial(src))
-		m_components.AddMaterial(dst, *m_components.GetMaterial(src));
+        else if (name == "Health" && std::holds_alternative<Health>(comp))
+            m_components.AddHealth(dst, std::get<Health>(comp));
 
-	// Velocity
-	if (m_components.HasVelocity(src))
-		m_components.AddVelocity(dst, *m_components.GetVelocity(src));
+        else if (name == "Light" && std::holds_alternative<Light>(comp))
+            m_components.AddLight(dst, std::get<Light>(comp));
 
-	// Health
-	if (m_components.HasHealth(src))
-		m_components.AddHealth(dst, *m_components.GetHealth(src));
+        else if (name == "Collider" && std::holds_alternative<Collider>(comp))
+            m_components.AddCollider(dst, std::get<Collider>(comp));
 
-	// Collider
-	if (m_components.HasCollider(src))
-		m_components.AddCollider(dst, *m_components.GetCollider(src));
+        else if (name == "Material" && std::holds_alternative<Material>(comp))
+            m_components.AddMaterial(dst, std::get<Material>(comp));
 
-	// Light
-	if (m_components.HasLight(src))
-		m_components.AddLight(dst, *m_components.GetLight(src));
+        else if (name == "Mesh" && std::holds_alternative<ECS::Mesh>(comp))
+            m_components.AddMesh(dst, std::get<ECS::Mesh>(comp));
 
-	// Script
-	if (m_components.HasScript(src))
-		m_components.AddScript(dst, *m_components.GetScript(src));
-
-	// Audio
-	if (m_components.HasAudio(src))
-		m_components.AddAudio(dst, *m_components.GetAudio(src));
-
-	// Animation
-	if (m_components.HasAnimation(src))
-		m_components.AddAnimation(dst, *m_components.GetAnimation(src));
-
-	// Skeleton
-	if (m_components.HasSkeleton(src))
-		m_components.AddSkeleton(dst, *m_components.GetSkeleton(src));
-
-	// AnimationClip 
-	if (m_components.HasAnimationClip(src))
-		m_components.AddAnimationClip(dst, *m_components.GetAnimationClip(src));
-
-	// Animator
-	if (m_components.HasAnimator(src))
-		m_components.AddAnimator(dst, *m_components.GetAnimator(src));
+        else if (name == "Animation" && std::holds_alternative<Animation>(comp))
+            m_components.AddAnimation(dst, std::get<Animation>(comp));
+    }
 }

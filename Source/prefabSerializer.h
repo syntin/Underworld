@@ -1,7 +1,7 @@
 //DB
 #pragma once
 #include <string>
-#include "prefabManager.h"
+#include "prefab.h"
 
 class PrefabSerializer
 {

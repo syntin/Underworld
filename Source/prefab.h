@@ -1,16 +1,35 @@
 //DB
 #pragma once
-#include <vector>
-#include <iostream>
+#include <variant>
+#include <string>
 #include <unordered_map>
+
 #include "entity.h"
 #include "hierarchy.h"
+#include "Transform.h"
+#include "mesh.h"
+#include "material.h"
+#include "velocity.h"
+#include "healthComponents.h"
+#include "lightComponents.h"
+#include "colliderComponents.h"
+#include "animationStateComponents.h"
 
-// prefab entity template
+using ComponentVariant = std::variant<
+	Transform,
+	ECS::Mesh,
+	Material,
+	Velocity,
+	Health,
+	Light,
+	Collider,
+	Animation
+>;
+
 struct PrefabEntity
 {
 	Hierarchy hierarchy;
-	std::unordered_map<std::string, void*> components; // a placeholder we replace
+	std::unordered_map<std::string, ComponentVariant> components;
 };
 
 // prefab definition
