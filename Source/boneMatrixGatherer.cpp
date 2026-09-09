@@ -6,6 +6,8 @@
 #include "animator.h"
 #include "Transform.h"
 
+#include <glm/gtx/matrix_decompose.hpp>
+
 static void EvaluateClipAtTIme(
 	const AnimationClip& clip,
 	Skeleton& skeleton,
@@ -144,12 +146,36 @@ void BoneMatrixGatherer::Gather(ComponentManager& components, BoneMatrixList& ou
 			glm::mat4 currentMat = tempCurrent.skinMatrices[i];
 
 			if (blending)
-			{
+			{	// Decompose -> Interpolate -> Recompose 
 				glm::mat4 nextMat = tempNext.skinMatrices[i];
 
-				// Linear blend of matrices
-				glm::mat4 blended = glm::mix(currentMat, nextMat, blendFactor);
+				glm::vec3 posA, scaleA, skewA;
+				glm::quat rotA;
+				glm::vec4 perspA;
+
+				glm::vec3 posB, scaleB, skewB;
+				glm::quat rotB;
+				glm::vec4 perspB;
+
+				// Decompose current
+				glm::decompose(currentMat, scaleA, rotA, posA, skewA, perspA);
+
+				// Decompose next
+				glm::decompose(nextMat, scaleB, rotB, posB, skewB, perspB);
+
+				// Interpolate components
+				glm::vec3 pos = glm::mix(posA, posB, blendFactor);
+				glm::quat rot = glm::slerp(rotA, rotB, blendFactor);
+				glm::vec3 scale = glm::mix(scaleA, scaleB, blendFactor);
+
+				// Recompose
+				glm::mat4 blended =
+					glm::translate(glm::mat4(1.0f), pos) *
+					glm::mat4_cast(rot) *
+					glm::scale(glm::mat4(1.0f), scale);
+
 				skeleton->skinMatrices[i] = blended;
+
 			}
 			else
 			{

@@ -6,7 +6,6 @@
 
 struct Animator
 {
-	std::string currentState = "Idle"; // 
 	std::string nextState = "";		   // for blending
 
 	float blendTime = 0.0f;				//for how long blending lasts

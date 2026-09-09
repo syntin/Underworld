@@ -2,42 +2,40 @@
 #include "animatorSystem.h"
 #include "componentManager.h"
 
-void AnimatorSystem::Update(ComponentManager& components, float deltaTime)
+void AnimatorSystem::Update(ComponentManager& components, float dt)
 {
-	auto& entities = components.GetAnimatorEntities();
+    auto& entities = components.GetAnimatorEntities();
 
-	for (auto& e : entities)
-	{
-		Animator* animator = components.GetAnimator(e);
-		Animation* anim = components.GetAnimation(e);
+    for (Entity e : entities)
+    {
+        Animator* animator = components.GetAnimator(e);
+        Animation* anim = components.GetAnimation(e);
 
-		if (!animator || !anim)
-			continue;
+        if (!animator || !anim)
+            continue;
 
-		// if nextState is set, begin blending
-		if (!animator->nextState.empty())
-		{
-			animator->blendTimer += deltaTime;
+        // If nextState is set, begin blending
+        if (!animator->nextState.empty())
+        {
+            animator->blendTimer += dt;
 
-			if (animator->blendTimer >= animator->blendTime)
-			{
-				// Finish blend
-				animator->currentState = animator->nextState;
-				animator->nextState = "";
-				animator->blendTimer = 0.0f;
-			}
+            if (animator->blendTimer >= animator->blendTime)
+            {
+                // Finish blend: switch animation state
+                anim->state = animator->nextState;
+                animator->nextState.clear();
+                animator->blendTimer = 0.0f;
 
-			animator->dirty = true;
-		}
+                // Reset animation time for new state
+                anim->time = 0.0f;
+            }
 
-		// Pick correct clip entity
-		auto it = animator->clips.find(animator->currentState);
-		if (it == animator->clips.end())
-			continue;
+            animator->dirty = true;
+        }
 
-		Entity clipEntity = it->second;
+        auto it = animator->clips.find(anim->state);
+        if (it == animator->clips.end())
+            continue;
 
-		// Attach the clip to the animationComponent
-		anim->clipEntity = clipEntity;
-	}
+    }
 }
