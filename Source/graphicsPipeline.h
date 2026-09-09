@@ -25,5 +25,5 @@ private:
 	VkPipelineLayout _pipelineLayout{ VK_NULL_HANDLE };
 	VkPipeline _pipeline = nullptr;
 	Device _device{};
-
 };
+

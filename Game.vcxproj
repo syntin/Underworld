@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\game.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -116,7 +119,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Vulkan\Lib; $(SolutionDir)External\ktx\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\KTX-Software\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);vulkan-1.lib;ktx.lib;ktx_read.lib</AdditionalDependencies>
     </Link>
     <Manifest>
@@ -137,7 +140,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Vulkan\Lib; $(SolutionDir)External\ktx\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\VulkanSDK\1.4.350.0\Lib;D:\KTX-Software\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);vulkan-1.lib;ktx.lib;ktx_read.lib</AdditionalDependencies>
     </Link>
     <Manifest>
