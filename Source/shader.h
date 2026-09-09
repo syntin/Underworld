@@ -23,7 +23,7 @@ public:
 	VkShaderModule GetFragShader() { return _fragShader; }
 
 protected:
-	VkShaderModule CreateShaderModule(VkDevice device, const std::string& fileName, shaderc_shader_kind kind) const;
+	VkShaderModule CreateShaderModule(Device device, const std::string& fileName, shaderc_shader_kind kind) const;
 
 private:
 	VkShaderModule _vertShader{ VK_NULL_HANDLE };

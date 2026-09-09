@@ -23,8 +23,9 @@ Shader::~Shader()
 
 }
 
-VkShaderModule Shader::CreateShaderModule(VkDevice device, const std::string& fileName, shaderc_shader_kind kind) const
+VkShaderModule Shader::CreateShaderModule(Device device, const std::string& fileName, shaderc_shader_kind kind) const
 {
+	/*
 	const std::string shaderPath = "src/shaders/" + fileName;
 	const std::string src = "";// readTextFile(shaderPath);
 	if (src.empty())
@@ -48,16 +49,16 @@ VkShaderModule Shader::CreateShaderModule(VkDevice device, const std::string& fi
 		return nullptr;
 	}
 	std::vector<uint32_t> spv = { result.cbegin(), result.cend() };
-
+	*/
 	// pass spir-v to vulkan and create shader-module
 	VkShaderModuleCreateInfo moduleCreateInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-		.codeSize = spv.size() * sizeof(uint32_t),
-		.pCode = spv.data()
+		//.codeSize = spv.size() * sizeof(uint32_t),
+		//.pCode = spv.data()
 	};
 	VkShaderModule shaderModule = nullptr;
-	if (vkCreateShaderModule(device, &moduleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
+	if (vkCreateShaderModule(device.GetLogicalDevice(), &moduleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
 	{
 		showError("Error creating shader module", nullptr);
 		return nullptr;
@@ -67,11 +68,11 @@ VkShaderModule Shader::CreateShaderModule(VkDevice device, const std::string& fi
 
 bool Shader::Create(Device device)
 {
-	if (_vertShader = CreateShaderModule(device.GetLogicalDevice(), "shader.vert", shaderc_vertex_shader); shaderc_vertex_shader)
+	if (_vertShader = CreateShaderModule(device, "shader.vert", shaderc_vertex_shader); shaderc_vertex_shader)
 	{
 		return false;
 	}
-	if (_fragShader = CreateShaderModule(device.GetLogicalDevice(), "shader.frag", shaderc_fragment_shader); shaderc_fragment_shader)
+	if (_fragShader = CreateShaderModule(device, "shader.frag", shaderc_fragment_shader); shaderc_fragment_shader)
 	{
 		return false;
 	}
