@@ -12,6 +12,7 @@ public:
 	Entity CreateEntity()
 	{
 		uint32_t index;
+
 		if (!m_freeIndices.empty())
 		{
 			index = m_freeIndices.front();
@@ -27,15 +28,27 @@ public:
 		Entity e;
 		e.index = index;
 		e.generation = m_generations[index];
+
+		m_activeEntities.push_back(e);
 		return e;
 	}
 
 	void DestroyEntity(Entity e)
 	{
-		if (!IsAlive(e)) return;
+		if (!IsAlive(e))
+			return;
 
 		m_generations[e.index] += 1; // invalidate old gen
 		m_freeIndices.push(e.index);
+
+		for (size_t i = 0; i < m_activeEntities.size(); ++i)
+		{
+			if (m_activeEntities[i] == e)
+			{
+				m_activeEntities.erase(m_activeEntities.begin() + i);
+				break;
+			}
+		}
 	}
 
 	bool IsAlive(Entity e) const
@@ -44,8 +57,13 @@ public:
 		return m_generations[e.index] == e.generation && e.generation != 0;
 	}
 
+	const std::vector<Entity>& GetAllEntities() const
+	{
+		return m_activeEntities;
+	}
+
 private:
 	std::vector<uint32_t> m_generations;
 	std::queue<uint32_t> m_freeIndices;
-
+	std::vector<Entity> m_activeEntities;
 };
