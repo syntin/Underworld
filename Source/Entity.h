@@ -1,6 +1,7 @@
 //DB
 #pragma once
 #include <cstdint>
+#include <functional>
 
 
 struct Entity
@@ -22,3 +23,17 @@ struct Entity
 };
 
 static const Entity INVALID_ENTITY = { 0, 0 };
+
+namespace std
+{
+	template<>
+	struct hash<Entity>
+	{
+		size_t operator()(const Entity& e) const noexcept
+		{
+			// Combine index and generation into a single hash
+			uint64_t combined = (uint64_t(e.index) << 32) | uint64_t(e.generation);
+			return std::hash<uint64_t>()(combined);
+		}
+	};
+}

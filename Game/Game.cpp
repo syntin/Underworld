@@ -1,20 +1,30 @@
 //DB
-#include "entity.h" // this is just to confirm that it's working, we need to replace this with the
-					// main engine header when we have it ready
-
-
+#include <SDL3/SDL.h>
 #include <iostream>
 
 int main()
 {
-	std::cout << "Game project running!" << std::endl;
+    SDL_Init(SDL_INIT_VIDEO);
 
-	//Later we will have something that looks like this but
-	// I don't think we're finished with everything yet
-	// Engine engine;
-	// engine.Initialize();
-	// engine.Run();
-	// engine.Shutdown();
+    SDL_Window* window = SDL_CreateWindow("Underworld Game",
+        1280, 720, SDL_WINDOW_VULKAN);
 
-	return 0;
+    bool running = true;
+    SDL_Event event;
+
+    while (running)
+    {
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+                running = false;
+        }
+
+        SDL_Delay(16);
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
 }
