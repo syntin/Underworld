@@ -17,6 +17,9 @@ public:
 	// Instantiate a prefab into the scene
 	Entity Instantiate(int prefabID);
 
+	void Save(int prefabID, const std::string& path);
+	int Load(const std::string& path);
+
 private:
 	Scene& m_scene;
 	ComponentManager& m_components;

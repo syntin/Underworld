@@ -1,5 +1,6 @@
 //DB
 #include "prefabManager.h"
+#include "prefabSerializer.h"
 
 PrefabManager::PrefabManager(Scene& scene, ComponentManager& components, EntityManager& entities)
 	: m_scene(scene), m_components(components), m_entities(entities)
@@ -72,6 +73,19 @@ Entity PrefabManager::Instantiate(int prefabID)
 	}
 
 	return newRoot;
+}
+
+void PrefabManager::Save(int prefabID, const std::string& path)
+{
+	PrefabSerializer::SavePrefab(m_prefabs[prefabID], path);
+}
+
+int PrefabManager::Load(const std::string& path)
+{
+	Prefab prefab = PrefabSerializer::LoadPrefab(path);
+	int id = m_nextPrefabID++;
+	m_prefabs[id] = prefab;
+	return id;
 }
 
 void PrefabManager::CopyEntityComponents(Entity src, Entity dst)

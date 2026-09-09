@@ -10,12 +10,12 @@
 struct PrefabEntity
 {
 	Hierarchy hierarchy;
-	std::unordered_map<std::string, void*> components; // a placeholder we'll replace
+	std::unordered_map<std::string, void*> components; // a placeholder we replace
 };
 
 // prefab definition
 struct Prefab
 {
 	Entity rootTemplate; // template root entity
-	std::unordered_map<Entity, PrefabEntity> entities; //template entiteis
+	std::unordered_map<Entity, PrefabEntity> entities; //template entities
 };
