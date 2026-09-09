@@ -23,7 +23,7 @@ Shader::~Shader()
 
 }
 
-VkShaderModule Shader::CreateShaderModule(Device device, const std::string& fileName, shaderc_shader_kind kind) const
+VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fileName, shaderc_shader_kind kind) const
 {
 	/*
 	const std::string shaderPath = "src/shaders/" + fileName;
@@ -66,7 +66,7 @@ VkShaderModule Shader::CreateShaderModule(Device device, const std::string& file
 	return shaderModule;
 }
 
-bool Shader::Create(Device device)
+bool Shader::Create(Device& device)
 {
 	if (_vertShader = CreateShaderModule(device, "shader.vert", shaderc_vertex_shader); shaderc_vertex_shader)
 	{
