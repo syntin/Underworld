@@ -53,7 +53,7 @@ bool VulkanWrapper::SetupVulkan()
 		return false;
 	}
 
-	if (!_graphicsQueue.FindGraphicsQueue(_surface.Data(), reinterpret_cast<Device*>(_device.GetPhysicalDevice())))
+	if (!_graphicsQueue.FindGraphicsQueue(_surface.Data(), &_device))
 	{
 		showError("Unable to find a compatible graphics queue", _window.GetSDLWindow());
 		return false;

@@ -5,6 +5,7 @@
 #include "scene.h"
 #include "componentManager.h"
 #include "entityManager.h"
+#include "prefabSerializer.h"
 
 class PrefabManager
 {
@@ -17,6 +18,9 @@ public:
 	// Instantiate a prefab into the scene
 	Entity Instantiate(int prefabID);
 
+	void Save(int prefabID, const std::string& path);
+	int Load(const std::string& path);
+
 private:
 	Scene& m_scene;
 	ComponentManager& m_components;
@@ -25,5 +29,5 @@ private:
 	std::unordered_map<int, Prefab> m_prefabs;
 	int m_nextPrefabID = 1;
 
-	void CopyEntityComponents(Entity src, Entity dst);
+	void CopyEntityComponents(const PrefabEntity& pe, Entity dst);
 };
