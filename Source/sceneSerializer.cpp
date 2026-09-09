@@ -376,3 +376,4 @@ void SceneSerializer::LoadScene(Scene& scene, const std::string& path)
 
         components.AddHierarchy(e, real);
     }
+}
