@@ -3,10 +3,10 @@
 #include "shader.h"
 #include "utils.h"
 
-#include <SDL3/SDL.h>
 #include <Volk/volk.h>
+#include <SDL3/SDL.h>
 #ifdef VMA_IMPLEMENTATION
-	#include <vma/vk_mem_alloc.h>
+#include <vma/vk_mem_alloc.h>
 #endif
 
 #include <iostream>
@@ -62,19 +62,20 @@ VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fil
 	}
 
 	std::vector<uint32_t> spv = { result.cbegin(), result.cend() };
-	
+
 	// pass spir-v to vulkan and create shader-module
 	VkShaderModuleCreateInfo moduleCreateInfo{};
 	moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 	moduleCreateInfo.codeSize = spv.size() * sizeof(uint32_t);
 	moduleCreateInfo.pCode = spv.data();
-
+	
 	VkShaderModule shaderModule = VK_NULL_HANDLE;
 	if (vkCreateShaderModule(device.GetLogicalDevice(), &moduleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
 	{
 		showError("Error creating shader module", nullptr);
 		return VK_NULL_HANDLE;
 	}
+
 	return shaderModule;
 }
 
