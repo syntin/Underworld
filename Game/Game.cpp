@@ -1,9 +1,12 @@
 //DB
 #include <SDL3/SDL.h>
 #include <iostream>
+#include "TestECS.h"
 
 int main()
 {
+    TestECS();
+
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window* window = SDL_CreateWindow("Underworld Game",

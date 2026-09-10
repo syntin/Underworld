@@ -1,7 +1,9 @@
 #include <iostream>
-#include "EntityManager.h"
-#include "ComponentManager.h"
+#include "entityManager.h"
+#include "componentManager.h"
 #include "SceneGraph.h"
+#include "TestECS.h"
+
 
 // test should print Entity position and the root should have 2 children
 
