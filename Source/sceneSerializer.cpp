@@ -358,6 +358,12 @@ void SceneSerializer::LoadScene(Scene& scene, const std::string& path)
                     {
                         Animation a;
                         LoadAnimation(file, a);
+
+                        if (a.clipEntity.IsValid() && entityMap.count(a.clipEntity))
+                            a.clipEntity = entityMap[a.clipEntity];
+                        else
+                            a.clipEntity = INVALID_ENTITY;
+
                         components.AddAnimation(e, a);
                     }
                 }
@@ -370,9 +376,21 @@ void SceneSerializer::LoadScene(Scene& scene, const std::string& path)
         Entity e = entityMap[saved];
 
         Hierarchy real{};
-        real.parent = (h.parent.IsValid() ? entityMap[h.parent] : INVALID_ENTITY);
-        real.firstChild = (h.firstChild.IsValid() ? entityMap[h.firstChild] : INVALID_ENTITY);
-        real.nextSibling = (h.nextSibling.IsValid() ? entityMap[h.nextSibling] : INVALID_ENTITY);
+
+        if (h.parent.IsValid() && entityMap.count(h.parent))
+            real.parent = entityMap[h.parent];
+        else
+            real.parent = INVALID_ENTITY;
+
+        if (h.firstChild.IsValid() && entityMap.count(h.firstChild))
+            real.firstChild = entityMap[h.firstChild];
+        else
+            real.firstChild = INVALID_ENTITY;
+
+        if (h.nextSibling.IsValid() && entityMap.count(h.nextSibling))
+            real.nextSibling = entityMap[h.nextSibling];
+        else
+            real.nextSibling = INVALID_ENTITY;
 
         components.AddHierarchy(e, real);
     }
