@@ -1,57 +1,63 @@
 #include <iostream>
-#include "entityManager.h"
-#include "componentManager.h"
-#include "SceneGraph.h"
+#include <chrono>
+#include <thread>
+#include "World.h"
 #include "TestECS.h"
-
-
-// test should print Entity position and the root should have 2 children
 
 int TestECS()
 {
-	EntityManager entityManager;
-	ComponentManager components;
-	SceneGraph sceneGraph;
+    World world;
+    world.Initialize();
 
-	// Create entities
-	Entity root = entityManager.CreateEntity();
-	Entity child1 = entityManager.CreateEntity();
-	Entity child2 = entityManager.CreateEntity();
+    auto& spawner = world.GetSpawner();
+    auto& components = world.GetComponentManager();
+    auto& sceneGraph = world.GetSceneGraph();
 
-	// Add transforms
-	Transform rootT;
-	rootT.position = { 0.0f, 0.0f, 0.0f };
-	components.AddTransform(root, rootT);
+    // Spawn root
+    Entity root = spawner.SpawnEmpty();
 
-	Transform child1T;
-	child1T.position = { 1.0f, 0.0f, 0.0f };
-	components.AddTransform(child1, child1T);
+    // Spawn two children under root
+    Entity child1 = spawner.SpawnEmpty({ root });
+    Entity child2 = spawner.SpawnEmpty({ root });
 
-	Transform child2T;
-	child2T.position = { 0.0f, 1.0f, 0.0f };
-	components.AddTransform(child2, child2T);
+    // Initial local positions
+    Transform* t1 = components.GetTransform(child1);
+    Transform* t2 = components.GetTransform(child2);
 
-	// Scene Graph parenting
-	sceneGraph.SetParent(child1, root);
-	sceneGraph.SetParent(child2, root);
+    t1->position = { 1, 0, 0 };   
+    t2->position = { -1, 0, 0 };  
 
-	// Print transforms
-	auto& transforms = components.GetAllTransforms();
-	auto& entities = components.GetTransformEntities();
+    for (int frame = 0; frame < 10; ++frame)
+    {
+        // Move in opposite directions
+        t1->position.x += 0.5f;   // moves right
+        t2->position.x -= 0.5f;   // moves left
 
-	for (size_t i = 0; i < transforms.size(); ++i)
-	{
-		const Entity& e = entities[i];
-		const Transform& t = transforms[i];
-		std::cout << "Entity " << e.index
-				  << "pos = (" << t.position.x << " , "
-							   << t.position.y << " , "
-							   << t.position.z << ")\n";
-	}
+        // Update world transforms
+        world.UpdateTransforms();
 
-	// Check children of root
-	const auto& children = sceneGraph.GetChildren(root);
-	std::cout << "Root has " << children.size() << " children.\n";
+        auto& transforms = components.GetAllTransforms();
+        auto& entities = components.GetTransformEntities();
 
-	return 0;
+        std::cout << "---- Frame " << frame << " ----\n";
+
+        for (size_t i = 0; i < transforms.size(); ++i)
+        {
+            const Entity& e = entities[i];
+            const Transform& t = transforms[i];
+
+            std::cout << "Entity " << e.index
+                << " local=(" << t.position.x << ", "
+                << t.position.y << ", "
+                << t.position.z << ") "
+                << " world=(" << t.worldPosition.x << ", "
+                << t.worldPosition.y << ", "
+                << t.worldPosition.z << ")\n";
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+
+    world.Shutdown();
+    return 0;
 }
