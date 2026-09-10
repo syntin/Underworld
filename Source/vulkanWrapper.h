@@ -33,6 +33,7 @@
 #include "graphicsQueue.h"
 #include "bindlessRender.h"
 #include "device.h"
+#include "semaphores.h"
 
 
 class VulkanWrapper
@@ -64,6 +65,7 @@ private:
 	Synchronization _synchronization{};
 	CommandBuffer _commandBuffer{};
 	BindlessRender _bindlessRender{};
+	Semaphore _semaphores;
 
 private:
 	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];

@@ -202,19 +202,21 @@ void VulkanWrapper::Destroy()
 
 void VulkanWrapper::DestroySwapchain()
 {
-	/*
-	for (VkImageView swapchainImgView : _swapChain.GetDepthImageView())
-	{
-		vkDestroyImageView(_device.GetLogicalDevice(), swapchainImgView, nullptr);
-	}
+	
+	VkImageView imageView = _swapChain.GetDepthImageView();
+
+	//for(VkImageView swapchainImgView; swapchainImgView < imageView.size(); ++swapChainImageView)
+	//{
+	//	vkDestroyImageView(_device.GetLogicalDevice(), swapchainImgView, nullptr);
+	//}
 	_swapChain.GetSwapChainImageViews().clear();
 
 	// destroy render-complete ssemaphores
-	for (VkSemaphore& semaphore : renderCompleteSemaphores)
+	for (VkSemaphore& semaphore : _semaphores.GetRenderCompleted())
 	{
 		vkDestroySemaphore(_device.GetLogicalDevice(), semaphore, nullptr);
 	}
-	renderCompleteSemaphores.clear();
+	_semaphores.ClearRenderCompleted();
 
 	if (_swapChain.GetSwapChain())
 	{
@@ -222,13 +224,15 @@ void VulkanWrapper::DestroySwapchain()
 	}
 
 	// destroy the depth buffer along with the swapchain
+	VkImageView depthImageView = _swapChain.GetDepthImageView();
+	VkImage depthImage = _swapChain.GetDepthImage();
+	VmaAllocation depthImageAllocation = _swapChain.GetDepthImageAllocation();
 	if (depthImageView)
 	{
 		vkDestroyImageView(_device.GetLogicalDevice(), depthImageView, nullptr);
 		vmaDestroyImage(_vma.GetAllocator(), depthImage, depthImageAllocation);
 		depthImageView = nullptr;
 	}
-	*/
 }
 
 
