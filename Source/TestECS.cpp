@@ -26,7 +26,7 @@ public:
 
     void OnExit(World& world) override
     {
-        // optional cleanup
+
     }
 
     void Update(World& world, float dt) override
@@ -71,8 +71,11 @@ int TestECS()
     World world;
     world.Initialize();
 
-    TestScene scene;
-    world.GetSceneManager().SetScene(&scene, world);
+    // Register scene
+    SceneRegistry::Register("TestScene", []() { return new TestScene(); });
+
+    // Load scene by name
+    world.GetSceneManager().LoadScene("TestScene", world);
 
     for (int i = 0; i < 10; ++i)
     {
