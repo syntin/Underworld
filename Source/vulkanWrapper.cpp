@@ -13,7 +13,7 @@ VulkanWrapper::VulkanWrapper()
 
 VulkanWrapper::~VulkanWrapper()
 {
-    Destroy();
+	Destroy();
 }
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -202,7 +202,7 @@ void VulkanWrapper::Destroy()
 
 void VulkanWrapper::DestroySwapchain()
 {
-	
+
 	VkImageView imageView = _swapChain.GetDepthImageView();
 
 	//for(VkImageView swapchainImgView; swapchainImgView < imageView.size(); ++swapChainImageView)
