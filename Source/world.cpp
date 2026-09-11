@@ -14,6 +14,7 @@ void World::Initialize()
 
 void World::Update(float dt)
 {
+    input.Update();
     UpdateTransforms();
 	//add shit here later
 }
