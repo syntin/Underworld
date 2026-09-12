@@ -12,12 +12,11 @@
 #include "instance.h"
 #include "validationLayer.h"
 #include "extensions.h"
-//#include "vulkanQueue.h"
 #include "graphicsQueue.h"
 #include "swapchain.h"
 #include "depthAttachment.h"
 #include "mesh.h"
-//#include "vertexData.h"
+//#include "vertex.h"
 #include "shader.h"
 #include "synchronization.h"
 #include "commandBuffer.h"
@@ -34,7 +33,7 @@
 #include "bindlessRender.h"
 #include "device.h"
 #include "semaphores.h"
-
+#include <Windows.h>
 
 class VulkanWrapper
 {

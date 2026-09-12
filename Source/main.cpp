@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <WinBase.h>
 
+#define VOLK_IMPLEMENTATION
 #define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 0
 #define VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 #define VK_NO_PROTOTYPES
@@ -30,8 +31,6 @@
 
 #define GL_APIENTRY_DEFINED
 
-
-
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_DESTROY:
@@ -41,7 +40,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
 }
-
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -53,3 +51,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     return 0;
 }
+

@@ -4,8 +4,7 @@
 #include <glm/glm.hpp>
 //DB
 namespace ECS {
-
-struct Mesh
+	typedef struct Mesh
 	{
 		// CPU-side mesh reference
 		uint32_t meshID = 0;
@@ -24,13 +23,14 @@ struct Mesh
 		glm::vec3 boundsMax = glm::vec3(0.0f);
 
 		bool dirty = true;
-	};
-
+	} Mesh;
 }
+
 //RC
-class Mesh {
+/*class Mesh {
 public:
 	Mesh();
 	virtual ~Mesh();
 	void Initialize();
 };
+*/

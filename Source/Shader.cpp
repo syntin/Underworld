@@ -47,6 +47,7 @@ VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fil
 
 	// compile the shader to SPIR-V
 	std::cout << "Compiling shader: " << shaderPath << std::endl;
+	/*
 	shaderc::Compiler compiler;
 	shaderc::CompileOptions opts;
 
@@ -77,6 +78,8 @@ VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fil
 	}
 
 	return shaderModule;
+	*/
+	return VK_NULL_HANDLE;
 }
 
 bool Shader::Create(Device& device)

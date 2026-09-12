@@ -1,10 +1,9 @@
 // Author: RC
 
-#include <Windows.h>
+
 #include "vulkanWrapper.h"
-#include "utils.h"
 
-
+#include <iostream>
 
 VulkanWrapper::VulkanWrapper()
 {
@@ -13,7 +12,7 @@ VulkanWrapper::VulkanWrapper()
 
 VulkanWrapper::~VulkanWrapper()
 {
-    Destroy();
+	Destroy();
 }
 
 void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -202,9 +201,11 @@ void VulkanWrapper::Destroy()
 
 void VulkanWrapper::DestroySwapchain()
 {
-	
+
 	VkImageView imageView = _swapChain.GetDepthImageView();
 
+	// This code below needs to be in! I have no clue what the fuck its trying to do, but it won't compile
+	// So for right now I will deal with memory leak
 	//for(VkImageView swapchainImgView; swapchainImgView < imageView.size(); ++swapChainImageView)
 	//{
 	//	vkDestroyImageView(_device.GetLogicalDevice(), swapchainImgView, nullptr);
