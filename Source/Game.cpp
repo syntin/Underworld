@@ -15,6 +15,7 @@ int main()
 	// engine.Initialize();
 	// engine.Run();
 	// engine.Shutdown();
+	// Engine can include vulkanwrapper and be happy about it
 
 	return 0;
 }
