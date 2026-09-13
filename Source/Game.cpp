@@ -2,7 +2,7 @@
 #include "entity.h" // this is just to confirm that it's working, we need to replace this with the
 					// main engine header when we have it ready
 
-
+#include "vulkanWrapper.h"
 #include <iostream>
 
 int main()
