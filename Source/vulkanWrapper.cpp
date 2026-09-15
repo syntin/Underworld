@@ -15,7 +15,7 @@ VulkanWrapper::~VulkanWrapper()
 	Destroy();
 }
 
-void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
+void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 	SDL_InitSubSystem(SDL_INIT_VIDEO);
 	_window.SetSDLWindow(SDL_CreateWindow("Vulkan Learning", WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
