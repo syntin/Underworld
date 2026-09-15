@@ -3,10 +3,10 @@
 #include <thread>
 #include "World.h"
 #include "RuntimeScene.h"
-#include "sceneRegistry.h"
+#include "SceneRegistry.h"
 #include "TestECS.h"
 #include "cameraControllerSystem.h"
-
+#include "cameraControllerComponent.h"
 
 class TestScene : public RuntimeScene
 {
@@ -16,6 +16,7 @@ public:
         auto& spawner = world.GetSpawner();
         auto& components = world.GetComponentManager();
 
+        // Moving entities
         root = spawner.SpawnEmpty();
         child1 = spawner.SpawnEmpty({ root });
         child2 = spawner.SpawnEmpty({ root });
@@ -26,10 +27,17 @@ public:
         t1->position = { 1, 0, 0 };
         t2->position = { -1, 0, 0 };
 
-        // --- Camera entity ---
+        // Camera entity 
         cameraEntity = spawner.SpawnEmpty();
+
         Camera cam;
         components.AddCamera(cameraEntity, cam);
+
+        // Add WASD controller ONLY to this camera
+        CameraControllerComponent ctrl;
+        ctrl.moveSpeed = 5.0f;
+        ctrl.rotateSpeed = 90.0f;
+        components.AddCameraController(cameraEntity, ctrl);
 
         Transform* ct = components.GetTransform(cameraEntity);
         ct->position = { 0, 2, -5 };
@@ -38,31 +46,27 @@ public:
 
     void OnExit(World& world) override
     {
-
+        // Nothing needed yet
     }
 
     void Update(World& world, float dt) override
     {
         auto& components = world.GetComponentManager();
 
+        // Move entities 
         Transform* t1 = components.GetTransform(child1);
         Transform* t2 = components.GetTransform(child2);
 
-        t1->position.x += dt * 2.0f;   // move right
-        t2->position.x -= dt * 2.0f;   // move left
+        t1->position.x += dt * 2.0f;
+        t2->position.x -= dt * 2.0f;
 
-        Transform* ct = components.GetTransform(cameraEntity);
-        Camera* cam = components.GetCamera(cameraEntity);
-
-        ct->rotation.y += dt * 10.0f;  
-        ct->dirty = true;
-        cam->dirty = true;
-
-        
+        // Camera WASD movement 
         cameraController.Update(world, dt);
 
+        // Update world transforms
         world.UpdateTransforms();
 
+        // Debug print
         auto& transforms = components.GetAllTransforms();
         auto& entities = components.GetTransformEntities();
 

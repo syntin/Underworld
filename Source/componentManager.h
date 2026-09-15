@@ -17,6 +17,7 @@
 #include "animationClip.h"
 #include "animator.h"
 #include "hierarchy.h"
+#include "cameraControllerComponent.h"
 
 class ComponentManager
 {
@@ -601,6 +602,28 @@ public:
 	{
 		return m_hierarchyPool.GetEntities();
 	}
+
+	//Camera Controller //TO DO MAYBE: ADD REMOVE COMPONENT FOR THIS BLOCK, MIGHT NOT BE NEEDED THOUGH
+	
+	CameraControllerComponent* AddCameraController(Entity e, const CameraControllerComponent& c)
+	{
+		return m_cameraControllerPool.AddComponent(e, c);
+	}
+
+	CameraControllerComponent* GetCameraController(Entity e)
+	{
+		return m_cameraControllerPool.GetComponent(e);
+	}
+
+	bool HasCameraController(Entity e) const
+	{
+		return m_cameraControllerPool.HasComponent(e);
+	}
+
+	std::vector<Entity>& GetCameraControllerEntities()
+	{
+		return m_cameraControllerPool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -619,6 +642,7 @@ private:
 	ComponentPool<AnimationClip> m_animationClipPool;
 	ComponentPool<Animator> m_animatorPool;
 	ComponentPool<Hierarchy> m_hierarchyPool;
+	ComponentPool<CameraControllerComponent> m_cameraControllerPool;
 
 	Entity m_activeCamera;
 };

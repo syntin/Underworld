@@ -2,6 +2,11 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <array>
+#define KEY_W 87
+#define KEY_A 65
+#define KEY_S 83
+#define KEY_D 68
+
 
 class Input
 {
