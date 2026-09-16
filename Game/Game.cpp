@@ -12,9 +12,9 @@ int Game()
     VulkanBackendAdapter backend;
     backend.Initialize();
 
-    auto entityManager = world.GetEntityManager();
-    auto components = world.GetComponentManager();
-    auto sceneGraph = world.GetSceneGraph();
+    auto& entityManager = world.GetEntityManager();
+    auto& components = world.GetComponentManager();
+    auto& sceneGraph = world.GetSceneGraph();
 
     Entity root = entityManager.CreateEntity();
     Entity child1 = entityManager.CreateEntity();
