@@ -3,7 +3,10 @@
 #include <volk/volk.h>
 #include "bindlessRender.h"
 #include "descriptorPool.h"
+#include "World.h"
 #include "utils.h"
+#include "vertex.h"
+#include "vma.h"
 
 BindlessRender::BindlessRender()
 {
@@ -21,7 +24,9 @@ void BindlessRender::Initialize(
 	GraphicsQueue* graphicsQueue,
 	Synchronization* sync,
 	CommandBuffer* cmdBuffer,
-	GraphicsPipeline* pipeline)
+	GraphicsPipeline* pipeline,
+	Vma* vma,
+	World* world)
 {
 	_device = device;
 	_swapChain = swapChain;
@@ -29,6 +34,33 @@ void BindlessRender::Initialize(
 	_sync = sync;
 	_cmdBuffer = cmdBuffer;
 	_pipeline = pipeline;
+	_world = world;
+
+	// --- Create vertex buffer for a single triangle ---
+	std::vector<Vertex2D> triangleVertices = {
+		{ 0.0f, -0.5f },
+		{ 0.5f,  0.5f },
+		{ -0.5f, 0.5f }
+	};
+
+	VmaAllocator allocator = vma->GetAllocator();
+
+	VkBufferCreateInfo bufferInfo{};
+	bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+	bufferInfo.size = sizeof(Vertex2D) * triangleVertices.size();
+	bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+	bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+	VmaAllocationCreateInfo allocInfo{};
+	allocInfo.flags = VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT |
+		VMA_ALLOCATION_CREATE_MAPPED_BIT;
+	allocInfo.usage = VMA_MEMORY_USAGE_AUTO;
+
+	VmaAllocationInfo vmaAllocInfo{};
+	vmaCreateBuffer(allocator, &bufferInfo, &allocInfo,
+		&_vertexBuffer, &_vertexBufferAllocation, &vmaAllocInfo);
+
+	memcpy(vmaAllocInfo.pMappedData, triangleVertices.data(), bufferInfo.size);
 }
 
 VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindlessSupport()
@@ -198,85 +230,107 @@ void BindlessRender::Render()
 		.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
 		.imageView = swapchainImageViews[imageIndex],
 		.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR, // clear the image
-		.storeOp = VK_ATTACHMENT_STORE_OP_STORE, // keep data for presentation
-		.clearValue{.color{0.01f, 0.01f, 0.01f, 1}}
+		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+		.storeOp = VK_ATTACHMENT_STORE_OP_STORE,
+		.clearValue{.color{0.01f, 0.01f, 0.01f, 1.0f} }
 	};
+
 	VkRenderingAttachmentInfo depthAttachInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
 		.imageView = depthImageView,
 		.imageLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL,
-		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR, // clear the depth data
-		.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE, // don't care after rendering
-		.clearValue{.depthStencil{1.0f, 0}}
+		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+		.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
+		.clearValue{.depthStencil{1.0f, 0} }
 	};
+
 	VkRenderingInfo renderingInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_RENDERING_INFO,
-		.renderArea
-		{
-			.offset{0, 0},
-			.extent{swapchainWidth, swapchainHeight}
-		},
+		.renderArea{.offset{0,0}, .extent{swapchainWidth, swapchainHeight} },
 		.layerCount = 1,
 		.colorAttachmentCount = 1,
 		.pColorAttachments = &colorAttachInfo,
 		.pDepthAttachment = &depthAttachInfo
 	};
 
-	// begin dynamic rendering
 	vkCmdBeginRendering(cmd, &renderingInfo);
 	{
-		// set the viewpot and scissor state
 		VkViewport viewport
 		{
-			.x = 0, .y = 0,
+			.x = 0,
+			.y = 0,
 			.width = static_cast<float>(swapchainWidth),
-			.height = static_cast<float>(swapchainHeight)
+			.height = static_cast<float>(swapchainHeight),
+			.minDepth = 0.0f,
+			.maxDepth = 1.0f
 		};
 		vkCmdSetViewport(cmd, 0, 1, &viewport);
 
 		VkRect2D scissor
 		{
-			.offset{.x = 0, .y = 0 },
-			.extent{.width = swapchainWidth, .height = swapchainHeight}
+			.offset{0,0},
+			.extent{swapchainWidth, swapchainHeight}
 		};
 		vkCmdSetScissor(cmd, 0, 1, &scissor);
 
-		// draw our triangle
 		vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipeline->GetPipeline());
-		vkCmdDraw(cmd, 3, 1, 0, 0);
+
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(cmd, 0, 1, &_vertexBuffer, offsets);
+
+		auto& components = _world->GetComponentManager();
+		auto& triangleEntities = components.GetTriangleRenderableEntities();
+
+		for (Entity e : triangleEntities)
+		{
+			Transform* t = components.GetTransform(e);
+			if (!t) continue;
+
+			glm::vec2 offset(t->position.x, t->position.y);
+
+			vkCmdPushConstants(
+				cmd,
+				_pipeline->GetPipelineLayout(),
+				VK_SHADER_STAGE_VERTEX_BIT,
+				0,
+				sizeof(offset),
+				&offset
+			);
+
+			vkCmdDraw(cmd, 3, 1, 0, 0);
+		}
 	}
-	// end dynamic rendering
 	vkCmdEndRendering(cmd);
 
-	// transition the image from color attachment to presentation so we can show it
+	// Transition to present
 	VkImageMemoryBarrier2 presentLayoutBarrier
 	{
 		.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2,
 		.srcStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT,
 		.srcAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT,
-		.dstStageMask = VK_PIPELINE_STAGE_2_NONE, // nothing is waiting, but the cache is flushed and layout is transition
+		.dstStageMask = VK_PIPELINE_STAGE_2_NONE,
 		.dstAccessMask = 0,
 		.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 		.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
 		.image = swapchainImages[imageIndex],
-		.subresourceRange
-		{
+		.subresourceRange{
 			.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
 			.baseMipLevel = 0,
 			.levelCount = 1,
 			.baseArrayLayer = 0,
-			.layerCount = 1,
+			.layerCount = 1
 		}
 	};
+
 	VkDependencyInfo presentDepInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO,
 		.imageMemoryBarrierCount = 1,
 		.pImageMemoryBarriers = &presentLayoutBarrier
 	};
+
 	vkCmdPipelineBarrier2(cmd, &presentDepInfo);
 
 	vkEndCommandBuffer(cmd);

@@ -14,4 +14,9 @@ public:
 	{
 		Render();
 	}
+
+	void SetWorld(World* world)
+	{
+		VulkanWrapper::SetWorld(world);
+	}
 };

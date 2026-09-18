@@ -21,11 +21,18 @@ VkPipeline GraphicsPipeline::Create(Device& device, Window window, SwapChain swa
 {
 	_device = device;
 	// need to define a pipeline layout
-	VkPipelineLayoutCreateInfo pipelineLayoutInfo
-	{
+	VkPushConstantRange pushConstantRange{
+	.stageFlags = VK_SHADER_STAGE_VERTEX_BIT,
+	.offset = 0,
+	.size = sizeof(float) * 2 // vec2 offset
+	};
+
+	VkPipelineLayoutCreateInfo pipelineLayoutInfo{
 		.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
 		.setLayoutCount = 0,
-		.pushConstantRangeCount = 0
+		.pSetLayouts = nullptr,
+		.pushConstantRangeCount = 1,
+		.pPushConstantRanges = &pushConstantRange
 	};
 	if (vkCreatePipelineLayout(device.GetLogicalDevice(), &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
 	{
@@ -51,10 +58,25 @@ VkPipeline GraphicsPipeline::Create(Device& device, Window window, SwapChain swa
 		}
 	};
 
-	// vertex pulling, don't define vertex input details
-	VkPipelineVertexInputStateCreateInfo vertInputInfo
-	{
-		.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
+	VkVertexInputBindingDescription bindingDesc{
+		.binding = 0,
+		.stride = sizeof(float) * 2, // Vertex2D: x, y
+		.inputRate = VK_VERTEX_INPUT_RATE_VERTEX
+	};
+
+	VkVertexInputAttributeDescription attrDesc{
+		.location = 0,
+		.binding = 0,
+		.format = VK_FORMAT_R32G32_SFLOAT, // vec2
+		.offset = 0
+	};
+
+	VkPipelineVertexInputStateCreateInfo vertInputInfo{
+		.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+		.vertexBindingDescriptionCount = 1,
+		.pVertexBindingDescriptions = &bindingDesc,
+		.vertexAttributeDescriptionCount = 1,
+		.pVertexAttributeDescriptions = &attrDesc
 	};
 
 	// input assembly

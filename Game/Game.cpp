@@ -11,6 +11,7 @@ int Game()
 
     VulkanBackendAdapter backend;
     backend.Initialize();
+    backend.SetWorld(&world);
 
     auto& entityManager = world.GetEntityManager();
     auto& components = world.GetComponentManager();
@@ -27,23 +28,38 @@ int Game()
     Transform child1T;
     child1T.position = { 1, 0, 0 };
     components.AddTransform(child1, child1T);
+    components.AddTriangleRenderable(child1, TriangleRenderable{});
 
     Transform child2T;
     child2T.position = { 0, 1, 0 };
     components.AddTransform(child2, child2T);
+    components.AddTriangleRenderable(child2, TriangleRenderable{});
 
     sceneGraph.SetParent(child1, root);
     sceneGraph.SetParent(child2, root);
 
     bool running = true;
 
+    Transform* t1 = components.GetTransform(child1);
+    Transform* t2 = components.GetTransform(child2);
+
     while (running)
     {
         world.Update(0.016f);
 
-        Transform* t1 = components.GetTransform(child1);
-        Transform* t2 = components.GetTransform(child2);
+        //  movement 
+        static float time = 0.0f;
+        time += 0.016f;
 
+        // clockwise (child1)
+        t1->position.x = cos(time) * 0.5f;
+        t1->position.y = sin(time) * 0.5f;
+
+        // counter‑clockwise (child2)
+        t2->position.x = cos(time) * 0.5f;
+        t2->position.y = -sin(time) * 0.5f;
+
+        
         std::cout << "Child1 Pos: "
             << t1->position.x << ", "
             << t1->position.y << ", "

@@ -19,6 +19,8 @@
 #include "hierarchy.h"
 #include "cameraControllerComponent.h"
 
+struct TriangleRenderable {};
+
 class ComponentManager
 {
 public:
@@ -624,6 +626,22 @@ public:
 	{
 		return m_cameraControllerPool.GetEntities();
 	}
+
+	// Triangle Renderable /will add more later, this is mostly just for testing though
+	TriangleRenderable* AddTriangleRenderable(Entity e, const TriangleRenderable& t)
+	{
+		return m_triangleRenderablePool.AddComponent(e, t);
+	}
+
+	bool HasTriangleRenderable(Entity e) const
+	{
+		return m_triangleRenderablePool.HasComponent(e);
+	}
+
+	std::vector<Entity>& GetTriangleRenderableEntities()
+	{
+		return m_triangleRenderablePool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -643,6 +661,7 @@ private:
 	ComponentPool<Animator> m_animatorPool;
 	ComponentPool<Hierarchy> m_hierarchyPool;
 	ComponentPool<CameraControllerComponent> m_cameraControllerPool;
+	ComponentPool<TriangleRenderable> m_triangleRenderablePool;
 
 	Entity m_activeCamera;
 };

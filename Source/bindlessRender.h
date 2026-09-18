@@ -10,6 +10,8 @@
 #include "commandBuffer.h"
 #include "graphicsPipeline.h"
 
+class World;
+
 class BindlessRender
 {
 public:
@@ -23,13 +25,20 @@ public:
 		GraphicsQueue* graphicsQueue,
 		Synchronization* sync,
 		CommandBuffer* cmdBuffer,
-		GraphicsPipeline* pipeline);
+		GraphicsPipeline* pipeline,
+		Vma* vma,
+		World* world);
 
 
 public:
 	VkPhysicalDeviceDescriptorIndexingFeatures QueryDeviceForBindlessSupport();
 	void CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorIndexingFeatures indexingFeatures, VkDevice vulkanDevice);
 	void Render();
+
+	void SetWorld(World* world)
+	{
+		_world = world;
+	}
 
 private:
 	bool _bindlessSupported = false;
@@ -43,7 +52,11 @@ private:
 	Synchronization* _sync = nullptr;
 	CommandBuffer* _cmdBuffer = nullptr;
 	GraphicsPipeline* _pipeline = nullptr;
+	World* _world = nullptr;
 
+	VkBuffer _vertexBuffer = VK_NULL_HANDLE;
+	VmaAllocation _vertexBufferAllocation = VK_NULL_HANDLE;
+	
 	// Frame counters
 	uint32_t _frameIndex = 0;
 	uint64_t _nextSignalValue = 0;

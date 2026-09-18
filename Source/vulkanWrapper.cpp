@@ -107,7 +107,9 @@ bool VulkanWrapper::SetupVulkan()
 		&_graphicsQueue,
 		&_synchronization,
 		&_commandBuffer,
-		&_pipeline);
+		&_pipeline,
+		&_vma,
+		_world);
 
 	return true;
 }
