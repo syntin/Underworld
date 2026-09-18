@@ -146,6 +146,8 @@ bool SwapChain::Create(Device device, Surface surface, Vma vma, SDL_Window* wind
 	_window = window;
 	_swapchainWidth = width;
 	_swapchainHeight = height;
+	_swapchainFormat = VK_FORMAT_B8G8R8A8_SRGB; 
+
 
 	if (!CreateInfoKHR(device, surface))
 	{
@@ -165,6 +167,8 @@ bool SwapChain::Create(Device device, Surface surface, Vma vma, SDL_Window* wind
 		showError("Error creating render-complete semaphores", _window);
 		return false;
 	}
+
+	depthFormat = VK_FORMAT_D32_SFLOAT;
 
 	if (!CreateDepthImageView(device, vma))
 	{

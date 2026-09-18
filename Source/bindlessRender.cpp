@@ -15,6 +15,22 @@ BindlessRender::~BindlessRender()
 
 }
 
+void BindlessRender::Initialize(
+	Device* device,
+	SwapChain* swapChain,
+	GraphicsQueue* graphicsQueue,
+	Synchronization* sync,
+	CommandBuffer* cmdBuffer,
+	GraphicsPipeline* pipeline)
+{
+	_device = device;
+	_swapChain = swapChain;
+	_graphicsQueue = graphicsQueue;
+	_sync = sync;
+	_cmdBuffer = cmdBuffer;
+	_pipeline = pipeline;
+}
+
 VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindlessSupport()
 {
 	VkPhysicalDeviceDescriptorIndexingFeatures indexingFeatures{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES, nullptr };
@@ -38,54 +54,87 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 	vkCreateDevice(_vulkanPhysicalDevice, &deviceCreateInfo, (const VkAllocationCallbacks*) /*&debugCallback*/ nullptr, &vulkanDevice);
 	DescriptorPool descriptorPool{};
 	descriptorPool.Create((VkAllocationCallbacks*) /*&debugCallback*/ nullptr);
+
+	_bindlessEnabled = _bindlessSupported;
 }
 
 void BindlessRender::Render()
 {
-	/*
+	std::cout << "BindlessRender::Render begin" << std::endl;
+
+	if (!_device || !_swapChain || !_graphicsQueue || !_sync || !_pipeline)
+		return;
+
+	auto& frameResources = _sync->GetFrameResources();
+	auto& renderCompleteSemaphores = _swapChain->GetRenderCompleteSemaphores();
+
+	VkSemaphore timelineSemaphore = _sync->GetTimelineSemaphore();
+	VkDevice device = _device->GetLogicalDevice();
+	VkSwapchainKHR swapchain = _swapChain->GetSwapChain();
+
+	auto swapchainImages = _swapChain->GetSwapChainImages();
+	auto swapchainImageViews = _swapChain->GetSwapChainImageViews();
+
+	VkImage depthImage = _swapChain->GetDepthImage();
+	VkImageView depthImageView = _swapChain->GetDepthImageView();
+
+	uint32_t swapchainWidth = _swapChain->GetWidth();
+	uint32_t swapchainHeight = _swapChain->GetHeight();
+
+	VkQueue gfxQueue = *_graphicsQueue->GetGraphicsQueue();
+
+
 	// first check if our swapchain is still valid
-	if (requireSwapchainRecreate)
+	//if (requireSwapchainRecreate)
+	//{
+	//	vkDeviceWaitIdle(device);
+	//	destroySwapchain();
+	//	createSwapchain(width, height);
+	//	requireSwapchainRecreate = false;
+	//}
+
+	const uint32_t frameResIndex = _frameIndex++ % MaxFramesInFlight;
+	const uint64_t signalValue = ++_nextSignalValue;
+
+	if (signalValue > MaxFramesInFlight)
 	{
-		vkDeviceWaitIdle(device);
-		destroySwapchain();
-		createSwapchain(width, height);
-		requireSwapchainRecreate = false;
+		const uint64_t waitValue = signalValue - MaxFramesInFlight;
+
+		VkSemaphoreWaitInfo waitInfo{
+			.sType = VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO,
+			.semaphoreCount = 1,
+			.pSemaphores = &timelineSemaphore,
+			.pValues = &waitValue
+		};
+		vkWaitSemaphores(device, &waitInfo, UINT64_MAX);
 	}
-
-	const uint32_t frameResIndex = frameIndex++ % MaxFramesInFlight;
-	const uint64_t signalValue = nextSignalValue++;
-	const uint64_t waitValue = signalValue - MaxFramesInFlight;
-
-	VkSemaphoreWaitInfo waitInfo
-	{
-		.sType = VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO,
-		.semaphoreCount = 1,
-		.pSemaphores = &timelineSemaphore,
-		.pValues = &waitValue
-	};
-	vkWaitSemaphores(device, &waitInfo, UINT64_MAX);
 
 	// now its safe to start recording commands
 	FrameResources& res = frameResources[frameResIndex];
-	vkResetCommandPool(device, res.commandPool, 0);
+	//vkResetCommandPool(device, res._commandPool, 0);
 
 	// get the resources for this frame
-	VkSemaphore imageAcquireSemaphore = frameResources[frameResIndex].imageAcquiredSemaphore;
+	VkSemaphore imageAcquireSemaphore = res._imageAcquiredSemaphore;
 
 	uint32_t imageIndex = 0;
 	VkResult acquireResult = vkAcquireNextImageKHR(device, swapchain, UINT64_MAX, imageAcquireSemaphore, VK_NULL_HANDLE, &imageIndex);
 
+
+
 	// handle resize and out-of-date images, may need swapchain recreate
-	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-	{
-		requireSwapchainRecreate = true;
-		return;
-	}
-	else if (acquireResult == VK_SUBOPTIMAL_KHR)
-	{
-		// can render this frame, recreate next time around
-		requireSwapchainRecreate = true;
-	}
+	//if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+	//{
+	//	_swapChain->SetSwapChainRecreate(true);
+	//	return;
+	//}
+	//else if (acquireResult == VK_SUBOPTIMAL_KHR)
+	//{
+	//	// can render this frame, recreate next time around
+	//	// requireSwapchainRecreate = true;
+	//	_swapChain->SetSwapChainRecreate(true);
+	//}
+
+	VkCommandBuffer cmd = res._commandBuffer;
 
 	// begin recording commands
 	VkCommandBufferBeginInfo cmdBeginInfo
@@ -93,7 +142,7 @@ void BindlessRender::Render()
 		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
 		.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT
 	};
-	vkBeginCommandBuffer(res.commandBuffer, &cmdBeginInfo);
+	vkBeginCommandBuffer(cmd, &cmdBeginInfo);
 
 	// transition the color and depth images
 	std::vector<VkImageMemoryBarrier2> layoutBarriers
@@ -141,7 +190,7 @@ void BindlessRender::Render()
 		.imageMemoryBarrierCount = static_cast<uint32_t>(layoutBarriers.size()),
 		.pImageMemoryBarriers = layoutBarriers.data()
 	};
-	vkCmdPipelineBarrier2(res.commandBuffer, &depInfo);
+	vkCmdPipelineBarrier2(cmd, &depInfo);
 
 	// setup the attachments (color and depth) and begin rendering (dynamic)
 	VkRenderingAttachmentInfo colorAttachInfo
@@ -167,8 +216,8 @@ void BindlessRender::Render()
 		.sType = VK_STRUCTURE_TYPE_RENDERING_INFO,
 		.renderArea
 		{
-			.offset{.x = 0, .y = 0},
-			.extent{.width = swapchainWidth, .height = swapchainHeight}
+			.offset{0, 0},
+			.extent{swapchainWidth, swapchainHeight}
 		},
 		.layerCount = 1,
 		.colorAttachmentCount = 1,
@@ -177,7 +226,7 @@ void BindlessRender::Render()
 	};
 
 	// begin dynamic rendering
-	vkCmdBeginRendering(res.commandBuffer, &renderingInfo);
+	vkCmdBeginRendering(cmd, &renderingInfo);
 	{
 		// set the viewpot and scissor state
 		VkViewport viewport
@@ -186,21 +235,21 @@ void BindlessRender::Render()
 			.width = static_cast<float>(swapchainWidth),
 			.height = static_cast<float>(swapchainHeight)
 		};
-		vkCmdSetViewport(res.commandBuffer, 0, 1, &viewport);
+		vkCmdSetViewport(cmd, 0, 1, &viewport);
 
 		VkRect2D scissor
 		{
 			.offset{.x = 0, .y = 0 },
 			.extent{.width = swapchainWidth, .height = swapchainHeight}
 		};
-		vkCmdSetScissor(res.commandBuffer, 0, 1, &scissor);
+		vkCmdSetScissor(cmd, 0, 1, &scissor);
 
 		// draw our triangle
-		vkCmdBindPipeline(res.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-		vkCmdDraw(res.commandBuffer, 3, 1, 0, 0);
+		vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipeline->GetPipeline());
+		vkCmdDraw(cmd, 3, 1, 0, 0);
 	}
 	// end dynamic rendering
-	vkCmdEndRendering(res.commandBuffer);
+	vkCmdEndRendering(cmd);
 
 	// transition the image from color attachment to presentation so we can show it
 	VkImageMemoryBarrier2 presentLayoutBarrier
@@ -228,9 +277,9 @@ void BindlessRender::Render()
 		.imageMemoryBarrierCount = 1,
 		.pImageMemoryBarriers = &presentLayoutBarrier
 	};
-	vkCmdPipelineBarrier2(res.commandBuffer, &presentDepInfo);
+	vkCmdPipelineBarrier2(cmd, &presentDepInfo);
 
-	vkEndCommandBuffer(res.commandBuffer);
+	vkEndCommandBuffer(cmd);
 
 	// ensure swapchain image is actually vailable to start color output
 	VkSemaphoreSubmitInfo imageAcquireWaitInfo
@@ -257,7 +306,7 @@ void BindlessRender::Render()
 	VkCommandBufferSubmitInfo cmdSubmitInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO,
-		.commandBuffer = res.commandBuffer,
+		.commandBuffer = cmd,
 	};
 	VkSubmitInfo2 submitInfo
 	{
@@ -283,6 +332,8 @@ void BindlessRender::Render()
 	};
 
 	vkQueuePresentKHR(gfxQueue, &presentInfo);
-	*/
+
+	// TEMPORARY: ensure GPU finihed this frame before starting the next
+	vkQueueWaitIdle(gfxQueue);
 }
 

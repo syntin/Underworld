@@ -18,18 +18,22 @@ public:
 	bool Create(Device device, Surface surface, Vma vma, SDL_Window* window, uint32_t width, uint32_t height);
 	void Destroy(Device device, Vma vma);
 
+	void SetSwapChainRecreate(bool value) { _requireSwapchainRecreate = value; }
+
+
 public:
 	uint32_t GetWidth() { return _swapchainWidth; }
 	uint32_t GetHeight() { return _swapchainHeight; }
-	VkFormat* GetSwapChainFormat() { return &_swapchainFormat; }
+	const VkFormat* GetSwapChainFormat() { return &_swapchainFormat; }
 	VkSwapchainKHR GetSwapChain() { return _swapchain; }
 	std::vector<VkImage> GetSwapChainImages() { return _swapchainImages; }
 	std::vector<VkImageView> GetSwapChainImageViews() { return _swapchainImageViews; }
-	std::vector<VkSemaphore> GetRenderCompleteSemaphores() { _renderCompleteSemaphores; }
-	bool GetSwapChainRecreate() { return _requireSwapchainRecreate; }
+	std::vector<VkSemaphore>& GetRenderCompleteSemaphores() { return _renderCompleteSemaphores; } //DB I added "return" here it was
+	bool GetSwapChainRecreate() { return _requireSwapchainRecreate; }							 //the only one that didn't have it
 	VkImage GetDepthImage() { return _depthImage; }
 	VkImageView GetDepthImageView() { return _depthImageView; }
 	VmaAllocation GetDepthImageAllocation() { return _depthImageAllocation; }
+	VkFormat depthFormat = VK_FORMAT_D32_SFLOAT;
 
 protected:
 	bool CreateInfoKHR(Device device, Surface surface);

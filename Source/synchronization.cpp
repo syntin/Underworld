@@ -20,7 +20,7 @@ bool Synchronization::Initialize(Device device, Window window)
 	{
 		.sType = VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO,
 		.semaphoreType = VK_SEMAPHORE_TYPE_TIMELINE,
-		.initialValue = MaxFramesInFlight
+		.initialValue = 0
 	};
 	VkSemaphoreCreateInfo semaphoreInfo
 	{

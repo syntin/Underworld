@@ -101,6 +101,14 @@ bool VulkanWrapper::SetupVulkan()
 		return false;
 	}
 
+	_bindlessRender.Initialize(
+		&_device,
+		&_swapChain,
+		&_graphicsQueue,
+		&_synchronization,
+		&_commandBuffer,
+		&_pipeline);
+
 	return true;
 }
 
@@ -130,6 +138,56 @@ void VulkanWrapper::Run()
 
 void VulkanWrapper::Render()
 {
+	// check if swapchain needs to be recreated
+	if (_swapChain.GetSwapChainRecreate())
+	{
+		vkDeviceWaitIdle(_device.GetLogicalDevice());
+
+		// destroy old swapchain
+		_swapChain.Destroy(_device, _vma);
+
+		// recreate swapchain with current window size
+		int width = 0, height = 0;
+		SDL_GetWindowSize(_window.GetSDLWindow(), &width, &height);
+
+		if (!_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(),
+			static_cast<uint32_t>(width),
+			static_cast<uint32_t>(height)))
+		{
+			showError("Failed to recreate swapchain", _window.GetSDLWindow());
+			return;
+		}
+
+		// clear the flag
+		_swapChain.SetSwapChainRecreate(false);
+
+		// rebuild pipeline + shaders
+		if (_pipeline.GetPipeline())
+		{
+			vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
+			vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
+		}
+
+		if (_shader.GetVertShader())
+		{
+			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
+		}
+		if (_shader.GetFragShader())
+		{
+			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
+		}
+
+		_shader.Create(_device);
+		_pipeline.Create(_device, _window, _swapChain, _shader);
+
+		// rebuild command buffers
+		_commandBuffer.CreateCommandBuffers(
+			_device,
+			_window,
+			_graphicsQueue.GetGraphicsQueueFamilyIndex(),
+			_synchronization.GetFrameResources());
+	}
+
 	_bindlessRender.Render();
 }
 

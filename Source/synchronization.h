@@ -25,7 +25,7 @@ public:
 public:
 	bool Initialize(Device device, Window window);
 	VkSemaphore GetTimelineSemaphore() { return _timelineSemaphore; }
-	std::array<FrameResources, MaxFramesInFlight> GetFrameResources() { return _frameResources; }
+	std::array<FrameResources, MaxFramesInFlight>& GetFrameResources() { return _frameResources; }
 
 protected:
 	bool CreateSyncResources(Device device, Window window);

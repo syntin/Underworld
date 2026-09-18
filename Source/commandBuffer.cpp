@@ -13,14 +13,19 @@ CommandBuffer::~CommandBuffer()
 {
 }
 
-bool CommandBuffer::CreateCommandBuffers(Device device, Window window, uint32_t gfxQueueFamIdx, std::array<FrameResources, MaxFramesInFlight> frameResources)
+bool CommandBuffer::CreateCommandBuffers(
+	Device device, 
+	Window window, 
+	uint32_t gfxQueueFamIdx, 
+	std::array<FrameResources, MaxFramesInFlight>& frameResources)
 {
-	for (FrameResources& res : _syncro.GetFrameResources())
+	for (FrameResources& res : frameResources)
 	{
 		// we'll give each frame its own pool, faster cmd buffer resets this way
 		VkCommandPoolCreateInfo poolInfo
 		{
 			.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+			.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
 			.queueFamilyIndex = gfxQueueFamIdx
 		};
 		if (vkCreateCommandPool(device.GetLogicalDevice(), &poolInfo, nullptr, &res._commandPool) != VK_SUCCESS)
