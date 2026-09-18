@@ -122,17 +122,17 @@ void BindlessRender::Render()
 
 
 	// handle resize and out-of-date images, may need swapchain recreate
-	//if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
-	//{
-	//	_swapChain->SetSwapChainRecreate(true);
-	//	return;
-	//}
-	//else if (acquireResult == VK_SUBOPTIMAL_KHR)
-	//{
-	//	// can render this frame, recreate next time around
-	//	// requireSwapchainRecreate = true;
-	//	_swapChain->SetSwapChainRecreate(true);
-	//}
+	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+	{
+		_swapChain->SetSwapChainRecreate(true);
+		return;
+	}
+	else if (acquireResult == VK_SUBOPTIMAL_KHR)
+	{
+		// can render this frame, recreate next time around
+		// requireSwapchainRecreate = true;
+		_swapChain->SetSwapChainRecreate(true);
+	}
 
 	VkCommandBuffer cmd = res._commandBuffer;
 
