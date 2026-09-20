@@ -17,6 +17,9 @@
 #include "animationClip.h"
 #include "animator.h"
 #include "hierarchy.h"
+#include "cameraControllerComponent.h"
+
+struct TriangleRenderable {};
 
 class ComponentManager
 {
@@ -601,6 +604,44 @@ public:
 	{
 		return m_hierarchyPool.GetEntities();
 	}
+
+	//Camera Controller //TO DO MAYBE: ADD REMOVE COMPONENT FOR THIS BLOCK, MIGHT NOT BE NEEDED THOUGH
+	
+	CameraControllerComponent* AddCameraController(Entity e, const CameraControllerComponent& c)
+	{
+		return m_cameraControllerPool.AddComponent(e, c);
+	}
+
+	CameraControllerComponent* GetCameraController(Entity e)
+	{
+		return m_cameraControllerPool.GetComponent(e);
+	}
+
+	bool HasCameraController(Entity e) const
+	{
+		return m_cameraControllerPool.HasComponent(e);
+	}
+
+	std::vector<Entity>& GetCameraControllerEntities()
+	{
+		return m_cameraControllerPool.GetEntities();
+	}
+
+	// Triangle Renderable /will add more later, this is mostly just for testing though
+	TriangleRenderable* AddTriangleRenderable(Entity e, const TriangleRenderable& t)
+	{
+		return m_triangleRenderablePool.AddComponent(e, t);
+	}
+
+	bool HasTriangleRenderable(Entity e) const
+	{
+		return m_triangleRenderablePool.HasComponent(e);
+	}
+
+	std::vector<Entity>& GetTriangleRenderableEntities()
+	{
+		return m_triangleRenderablePool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -619,6 +660,8 @@ private:
 	ComponentPool<AnimationClip> m_animationClipPool;
 	ComponentPool<Animator> m_animatorPool;
 	ComponentPool<Hierarchy> m_hierarchyPool;
+	ComponentPool<CameraControllerComponent> m_cameraControllerPool;
+	ComponentPool<TriangleRenderable> m_triangleRenderablePool;
 
 	Entity m_activeCamera;
 };

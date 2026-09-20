@@ -62,6 +62,9 @@ VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR* 
 		return nullptr;
 	}
 
+	//DB Added this to fix an error 9/16/26 @ 11:27AM
+	_physicalDevice = physicalDevice;
+
 	return physicalDevice;
 }
 
@@ -126,7 +129,9 @@ bool Device::Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_
 		.pEnabledFeatures = nullptr // features struct chain is set in pNext
 	};
 
-	if (vkCreateDevice(*physicalDevice, &devCreateInfo, nullptr, (VkDevice*) _logicalDevice) != VK_SUCCESS)
+	// DB: OLD LINE, I AM CHANGING THIS TO FIX AN ERROR BUT LEAVING OLD ONE JUST IN CASE
+	//if (vkCreateDevice(*physicalDevice, &devCreateInfo, nullptr, (VkDevice*) _logicalDevice) != VK_SUCCESS)
+	if (vkCreateDevice(*physicalDevice, &devCreateInfo, nullptr, &_logicalDevice) != VK_SUCCESS)
 	{
 		return false;
 	}

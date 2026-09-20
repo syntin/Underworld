@@ -1,7 +1,7 @@
-// Author: RC
+// Author: RC & DB
 
 #pragma once
-
+//RC
 #include <volk/volk.h>
 #include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
@@ -32,9 +32,10 @@ private:
 	std::vector<VkPhysicalDevice> _devices;
 	uint32_t _deviceIndex = 0;
 	uint32_t _deviceCount = 0;
-	VkPhysicalDevice _physicalDevice = nullptr;
-	VkDevice _logicalDevice = nullptr;
+	VkPhysicalDevice _physicalDevice = VK_NULL_HANDLE;
+	VkDevice _logicalDevice = VK_NULL_HANDLE;
 	VkFormat _swapchainFormat = VK_FORMAT_B8G8R8A8_SRGB;
+
 };
 
 

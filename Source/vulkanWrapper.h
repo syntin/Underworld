@@ -45,6 +45,12 @@ public:
 	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 	void Run();
 
+	void SetWorld(World* world)
+	{
+		_world = world;
+		_bindlessRender.SetWorld(world);
+	}
+
 protected:
 	bool SetupVulkan();
 	void Render();
@@ -65,6 +71,7 @@ private:
 	CommandBuffer _commandBuffer{};
 	BindlessRender _bindlessRender{};
 	Semaphore _semaphores;
+	World* _world = nullptr;
 
 private:
 	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];

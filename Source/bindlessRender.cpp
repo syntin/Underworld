@@ -3,7 +3,10 @@
 #include <volk/volk.h>
 #include "bindlessRender.h"
 #include "descriptorPool.h"
+#include "World.h"
 #include "utils.h"
+#include "vertex.h"
+#include "vma.h"
 
 BindlessRender::BindlessRender()
 {
@@ -13,6 +16,51 @@ BindlessRender::BindlessRender()
 BindlessRender::~BindlessRender()
 {
 
+}
+
+void BindlessRender::Initialize(
+	Device* device,
+	SwapChain* swapChain,
+	GraphicsQueue* graphicsQueue,
+	Synchronization* sync,
+	CommandBuffer* cmdBuffer,
+	GraphicsPipeline* pipeline,
+	Vma* vma,
+	World* world)
+{
+	_device = device;
+	_swapChain = swapChain;
+	_graphicsQueue = graphicsQueue;
+	_sync = sync;
+	_cmdBuffer = cmdBuffer;
+	_pipeline = pipeline;
+	_world = world;
+
+	// --- Create vertex buffer for a single triangle ---
+	std::vector<Vertex2D> triangleVertices = {
+		{ 0.0f, -0.5f },
+		{ 0.5f,  0.5f },
+		{ -0.5f, 0.5f }
+	};
+
+	VmaAllocator allocator = vma->GetAllocator();
+
+	VkBufferCreateInfo bufferInfo{};
+	bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+	bufferInfo.size = sizeof(Vertex2D) * triangleVertices.size();
+	bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+	bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+	VmaAllocationCreateInfo allocInfo{};
+	allocInfo.flags = VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT |
+		VMA_ALLOCATION_CREATE_MAPPED_BIT;
+	allocInfo.usage = VMA_MEMORY_USAGE_AUTO;
+
+	VmaAllocationInfo vmaAllocInfo{};
+	vmaCreateBuffer(allocator, &bufferInfo, &allocInfo,
+		&_vertexBuffer, &_vertexBufferAllocation, &vmaAllocInfo);
+
+	memcpy(vmaAllocInfo.pMappedData, triangleVertices.data(), bufferInfo.size);
 }
 
 VkPhysicalDeviceDescriptorIndexingFeatures BindlessRender::QueryDeviceForBindlessSupport()
@@ -38,54 +86,87 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 	vkCreateDevice(_vulkanPhysicalDevice, &deviceCreateInfo, (const VkAllocationCallbacks*) /*&debugCallback*/ nullptr, &vulkanDevice);
 	DescriptorPool descriptorPool{};
 	descriptorPool.Create((VkAllocationCallbacks*) /*&debugCallback*/ nullptr);
+
+	_bindlessEnabled = _bindlessSupported;
 }
 
 void BindlessRender::Render()
 {
-	/*
+	std::cout << "BindlessRender::Render begin" << std::endl;
+
+	if (!_device || !_swapChain || !_graphicsQueue || !_sync || !_pipeline)
+		return;
+
+	auto& frameResources = _sync->GetFrameResources();
+	auto& renderCompleteSemaphores = _swapChain->GetRenderCompleteSemaphores();
+
+	VkSemaphore timelineSemaphore = _sync->GetTimelineSemaphore();
+	VkDevice device = _device->GetLogicalDevice();
+	VkSwapchainKHR swapchain = _swapChain->GetSwapChain();
+
+	auto swapchainImages = _swapChain->GetSwapChainImages();
+	auto swapchainImageViews = _swapChain->GetSwapChainImageViews();
+
+	VkImage depthImage = _swapChain->GetDepthImage();
+	VkImageView depthImageView = _swapChain->GetDepthImageView();
+
+	uint32_t swapchainWidth = _swapChain->GetWidth();
+	uint32_t swapchainHeight = _swapChain->GetHeight();
+
+	VkQueue gfxQueue = *_graphicsQueue->GetGraphicsQueue();
+
+
 	// first check if our swapchain is still valid
-	if (requireSwapchainRecreate)
+	//if (requireSwapchainRecreate)
+	//{
+	//	vkDeviceWaitIdle(device);
+	//	destroySwapchain();
+	//	createSwapchain(width, height);
+	//	requireSwapchainRecreate = false;
+	//}
+
+	const uint32_t frameResIndex = _frameIndex++ % MaxFramesInFlight;
+	const uint64_t signalValue = ++_nextSignalValue;
+
+	if (signalValue > MaxFramesInFlight)
 	{
-		vkDeviceWaitIdle(device);
-		destroySwapchain();
-		createSwapchain(width, height);
-		requireSwapchainRecreate = false;
+		const uint64_t waitValue = signalValue - MaxFramesInFlight;
+
+		VkSemaphoreWaitInfo waitInfo{
+			.sType = VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO,
+			.semaphoreCount = 1,
+			.pSemaphores = &timelineSemaphore,
+			.pValues = &waitValue
+		};
+		vkWaitSemaphores(device, &waitInfo, UINT64_MAX);
 	}
-
-	const uint32_t frameResIndex = frameIndex++ % MaxFramesInFlight;
-	const uint64_t signalValue = nextSignalValue++;
-	const uint64_t waitValue = signalValue - MaxFramesInFlight;
-
-	VkSemaphoreWaitInfo waitInfo
-	{
-		.sType = VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO,
-		.semaphoreCount = 1,
-		.pSemaphores = &timelineSemaphore,
-		.pValues = &waitValue
-	};
-	vkWaitSemaphores(device, &waitInfo, UINT64_MAX);
 
 	// now its safe to start recording commands
 	FrameResources& res = frameResources[frameResIndex];
-	vkResetCommandPool(device, res.commandPool, 0);
+	//vkResetCommandPool(device, res._commandPool, 0);
 
 	// get the resources for this frame
-	VkSemaphore imageAcquireSemaphore = frameResources[frameResIndex].imageAcquiredSemaphore;
+	VkSemaphore imageAcquireSemaphore = res._imageAcquiredSemaphore;
 
 	uint32_t imageIndex = 0;
 	VkResult acquireResult = vkAcquireNextImageKHR(device, swapchain, UINT64_MAX, imageAcquireSemaphore, VK_NULL_HANDLE, &imageIndex);
 
+
+
 	// handle resize and out-of-date images, may need swapchain recreate
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
 	{
-		requireSwapchainRecreate = true;
+		_swapChain->SetSwapChainRecreate(true);
 		return;
 	}
 	else if (acquireResult == VK_SUBOPTIMAL_KHR)
 	{
 		// can render this frame, recreate next time around
-		requireSwapchainRecreate = true;
+		// requireSwapchainRecreate = true;
+		_swapChain->SetSwapChainRecreate(true);
 	}
+
+	VkCommandBuffer cmd = res._commandBuffer;
 
 	// begin recording commands
 	VkCommandBufferBeginInfo cmdBeginInfo
@@ -93,7 +174,7 @@ void BindlessRender::Render()
 		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
 		.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT
 	};
-	vkBeginCommandBuffer(res.commandBuffer, &cmdBeginInfo);
+	vkBeginCommandBuffer(cmd, &cmdBeginInfo);
 
 	// transition the color and depth images
 	std::vector<VkImageMemoryBarrier2> layoutBarriers
@@ -141,7 +222,7 @@ void BindlessRender::Render()
 		.imageMemoryBarrierCount = static_cast<uint32_t>(layoutBarriers.size()),
 		.pImageMemoryBarriers = layoutBarriers.data()
 	};
-	vkCmdPipelineBarrier2(res.commandBuffer, &depInfo);
+	vkCmdPipelineBarrier2(cmd, &depInfo);
 
 	// setup the attachments (color and depth) and begin rendering (dynamic)
 	VkRenderingAttachmentInfo colorAttachInfo
@@ -149,88 +230,110 @@ void BindlessRender::Render()
 		.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
 		.imageView = swapchainImageViews[imageIndex],
 		.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR, // clear the image
-		.storeOp = VK_ATTACHMENT_STORE_OP_STORE, // keep data for presentation
-		.clearValue{.color{0.01f, 0.01f, 0.01f, 1}}
+		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+		.storeOp = VK_ATTACHMENT_STORE_OP_STORE,
+		.clearValue{.color{0.01f, 0.01f, 0.01f, 1.0f} }
 	};
+
 	VkRenderingAttachmentInfo depthAttachInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO,
 		.imageView = depthImageView,
 		.imageLayout = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL,
-		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR, // clear the depth data
-		.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE, // don't care after rendering
-		.clearValue{.depthStencil{1.0f, 0}}
+		.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+		.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
+		.clearValue{.depthStencil{1.0f, 0} }
 	};
+
 	VkRenderingInfo renderingInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_RENDERING_INFO,
-		.renderArea
-		{
-			.offset{.x = 0, .y = 0},
-			.extent{.width = swapchainWidth, .height = swapchainHeight}
-		},
+		.renderArea{.offset{0,0}, .extent{swapchainWidth, swapchainHeight} },
 		.layerCount = 1,
 		.colorAttachmentCount = 1,
 		.pColorAttachments = &colorAttachInfo,
 		.pDepthAttachment = &depthAttachInfo
 	};
 
-	// begin dynamic rendering
-	vkCmdBeginRendering(res.commandBuffer, &renderingInfo);
+	vkCmdBeginRendering(cmd, &renderingInfo);
 	{
-		// set the viewpot and scissor state
 		VkViewport viewport
 		{
-			.x = 0, .y = 0,
+			.x = 0,
+			.y = 0,
 			.width = static_cast<float>(swapchainWidth),
-			.height = static_cast<float>(swapchainHeight)
+			.height = static_cast<float>(swapchainHeight),
+			.minDepth = 0.0f,
+			.maxDepth = 1.0f
 		};
-		vkCmdSetViewport(res.commandBuffer, 0, 1, &viewport);
+		vkCmdSetViewport(cmd, 0, 1, &viewport);
 
 		VkRect2D scissor
 		{
-			.offset{.x = 0, .y = 0 },
-			.extent{.width = swapchainWidth, .height = swapchainHeight}
+			.offset{0,0},
+			.extent{swapchainWidth, swapchainHeight}
 		};
-		vkCmdSetScissor(res.commandBuffer, 0, 1, &scissor);
+		vkCmdSetScissor(cmd, 0, 1, &scissor);
 
-		// draw our triangle
-		vkCmdBindPipeline(res.commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-		vkCmdDraw(res.commandBuffer, 3, 1, 0, 0);
+		vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS, _pipeline->GetPipeline());
+
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(cmd, 0, 1, &_vertexBuffer, offsets);
+
+		auto& components = _world->GetComponentManager();
+		auto& triangleEntities = components.GetTriangleRenderableEntities();
+
+		for (Entity e : triangleEntities)
+		{
+			Transform* t = components.GetTransform(e);
+			if (!t) continue;
+
+			glm::vec2 offset(t->position.x, t->position.y);
+
+			vkCmdPushConstants(
+				cmd,
+				_pipeline->GetPipelineLayout(),
+				VK_SHADER_STAGE_VERTEX_BIT,
+				0,
+				sizeof(offset),
+				&offset
+			);
+
+			vkCmdDraw(cmd, 3, 1, 0, 0);
+		}
 	}
-	// end dynamic rendering
-	vkCmdEndRendering(res.commandBuffer);
+	vkCmdEndRendering(cmd);
 
-	// transition the image from color attachment to presentation so we can show it
+	// Transition to present
 	VkImageMemoryBarrier2 presentLayoutBarrier
 	{
 		.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2,
 		.srcStageMask = VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT,
 		.srcAccessMask = VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT,
-		.dstStageMask = VK_PIPELINE_STAGE_2_NONE, // nothing is waiting, but the cache is flushed and layout is transition
+		.dstStageMask = VK_PIPELINE_STAGE_2_NONE,
 		.dstAccessMask = 0,
 		.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
 		.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
 		.image = swapchainImages[imageIndex],
-		.subresourceRange
-		{
+		.subresourceRange{
 			.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
 			.baseMipLevel = 0,
 			.levelCount = 1,
 			.baseArrayLayer = 0,
-			.layerCount = 1,
+			.layerCount = 1
 		}
 	};
+
 	VkDependencyInfo presentDepInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_DEPENDENCY_INFO,
 		.imageMemoryBarrierCount = 1,
 		.pImageMemoryBarriers = &presentLayoutBarrier
 	};
-	vkCmdPipelineBarrier2(res.commandBuffer, &presentDepInfo);
 
-	vkEndCommandBuffer(res.commandBuffer);
+	vkCmdPipelineBarrier2(cmd, &presentDepInfo);
+
+	vkEndCommandBuffer(cmd);
 
 	// ensure swapchain image is actually vailable to start color output
 	VkSemaphoreSubmitInfo imageAcquireWaitInfo
@@ -257,7 +360,7 @@ void BindlessRender::Render()
 	VkCommandBufferSubmitInfo cmdSubmitInfo
 	{
 		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO,
-		.commandBuffer = res.commandBuffer,
+		.commandBuffer = cmd,
 	};
 	VkSubmitInfo2 submitInfo
 	{
@@ -283,6 +386,8 @@ void BindlessRender::Render()
 	};
 
 	vkQueuePresentKHR(gfxQueue, &presentInfo);
-	*/
+
+	// TEMPORARY: ensure GPU finihed this frame before starting the next
+	vkQueueWaitIdle(gfxQueue);
 }
 

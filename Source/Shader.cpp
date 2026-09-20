@@ -2,7 +2,7 @@
 
 #include "shader.h"
 #include "utils.h"
-
+#include <shaderc/shaderc.hpp>
 #include <Volk/volk.h>
 #include <SDL3/SDL.h>
 #ifdef VMA_IMPLEMENTATION
@@ -36,18 +36,18 @@ Shader::~Shader()
 VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fileName, shaderc_shader_kind kind) const
 {
 	// Load source
-	const std::string shaderPath = "src/shaders/" + fileName;
+	const std::string shaderPath = "shaders/" + fileName;
 	const std::string src = ReadTextFile(shaderPath);
 
 	if (src.empty())
 	{
 		showError("Specified shader file doesn't exist: " + shaderPath, nullptr);
-		return nullptr;
+		return VK_NULL_HANDLE;
 	}
 
 	// compile the shader to SPIR-V
 	std::cout << "Compiling shader: " << shaderPath << std::endl;
-	/*
+	
 	shaderc::Compiler compiler;
 	shaderc::CompileOptions opts;
 
@@ -78,8 +78,6 @@ VkShaderModule Shader::CreateShaderModule(Device& device, const std::string& fil
 	}
 
 	return shaderModule;
-	*/
-	return VK_NULL_HANDLE;
 }
 
 bool Shader::Create(Device& device)
