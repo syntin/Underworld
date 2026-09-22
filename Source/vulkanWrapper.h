@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <Windows.h>
 #include <Volk/volk.h>
 #include <vma/vk_mem_alloc.h>
 #include <GLFW/glfw3.h>
@@ -33,7 +34,6 @@
 #include "bindlessRender.h"
 #include "device.h"
 #include "semaphores.h"
-#include <Windows.h>
 
 class VulkanWrapper
 {
