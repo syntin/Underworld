@@ -10,8 +10,8 @@
 #include <volk/volk.h>
 #define SDL_IMPLEMENTATION
 #include <SDL3/SDL.h>
-#define GLFW_IMPLEMENTATION
-#include <GLFW/glfw3.h>
+//#define GLFW_IMPLEMENTATION
+//#include <GLFW/glfw3.h>
 #define VMA_IMPLEMENTATION
 #define STB_IMPLEMENTATION
 #define TINYOBJLOADER_IMPLEMENTATION

@@ -1,5 +1,5 @@
 #include <vulkan/vulkan.h>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include "debugMessenger.h"
 #include "utils.h"
 #include <cstdint>
@@ -16,6 +16,7 @@ DebugMessenger::~DebugMessenger()
 
 void DebugMessenger::Initialize()
 {
+	/*
 	uint32_t glfwExtensionCount = 0;
 	const char** glfwExtensions;
 	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -25,5 +26,5 @@ void DebugMessenger::Initialize()
 	if (enableValidationLayers) {
 		_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 	}
-
+	*/
 }

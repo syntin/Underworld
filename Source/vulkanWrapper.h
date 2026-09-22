@@ -4,8 +4,8 @@
 
 #include <Windows.h>
 #include <Volk/volk.h>
-#include <vma/vk_mem_alloc.h>
-#include <GLFW/glfw3.h>
+#include <VMA/vk_mem_alloc.h>
+//#include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 #include "window.h"

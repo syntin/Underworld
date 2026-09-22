@@ -16,9 +16,10 @@ Window::Window()
 
 Window::~Window()
 {
-
+	Cleanup();
 }
 
+/*
 void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
 	CreateBasicWindow(hInstance, hPrevInstance, pCmdLine, nCmdShow);
@@ -44,7 +45,7 @@ void Window::CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPST
 	ShowWindow(_hWnd, nCmdShow);
 	RunMessageLoop();
 }
-
+*/
 void Window::CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize)
 {
 	SDL_Window* window = SDL_CreateWindow("How to Vulkan", 1280u, 720u, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE);
@@ -104,8 +105,12 @@ int Window::RunMessageLoop()
 
 void Window::Cleanup()
 {
-	if (_glfwWindow) {
+/*	if (_glfwWindow) {
 		glfwDestroyWindow(_glfwWindow);
 		glfwTerminate();
+	}
+*/
+	if (_sdlWindow) {
+		SDL_DestroyWindow(_sdlWindow);
 	}
 }

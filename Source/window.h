@@ -4,7 +4,7 @@
 
 #include <Windows.h>
 #include <Volk/volk.h>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_vulkan.h>
 #include <vector>
@@ -17,13 +17,13 @@ public:
 	virtual ~Window();
 
 public:
-	void CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
+	//void CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	void CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize);
 	//void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	HWND GetHWnd() { return _hWnd; }
-	GLFWwindow* GetGLFWWindow() { return _glfwWindow; }
+	//GLFWwindow* GetGLFWWindow() { return _glfwWindow; }
 	SDL_Window* GetSDLWindow() { return _sdlWindow; }
-	GLFWwindow* SetGLFWWindow(GLFWwindow* glfwWindow) { _glfwWindow = glfwWindow; }
+	//GLFWwindow* SetGLFWWindow(GLFWwindow* glfwWindow) { _glfwWindow = glfwWindow; }
 	void SetSDLWindow(SDL_Window* sdlWindow) { _sdlWindow = sdlWindow; }
 
 protected:
@@ -44,7 +44,7 @@ protected:
 	}
 
 private:
-	GLFWwindow* _glfwWindow = nullptr;
+	//GLFWwindow* _glfwWindow = nullptr;
 	SDL_Window* _sdlWindow = nullptr;
 	std::vector<VkPhysicalDevice> _physicalDevice;
 	uint32_t _deviceIndex = 0;
