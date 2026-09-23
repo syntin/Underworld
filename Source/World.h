@@ -12,17 +12,20 @@ class World
 public:
 	World();
 
+public:
 	void Initialize();
 	void Update(float dt);
 	void Shutdown();
 	void UpdateTransforms();
 
+public:
 	EntityManager& GetEntityManager() { return entityManager; }
 	ComponentManager& GetComponentManager() { return componentManager; }
 	SceneGraph& GetSceneGraph() { return sceneGraph; }
 	SceneManager& GetSceneManager() { return sceneManager; }
 	EntitySpawner& GetSpawner() { return spawner; }
 	Input& GetInput() { return input; }
+
 private:
 	EntityManager entityManager;
 	ComponentManager componentManager;
