@@ -20,7 +20,12 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance,
 									 LPSTR lpCmdLine, 
 									 int nShowCmd)
 {
-	SDL_InitSubSystem(SDL_INIT_VIDEO);
+	
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
+		printf("SDL_Init failed: %s\n", SDL_GetError());
+		return;
+	}
 
 	_window.CreateSDLwindow("Vulkan Learning", WIDTH, HEIGHT);
 
@@ -34,6 +39,8 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance,
 	{
 		showError("Failed to initialize Vulkan", _window.GetSDLWindow());
 	}
+
+	_running = true;
 }
 
 bool VulkanWrapper::SetupVulkan()
@@ -176,7 +183,7 @@ void VulkanWrapper::Render()
 	// check if swapchain needs to be recreated
 	if (_swapChain.GetSwapChainRecreate())
 	{
-		Uint32 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
+		Uint64 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
 		bool windowInvalid =
 			(flags == 0) ||
 			(flags & SDL_WINDOW_MINIMIZED) ||
