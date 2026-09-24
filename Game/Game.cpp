@@ -10,8 +10,8 @@ int Game()
     world.Initialize();
 
     VulkanBackendAdapter backend;
-    backend.Initialize();
     backend.SetWorld(&world);
+    backend.Initialize();
 
     auto& entityManager = world.GetEntityManager();
     auto& components = world.GetComponentManager();
