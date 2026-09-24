@@ -20,7 +20,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance,
 									 LPSTR lpCmdLine, 
 									 int nShowCmd)
 {
-	if (SDL_InitSubSystem(SDL_INIT_VIDEO) == false)
+	if (SDL_Init(SDL_INIT_VIDEO) == false)
 	{
 		printf("SDL_Init failed: %s\n", SDL_GetError());
 		return;
