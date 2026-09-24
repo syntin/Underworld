@@ -385,7 +385,18 @@ void BindlessRender::Render()
 		.pResults = nullptr
 	};
 
-	vkQueuePresentKHR(gfxQueue, &presentInfo);
+	VkResult presentRes = vkQueuePresentKHR(gfxQueue, &presentInfo);
+
+	if (presentRes == VK_ERROR_OUT_OF_DATE_KHR || presentRes == VK_SUBOPTIMAL_KHR)
+	{
+		_swapChain->SetSwapChainRecreate(true);
+		return;
+	}
+	else if (presentRes != VK_SUCCESS)
+	{
+		showError("Failed to present swapchain image", nullptr);
+		return;
+	}
 
 	// TEMPORARY: ensure GPU finihed this frame before starting the next
 	vkQueueWaitIdle(gfxQueue);

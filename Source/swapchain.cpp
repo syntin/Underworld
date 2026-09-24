@@ -5,6 +5,7 @@
 #include <vma/vk_mem_alloc.h>
 #include "device.h"
 #include "utils.h"
+#include <stdio.h>
 
 SwapChain::SwapChain()
 {
@@ -16,29 +17,55 @@ SwapChain::~SwapChain()
 
 }
 
-bool SwapChain::CreateInfoKHR(Device device, Surface surface)
+bool SwapChain::CreateInfoKHR(Device& device, Surface& surface)
 {
 	VkSurfaceCapabilitiesKHR surfaceCaps{};
 	VkPhysicalDevice physicalDevice = device.GetPhysicalDevice();
-	if (vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface.GetSurface(), &surfaceCaps) != VK_SUCCESS)
+	VkSurfaceKHR surf = surface.GetSurface();
+
+	printf("Capabilities query: phys=%p  surf=%p\n",
+		(void*)physicalDevice, (void*)surf);
+
+	VkResult res = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surf, &surfaceCaps);
+	printf("vkGetPhysicalDeviceSurfaceCapabilitiesKHR result: %d\n", res);
+
+	if (res == VK_ERROR_SURFACE_LOST_KHR)
+	{
+		printf("SURFACE LOST — shit is cooked\n");
+		return false; 
+	}
+
+	if (res != VK_SUCCESS)
 	{
 		showError("Couldn't get the surface capabilities", nullptr);
 		return false;
 	}
 
-	VkSwapchainCreateInfoKHR swapchainCreateInfo
+	uint32_t imageCount = surfaceCaps.minImageCount + 1;
+	if (surfaceCaps.maxImageCount > 0 && imageCount > surfaceCaps.maxImageCount)
+		imageCount = surfaceCaps.maxImageCount;
+
+	VkExtent2D extent = { _swapchainWidth, _swapchainHeight };
+	if (surfaceCaps.currentExtent.width != UINT32_MAX)
 	{
+		extent = surfaceCaps.currentExtent;
+	}
+
+	VkSwapchainCreateInfoKHR swapchainCreateInfo{
 		.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-		.surface = surface.GetSurface(),
-		.minImageCount = surfaceCaps.minImageCount,
+		.surface = surf,
+		.minImageCount = imageCount,
 		.imageFormat = _swapchainFormat,
 		.imageColorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR,
-		.imageExtent{.width = _swapchainWidth, .height = _swapchainHeight },
+		.imageExtent = extent,
 		.imageArrayLayers = 1,
 		.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-		.preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR,
+		.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE,
+		.preTransform = surfaceCaps.currentTransform,
 		.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-		.presentMode = VK_PRESENT_MODE_FIFO_KHR
+		.presentMode = VK_PRESENT_MODE_FIFO_KHR,
+		.clipped = VK_TRUE,
+		.oldSwapchain = VK_NULL_HANDLE
 	};
 
 	if (vkCreateSwapchainKHR(device.GetLogicalDevice(), &swapchainCreateInfo, nullptr, &_swapchain) != VK_SUCCESS)
@@ -46,6 +73,7 @@ bool SwapChain::CreateInfoKHR(Device device, Surface surface)
 		showError("Error creating swapchain", nullptr);
 		return false;
 	}
+
 	return true;
 }
 
@@ -141,7 +169,8 @@ bool SwapChain::CreateDepthImageView(Device device, Vma vma)
 	return true;
 }
 
-bool SwapChain::Create(Device device, Surface surface, Vma vma, SDL_Window* window, uint32_t width, uint32_t height)
+bool SwapChain::Create(Device& device, Surface& surface, Vma& vma,
+					   SDL_Window* window, uint32_t width, uint32_t height)
 {
 	_window = window;
 	_swapchainWidth = width;

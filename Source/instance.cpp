@@ -1,4 +1,4 @@
-// Author: RC
+// Author: RC & DB
 
 #include "instance.h"
 //#include <GLFW/glfw3.h>
@@ -20,49 +20,52 @@ VulkanInstance::~VulkanInstance()
 	Destroy();
 }
 
-bool VulkanInstance::Create()
+bool VulkanInstance::Create(SDL_Window* window)
 {
-	// Initialize Volk and load Vk function pointers
-	if (volkInitialize() != VK_SUCCESS)
-	{
-		showError("Error initializing Volk", nullptr);
-		return false;
-	}
+    if (volkInitialize() != VK_SUCCESS)
+    {
+        showError("Error initializing Volk", nullptr);
+        return false;
+    }
 
-	// Create the vulkan application instance
-	VkApplicationInfo appInfo
-	{
-		.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
-		.pApplicationName = "My First Triangle",
-		.apiVersion = VulkanVersion,
-	};
+    VkApplicationInfo appInfo{
+        .sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
+        .pApplicationName = "Astoroth Engine",
+        .apiVersion = VulkanVersion,
+    };
 
-	uint32_t instExtCount = 0;
-	const char *const *extensions = SDL_Vulkan_GetInstanceExtensions(&instExtCount);
+    Uint32 instExtCount = 0;
 
-	std::vector<const char *> requestedLayers
-	{
-		"VK_LAYER_KHRONOS_validation"
-	};
+    const char* const* extensions = SDL_Vulkan_GetInstanceExtensions(&instExtCount);
+    if (!extensions)
+    {
+        showError("SDL_Vulkan_GetInstanceExtensions failed", nullptr);
+        return false;
+    }
 
-	VkInstanceCreateInfo instCreateInfo
-	{
-		.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-		.pApplicationInfo = &appInfo,
-		.enabledLayerCount = static_cast<uint32_t>(requestedLayers.size()),
-		.ppEnabledLayerNames = requestedLayers.data(),
-		.enabledExtensionCount = instExtCount,
-		.ppEnabledExtensionNames = extensions
-	};
+    std::vector<const char*> requestedLayers{
+        "VK_LAYER_KHRONOS_validation"
+    };
 
-	if (vkCreateInstance(&instCreateInfo, nullptr, &_vulkanInstance) != VK_SUCCESS)
-	{
-		return false;
-	}
+    VkInstanceCreateInfo instCreateInfo{
+        .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+        .pApplicationInfo = &appInfo,
+        .enabledLayerCount = static_cast<uint32_t>(requestedLayers.size()),
+        .ppEnabledLayerNames = requestedLayers.data(),
+        .enabledExtensionCount = instExtCount,
+        .ppEnabledExtensionNames = extensions
+    };
 
-	volkLoadInstance(_vulkanInstance);
-	return true;
+    if (vkCreateInstance(&instCreateInfo, nullptr, &_vulkanInstance) != VK_SUCCESS)
+    {
+        showError("Failed to create Vulkan instance", nullptr);
+        return false;
+    }
+
+    volkLoadInstance(_vulkanInstance);
+    return true;
 }
+
 
 void VulkanInstance::Destroy()
 {

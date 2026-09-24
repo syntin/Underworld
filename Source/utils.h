@@ -48,7 +48,7 @@ static inline void chk(bool result)
 }
 static inline void showError(const std::string& errorMessasge, SDL_Window* window)
 {
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorMessasge.c_str(), window);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorMessasge.c_str(), nullptr);
 }
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(

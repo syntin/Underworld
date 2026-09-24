@@ -18,7 +18,7 @@ public:
 
 public:
 	//void CreateGLFWwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
-	void CreateSDLwindow(VkInstance vkInstance, VkSurfaceKHR surface, WindowSize windowSize);
+	void CreateSDLwindow(const char* title, int width, int height);
 	//void CreateSDLwindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
 	HWND GetHWnd() { return _hWnd; }
 	//GLFWwindow* GetGLFWWindow() { return _glfwWindow; }

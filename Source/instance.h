@@ -13,7 +13,7 @@ public:
 	virtual ~VulkanInstance();
 
 public:
-	bool Create();
+	bool Create(SDL_Window* window);
 	void Destroy();
 
 public:

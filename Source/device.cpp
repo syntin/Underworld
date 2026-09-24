@@ -16,7 +16,7 @@ Device::~Device()
 
 }
 
-VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR* surface, SDL_Window* window)
+VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR surface, SDL_Window* window)
 {
 	uint32_t physDeviceCount = 0;
 	vkEnumeratePhysicalDevices(instance, &physDeviceCount, nullptr);
@@ -43,9 +43,9 @@ VkPhysicalDevice Device::FindPhysicalDevice(VkInstance& instance, VkSurfaceKHR* 
 
 	// ensure the desired swapchain format is supported
 	uint32_t formatCount = 0;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, *surface, &formatCount, nullptr);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &formatCount, nullptr);
 	std::vector<VkSurfaceFormatKHR> surfaceFormats(formatCount);
-	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, *surface, &formatCount, surfaceFormats.data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, &formatCount, surfaceFormats.data());
 
 	bool formatSupported = false;
 	for (const VkSurfaceFormatKHR& surfFormat : surfaceFormats)
@@ -113,7 +113,8 @@ bool Device::Create(VkPhysicalDevice* physicalDevice, VkQueue* gfxQueue, uint32_
 	{
 		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
 		.pNext = &features13,
-		.timelineSemaphore = VK_TRUE
+		.timelineSemaphore = VK_TRUE,
+		.bufferDeviceAddress = VK_TRUE
 	};
 	VkPhysicalDeviceFeatures2 features{ .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, .pNext = &features12 };
 

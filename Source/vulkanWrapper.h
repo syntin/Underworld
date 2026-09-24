@@ -51,6 +51,8 @@ public:
 		_bindlessRender.SetWorld(world);
 	}
 
+	void RequestSwapChainRecreate(uint32_t width, uint32_t height);
+
 protected:
 	bool SetupVulkan();
 	void Render();
@@ -78,6 +80,8 @@ private:
 	bool _running = true;
 	uint32_t _newWidth = WIDTH;
 	uint32_t _newHeight = HEIGHT;
+	uint32_t _requestedWidth = 0;
+	uint32_t _requestedHeight = 0;
 };
 
 

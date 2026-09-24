@@ -15,10 +15,14 @@ VulkanWrapper::~VulkanWrapper()
 	Destroy();
 }
 
-void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, 
+									 HINSTANCE hPrevInstance, 
+									 LPSTR lpCmdLine, 
+									 int nShowCmd)
 {
 	SDL_InitSubSystem(SDL_INIT_VIDEO);
-	_window.SetSDLWindow(SDL_CreateWindow("Vulkan Learning", WIDTH, HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE));
+
+	_window.CreateSDLwindow("Vulkan Learning", WIDTH, HEIGHT);
 
 	if (!_window.GetSDLWindow())
 	{
@@ -34,7 +38,7 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 
 bool VulkanWrapper::SetupVulkan()
 {
-	if (!_instance.Create())
+	if (!_instance.Create(_window.GetSDLWindow()))
 	{
 		showError("Couldn't create a vulkan instance", _window.GetSDLWindow());
 		return false;
@@ -46,7 +50,7 @@ bool VulkanWrapper::SetupVulkan()
 		return false;
 	}
 
-	if (!_device.FindPhysicalDevice(_instance.GetInstance(), _surface.GetSurfacePtr(), _window.GetSDLWindow()))
+	if (!_device.FindPhysicalDevice(_instance.GetInstance(), _surface.GetSurface(), _window.GetSDLWindow()))
 	{
 		showError("Unable to find an appropriate physical device", _window.GetSDLWindow());
 		return false;
@@ -76,6 +80,8 @@ bool VulkanWrapper::SetupVulkan()
 		showError("Unable to create swapchain", _window.GetSDLWindow());
 		return false;
 	}
+
+	_swapChain.SetSwapChainRecreate(false);
 
 	if (!_shader.Create(_device))
 	{
@@ -114,6 +120,14 @@ bool VulkanWrapper::SetupVulkan()
 	return true;
 }
 
+void VulkanWrapper::RequestSwapChainRecreate(uint32_t width, uint32_t height)
+{
+	_swapChain.SetSwapChainRecreate(true);
+	_requestedWidth = width;
+	_requestedHeight = height;
+}
+
+/* Seeing if this is the issue, moved it to Render loop. 
 void VulkanWrapper::Run()
 {
 	_running = true;
@@ -131,65 +145,111 @@ void VulkanWrapper::Run()
 			{
 				uint32_t width = event.window.data1;
 				uint32_t height = event.window.data2;
-				break;
+				
+				_swapChain.SetSwapChainRecreate(true);
 			}
 		}
 		Render();
 	}
 }
+*/
 
 void VulkanWrapper::Render()
 {
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_EVENT_QUIT)
+		{
+			_running = false;
+			return;
+		}
+		else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+		{
+			uint32_t width = event.window.data1;
+			uint32_t height = event.window.data2;
+
+			RequestSwapChainRecreate(width, height);
+		}
+	}
+
 	// check if swapchain needs to be recreated
 	if (_swapChain.GetSwapChainRecreate())
 	{
-		vkDeviceWaitIdle(_device.GetLogicalDevice());
+		Uint32 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
+		bool windowInvalid =
+			(flags == 0) ||
+			(flags & SDL_WINDOW_MINIMIZED) ||
+			(flags & SDL_WINDOW_HIDDEN);
 
-		// destroy old swapchain
-		_swapChain.Destroy(_device, _vma);
-
-		// recreate swapchain with current window size
-		int width = 0, height = 0;
-		SDL_GetWindowSize(_window.GetSDLWindow(), &width, &height);
-
-		if (!_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(),
-			static_cast<uint32_t>(width),
-			static_cast<uint32_t>(height)))
+		if (windowInvalid)
 		{
-			showError("Failed to recreate swapchain", _window.GetSDLWindow());
-			return;
+			_swapChain.SetSwapChainRecreate(false);
+			// Window not ready yet — skip recreate but STILL render
 		}
-
-		// clear the flag
-		_swapChain.SetSwapChainRecreate(false);
-
-		// rebuild pipeline + shaders
-		if (_pipeline.GetPipeline())
+		else
 		{
-			vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
-			vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
-		}
+			// SAFE TO RECREATE NOW
+			vkDeviceWaitIdle(_device.GetLogicalDevice());
 
-		if (_shader.GetVertShader())
-		{
-			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
-		}
-		if (_shader.GetFragShader())
-		{
-			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
-		}
+			// destroy old swapchain
+			_swapChain.Destroy(_device, _vma);
 
-		_shader.Create(_device);
-		_pipeline.Create(_device, _window, _swapChain, _shader);
+			// get new size
+			uint32_t width = _requestedWidth ? _requestedWidth : _newWidth;
+			uint32_t height = _requestedHeight ? _requestedHeight : _newHeight;
 
-		// rebuild command buffers
-		_commandBuffer.CreateCommandBuffers(
-			_device,
-			_window,
-			_graphicsQueue.GetGraphicsQueueFamilyIndex(),
-			_synchronization.GetFrameResources());
+			// update stored size
+			_newWidth = width;
+			_newHeight = height;
+
+			// destroy old surface
+			vkDestroySurfaceKHR(_instance.GetInstance(), _surface.GetSurface(), nullptr);
+
+			// recreate surface
+			if (_surface.Create(_instance.GetInstance(), _window.GetSDLWindow()))
+			{
+				// recreate swapchain
+				if (_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(),
+					width, height))
+				{
+					_swapChain.SetSwapChainRecreate(false);
+
+					// rebuild pipeline + shaders
+					if (_pipeline.GetPipeline())
+					{
+						vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
+						vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
+					}
+
+					if (_shader.GetVertShader())
+						vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
+					if (_shader.GetFragShader())
+						vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
+
+					_shader.Create(_device);
+					_pipeline.Create(_device, _window, _swapChain, _shader);
+
+					// rebuild command buffers
+					_commandBuffer.CreateCommandBuffers(
+						_device,
+						_window,
+						_graphicsQueue.GetGraphicsQueueFamilyIndex(),
+						_synchronization.GetFrameResources());
+				}
+				else
+				{
+					showError("Failed to recreate swapchain after surface loss", _window.GetSDLWindow());
+				}
+			}
+			else
+			{
+				showError("Failed to recreate surface", _window.GetSDLWindow());
+			}
+		}
 	}
 
+	// ALWAYS render
 	_bindlessRender.Render();
 }
 
@@ -295,5 +355,4 @@ void VulkanWrapper::DestroySwapchain()
 		depthImageView = nullptr;
 	}
 }
-
 

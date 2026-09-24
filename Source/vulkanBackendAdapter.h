@@ -19,4 +19,9 @@ public:
 	{
 		VulkanWrapper::SetWorld(world);
 	}
+
+	void OnWindowResize(uint32_t width, uint32_t height)
+	{
+		RequestSwapChainRecreate(width, height);
+	}
 };

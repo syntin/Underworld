@@ -39,7 +39,7 @@ bool VolkLoader::Initialize(VulkanInstance vulkanInstance, Extensions& extension
 	// expects for its output parameter. Seems out of place but initialization needs to be called AFTER
 	// creation of the extensions
 	extensions.Initialize();
-	vulkanInstance.Create();
+	vulkanInstance.Create(nullptr);
 	volkLoadInstance(vulkanInstance.GetInstance());
 	return true;
 }

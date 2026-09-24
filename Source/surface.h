@@ -15,7 +15,7 @@ public:
 
 public:
 	bool Create(VkInstance& instance, SDL_Window* window);
-	VkSurfaceKHR GetSurface() { return _surface; }
+	VkSurfaceKHR GetSurface() const { return _surface; }
 	VkSurfaceKHR* GetSurfacePtr() { return &_surface; }
 	Surface* Data()
 	{
@@ -23,5 +23,5 @@ public:
 	}
 
 private:
-	VkSurfaceKHR _surface = nullptr;
+	VkSurfaceKHR _surface = VK_NULL_HANDLE;
 };

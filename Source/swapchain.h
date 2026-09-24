@@ -15,7 +15,7 @@ public:
 	virtual ~SwapChain();
 
 public:
-	bool Create(Device device, Surface surface, Vma vma, SDL_Window* window, uint32_t width, uint32_t height);
+	bool Create(Device& device, Surface& surface, Vma& vma, SDL_Window* window, uint32_t width, uint32_t height);
 	void Destroy(Device device, Vma vma);
 
 	void SetSwapChainRecreate(bool value) { _requireSwapchainRecreate = value; }
@@ -36,7 +36,7 @@ public:
 	VkFormat depthFormat = VK_FORMAT_D32_SFLOAT;
 
 protected:
-	bool CreateInfoKHR(Device device, Surface surface);
+	bool CreateInfoKHR(Device& device, Surface& surface);
 	bool CreateImageView(Device device);
 	bool RenderCompleteSemaphores(Device device);
 	bool CreateDepthImageView(Device device, Vma vma);
