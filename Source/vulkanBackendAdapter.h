@@ -24,4 +24,17 @@ public:
     {
         RequestSwapChainRecreate(width, height);
     }
+
+    void SetRunning(bool flag = true)
+    {
+        _isRunning = flag;
+    }
+
+    bool IsRunning()
+    {
+        return _isRunning;
+    }
+
+private:
+    bool _isRunning = true;
 };

@@ -51,6 +51,8 @@ int Game()
     Transform* t1 = components.GetTransform(child1);
     Transform* t2 = components.GetTransform(child2);
 
+    backend.SetRunning();
+
     while (running && backend.IsRunning())
     {
         SDL_Event event;
