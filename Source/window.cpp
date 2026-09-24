@@ -16,7 +16,7 @@ Window::Window()
 
 Window::~Window()
 {
-	Cleanup();
+
 }
 
 /*
@@ -106,7 +106,7 @@ void Window::Cleanup()
 		glfwTerminate();
 	}
 */
-	if (_sdlWindow) {
-		SDL_DestroyWindow(_sdlWindow);
-	}
+	//if (_sdlWindow) {
+	//	SDL_DestroyWindow(_sdlWindow);
+	//}
 }

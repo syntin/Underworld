@@ -35,6 +35,8 @@
 #include "device.h"
 #include "semaphores.h"
 
+class World;
+
 class VulkanWrapper
 {
 public:
@@ -42,7 +44,7 @@ public:
 	virtual ~VulkanWrapper();
 
 public:
-	void InitializeVulkan(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+	void InitializeVulkan(SDL_Window* existingWindow);
 	void Run();
 
 	void SetWorld(World* world)
@@ -51,7 +53,14 @@ public:
 		_bindlessRender.SetWorld(world);
 	}
 
+	Window* GetWindow()
+	{
+		return &_window;
+	}
+
+
 	void RequestSwapChainRecreate(uint32_t width, uint32_t height);
+	bool IsRunning() const { return _running; }
 
 protected:
 	bool SetupVulkan();

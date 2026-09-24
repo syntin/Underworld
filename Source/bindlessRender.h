@@ -10,7 +10,10 @@
 #include "commandBuffer.h"
 #include "graphicsPipeline.h"
 
+
 class World;
+
+class VulkanWrapper;
 
 class BindlessRender
 {
@@ -27,7 +30,8 @@ public:
 		CommandBuffer* cmdBuffer,
 		GraphicsPipeline* pipeline,
 		Vma* vma,
-		World* world);
+		World* world,
+		VulkanWrapper* backend);
 
 
 public:
@@ -53,6 +57,8 @@ private:
 	CommandBuffer* _cmdBuffer = nullptr;
 	GraphicsPipeline* _pipeline = nullptr;
 	World* _world = nullptr;
+	Vma* _vma = nullptr;
+	VulkanWrapper* _backend = nullptr;
 
 	VkBuffer _vertexBuffer = VK_NULL_HANDLE;
 	VmaAllocation _vertexBufferAllocation = VK_NULL_HANDLE;

@@ -3,15 +3,23 @@
 #include "vulkanBackendAdapter.h"
 #include <chrono>
 #include <thread>
+#include <SDL3/SDL.h>
 
 int Game()
 {
+    SDL_Window* window = SDL_CreateWindow(
+        "Vulkan Learning",
+        1280,
+        720,
+        SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE
+    );
+
     World world;
     world.Initialize();
 
     VulkanBackendAdapter backend;
-    backend.Initialize();
     backend.SetWorld(&world);
+    backend.Initialize(window);
 
     auto& entityManager = world.GetEntityManager();
     auto& components = world.GetComponentManager();
@@ -43,8 +51,22 @@ int Game()
     Transform* t1 = components.GetTransform(child1);
     Transform* t2 = components.GetTransform(child2);
 
-    while (running)
+    while (running && backend.IsRunning())
     {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_EVENT_QUIT)
+            {
+                running = false;
+            }
+            else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+            {
+                // forward to backend so it can recreate swapchain
+                backend.OnWindowResize(event.window.data1, event.window.data2);
+            }
+        }
+
         world.Update(0.016f);
 
         //  movement 
@@ -76,6 +98,10 @@ int Game()
     }
 
     world.Shutdown();
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
     return 0;
 }
 

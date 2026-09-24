@@ -43,12 +43,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    VulkanWrapper wrapper;
-
-    // Initialize Vulkan
-    wrapper.InitializeVulkan(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
-    //wrapper.RunRenderLoop();
-    
+    // This file is kept for compatibility, but the engine uses SDL + Game() now.
     return 0;
 }
+
 

@@ -2,6 +2,7 @@
 
 #include <volk/volk.h>
 #include "bindlessRender.h"
+#include "vulkanWrapper.h"
 #include "descriptorPool.h"
 #include "World.h"
 #include "utils.h"
@@ -26,7 +27,8 @@ void BindlessRender::Initialize(
 	CommandBuffer* cmdBuffer,
 	GraphicsPipeline* pipeline,
 	Vma* vma,
-	World* world)
+	World* world,
+	VulkanWrapper* backend)
 {
 	_device = device;
 	_swapChain = swapChain;
@@ -34,7 +36,9 @@ void BindlessRender::Initialize(
 	_sync = sync;
 	_cmdBuffer = cmdBuffer;
 	_pipeline = pipeline;
+	_vma = vma;
 	_world = world;
+	_backend = backend;
 
 	// --- Create vertex buffer for a single triangle ---
 	std::vector<Vertex2D> triangleVertices = {
@@ -145,25 +149,43 @@ void BindlessRender::Render()
 	FrameResources& res = frameResources[frameResIndex];
 	//vkResetCommandPool(device, res._commandPool, 0);
 
+	std::cout << "frameResIndex: " << frameResIndex
+		<< " frameResources.size(): " << frameResources.size() << std::endl;
+
+
 	// get the resources for this frame
 	VkSemaphore imageAcquireSemaphore = res._imageAcquiredSemaphore;
 
 	uint32_t imageIndex = 0;
 	VkResult acquireResult = vkAcquireNextImageKHR(device, swapchain, UINT64_MAX, imageAcquireSemaphore, VK_NULL_HANDLE, &imageIndex);
-
-
+	std::cout << "vkAcquireNextImageKHR result: " << acquireResult << std::endl;
 
 	// handle resize and out-of-date images, may need swapchain recreate
-	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR)
+	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR || acquireResult == VK_SUBOPTIMAL_KHR)
 	{
-		_swapChain->SetSwapChainRecreate(true);
+		if (!_backend)
+		{
+			showError("BindlessRender backend is null", nullptr);
+			return;
+		}
+
+		int width = 0, height = 0;
+		SDL_GetWindowSize(_backend->GetWindow()->GetSDLWindow(), &width, &height);
+
+		_backend->RequestSwapChainRecreate(width, height);
 		return;
 	}
-	else if (acquireResult == VK_SUBOPTIMAL_KHR)
+	else if (acquireResult != VK_SUCCESS)
 	{
-		// can render this frame, recreate next time around
-		// requireSwapchainRecreate = true;
-		_swapChain->SetSwapChainRecreate(true);
+		if (!_backend)
+		{
+			showError("BindlessRender backend is null", nullptr);
+			return;
+		}
+
+		showError("Failed to acquire swapchain image", nullptr);
+		_backend->RequestSwapChainRecreate(0, 0);
+		return;
 	}
 
 	VkCommandBuffer cmd = res._commandBuffer;

@@ -15,18 +15,12 @@ VulkanWrapper::~VulkanWrapper()
 	Destroy();
 }
 
-void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance, 
-									 HINSTANCE hPrevInstance, 
-									 LPSTR lpCmdLine, 
-									 int nShowCmd)
+void VulkanWrapper::InitializeVulkan(SDL_Window* existingWindow)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) == false)
-	{
-		printf("SDL_Init failed: %s\n", SDL_GetError());
-		return;
-	}
+	printf("InitializeVulkan: existingWindow = %p\n", existingWindow);
+	printf("Stored window = %p\n", _window.GetSDLWindow());
 
-	_window.CreateSDLwindow("Vulkan Learning", WIDTH, HEIGHT);
+	_window.SetSDLWindow(existingWindow);
 
 	if (!_window.GetSDLWindow())
 	{
@@ -37,6 +31,8 @@ void VulkanWrapper::InitializeVulkan(HINSTANCE hInstance,
 	if (!SetupVulkan())
 	{
 		showError("Failed to initialize Vulkan", _window.GetSDLWindow());
+		_running = false; 
+		return;
 	}
 
 	_running = true;
@@ -121,19 +117,21 @@ bool VulkanWrapper::SetupVulkan()
 		&_commandBuffer,
 		&_pipeline,
 		&_vma,
-		_world);
+		_world,
+		this);
 
 	return true;
 }
 
 void VulkanWrapper::RequestSwapChainRecreate(uint32_t width, uint32_t height)
 {
+	std::cout << "RequestSwapChainRecreate called: " << width << "x" << height << std::endl;
 	_swapChain.SetSwapChainRecreate(true);
 	_requestedWidth = width;
 	_requestedHeight = height;
 }
 
-/* Seeing if this is the issue, moved it to Render loop. 
+/*
 void VulkanWrapper::Run()
 {
 	_running = true;
@@ -152,7 +150,7 @@ void VulkanWrapper::Run()
 				uint32_t width = event.window.data1;
 				uint32_t height = event.window.data2;
 				
-				_swapChain.SetSwapChainRecreate(true);
+				RequestSwapChainRecreate(width, height);
 			}
 		}
 		Render();
@@ -162,100 +160,105 @@ void VulkanWrapper::Run()
 
 void VulkanWrapper::Render()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_EVENT_QUIT)
-		{
-			_running = false;
-			return;
-		}
-		else if (event.type == SDL_EVENT_WINDOW_RESIZED)
-		{
-			uint32_t width = event.window.data1;
-			uint32_t height = event.window.data2;
+	if (!_running)
+		return;
 
-			RequestSwapChainRecreate(width, height);
-		}
-	}
+	std::cout << "SwapChainRecreate flag = " << _swapChain.GetSwapChainRecreate() << std::endl;
 
 	// check if swapchain needs to be recreated
 	if (_swapChain.GetSwapChainRecreate())
 	{
-		Uint64 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
+		std::cout << "Recreating swapchain..." << std::endl;
+
+		SDL_Window* win = _window.GetSDLWindow();
+		if (!win)
+		{
+			std::cout << "SDL WINDOW IS NULL" << std::endl;
+		}
+		else
+		{
+			Uint32 dbgFlags = SDL_GetWindowFlags(win);
+			std::cout << "SDL window flags (dbg) = 0x" << std::hex << dbgFlags << std::dec << std::endl;
+			std::cout << "SDL_GetError(): " << SDL_GetError() << std::endl;
+		}
+
+		Uint32 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
+		std::cout << "SDL window flags = 0x" << std::hex << flags << std::dec << std::endl;
+
 		bool windowInvalid =
 			(flags == 0) ||
 			(flags & SDL_WINDOW_MINIMIZED) ||
 			(flags & SDL_WINDOW_HIDDEN);
 
+
 		if (windowInvalid)
 		{
-			_swapChain.SetSwapChainRecreate(false);
-			// Window not ready yet — skip recreate but STILL render
+			// Window not ready yet 
+			std::cout << "Window invalid, delaying swapchain recreate\n";
+			return;    // do NOT render this frame
 		}
-		else
+
+		// SAFE TO RECREATE NOW
+		vkDeviceWaitIdle(_device.GetLogicalDevice());
+
+		// destroy old swapchain
+		_swapChain.Destroy(_device, _vma);
+
+		// get new size
+		uint32_t width = _requestedWidth ? _requestedWidth : _newWidth;
+		uint32_t height = _requestedHeight ? _requestedHeight : _newHeight;
+
+		// update stored size
+		_newWidth = width;
+		_newHeight = height;
+
+		// destroy old surface
+		vkDestroySurfaceKHR(_instance.GetInstance(), _surface.GetSurface(), nullptr);
+
+		// recreate surface
+		if (!_surface.Create(_instance.GetInstance(), _window.GetSDLWindow()))
 		{
-			// SAFE TO RECREATE NOW
-			vkDeviceWaitIdle(_device.GetLogicalDevice());
-
-			// destroy old swapchain
-			_swapChain.Destroy(_device, _vma);
-
-			// get new size
-			uint32_t width = _requestedWidth ? _requestedWidth : _newWidth;
-			uint32_t height = _requestedHeight ? _requestedHeight : _newHeight;
-
-			// update stored size
-			_newWidth = width;
-			_newHeight = height;
-
-			// destroy old surface
-			vkDestroySurfaceKHR(_instance.GetInstance(), _surface.GetSurface(), nullptr);
-
-			// recreate surface
-			if (_surface.Create(_instance.GetInstance(), _window.GetSDLWindow()))
-			{
-				// recreate swapchain
-				if (_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(),
-					width, height))
-				{
-					_swapChain.SetSwapChainRecreate(false);
-
-					// rebuild pipeline + shaders
-					if (_pipeline.GetPipeline())
-					{
-						vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
-						vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
-					}
-
-					if (_shader.GetVertShader())
-						vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
-					if (_shader.GetFragShader())
-						vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
-
-					_shader.Create(_device);
-					_pipeline.Create(_device, _window, _swapChain, _shader);
-
-					// rebuild command buffers
-					_commandBuffer.CreateCommandBuffers(
-						_device,
-						_window,
-						_graphicsQueue.GetGraphicsQueueFamilyIndex(),
-						_synchronization.GetFrameResources());
-				}
-				else
-				{
-					showError("Failed to recreate swapchain after surface loss", _window.GetSDLWindow());
-				}
-			}
-			else
-			{
-				showError("Failed to recreate surface", _window.GetSDLWindow());
-			}
+			showError("Failed to recreate surface", _window.GetSDLWindow());
+			_running = false;
+			return;
 		}
+
+		// recreate swapchain
+		if (!_swapChain.Create(_device, _surface, _vma, _window.GetSDLWindow(), width, height))
+		{
+			showError("Failed to recreate swapchain after surface loss", _window.GetSDLWindow());
+			_running = false;
+			return;
+		}
+
+		// rebuild pipeline + shaders
+		if (_pipeline.GetPipeline())
+		{
+			vkDestroyPipelineLayout(_device.GetLogicalDevice(), _pipeline.GetPipelineLayout(), nullptr);
+			vkDestroyPipeline(_device.GetLogicalDevice(), _pipeline.GetPipeline(), nullptr);
+		}
+
+		if (_shader.GetVertShader())
+			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetVertShader(), nullptr);
+		if (_shader.GetFragShader())
+			vkDestroyShaderModule(_device.GetLogicalDevice(), _shader.GetFragShader(), nullptr);
+
+		_shader.Create(_device);
+		_pipeline.Create(_device, _window, _swapChain, _shader);
+
+		// rebuild command buffers
+		_commandBuffer.CreateCommandBuffers(
+			_device,
+			_window,
+			_graphicsQueue.GetGraphicsQueueFamilyIndex(),
+			_synchronization.GetFrameResources());
+
+		// swapchain successfully recreated: clear flag and skip this frame
+		_swapChain.SetSwapChainRecreate(false);
+		return;
 	}
 
-	// ALWAYS render
+	// only render when swapchain is valid
 	_bindlessRender.Render();
 }
 
@@ -317,12 +320,7 @@ void VulkanWrapper::Destroy()
 	}
 	volkFinalize();
 
-	// cleanup SDL
-	if (_window.GetSDLWindow())
-	{
-		SDL_DestroyWindow(_window.GetSDLWindow());
-	}
-	SDL_Quit();
+	
 }
 
 void VulkanWrapper::DestroySwapchain()
