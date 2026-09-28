@@ -18,6 +18,7 @@
 #include "animator.h"
 #include "hierarchy.h"
 #include "cameraControllerComponent.h"
+#include "culling.h"
 
 struct TriangleRenderable {};
 
@@ -107,6 +108,12 @@ public:
 	{
 		m_activeCamera = e;
 	}
+
+	Camera* GetActiveCameraComponent()
+	{
+		return m_cameraPool.GetComponent(m_activeCamera);
+	}
+
 
 	// Mesh
 	ECS::Mesh* AddMesh(Entity e, const ECS::Mesh& m)
@@ -642,6 +649,44 @@ public:
 	{
 		return m_triangleRenderablePool.GetEntities();
 	}
+	
+	// Bounds
+	BoundsComponent* AddBounds(Entity e, const BoundsComponent& b)
+	{
+		return m_boundsPool.AddComponent(e, b);
+	}
+
+	BoundsComponent* GetBounds(Entity e)
+	{
+		return m_boundsPool.GetComponent(e);
+	}
+
+	const BoundsComponent* GetBounds(Entity e) const
+	{
+		return m_boundsPool.GetComponent(e);
+	}
+
+	bool HasBounds(Entity e) const
+	{
+		return m_boundsPool.HasComponent(e);
+	}
+
+	bool RemoveBounds(Entity e)
+	{
+		return m_boundsPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetEntitiesWithBounds()
+	{
+		return m_boundsPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetEntitiesWithBounds() const
+	{
+		return m_boundsPool.GetEntities();
+	}
+	
+	
 	// TO DO: Add components as needed
 
 private:
@@ -662,6 +707,8 @@ private:
 	ComponentPool<Hierarchy> m_hierarchyPool;
 	ComponentPool<CameraControllerComponent> m_cameraControllerPool;
 	ComponentPool<TriangleRenderable> m_triangleRenderablePool;
+	ComponentPool<BoundsComponent> m_boundsPool;
+
 
 	Entity m_activeCamera;
 };

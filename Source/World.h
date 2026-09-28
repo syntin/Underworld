@@ -6,6 +6,10 @@
 #include "worldSpawn.h"
 #include "sceneManager.h"
 #include "input.h"
+#include "transformSystem.h"
+#include "cameraSystem.h"
+
+class CullingSystem;
 
 class World
 {
@@ -33,4 +37,9 @@ private:
 	SceneManager sceneManager;
 	EntitySpawner spawner;
 	Input input;
+
+	CullingSystem* _cullingSystem = nullptr;
+	TransformSystem* _transformSystem = nullptr;
+	CameraSystem* _cameraSystem = nullptr;
+
 };

@@ -4,6 +4,8 @@
 #include <chrono>
 #include <thread>
 #include <SDL3/SDL.h>
+#include "mesh.h"
+#include "culling.h"
 
 int Game()
 {
@@ -32,6 +34,7 @@ int Game()
     rootT.position = { 0, 0, 0 };
     components.AddTransform(root, rootT);
 
+
     // CHILD 1 (clockwise orbit)
     Entity child1 = entityManager.CreateEntity();
 
@@ -39,6 +42,17 @@ int Game()
     child1T.position = { 1, 0, 0 };
     components.AddTransform(child1, child1T);
     components.AddTriangleRenderable(child1, TriangleRenderable{});
+
+    // Mesh + Bounds for child1
+    ECS::Mesh mesh1;
+    mesh1.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
+    mesh1.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
+    components.AddMesh(child1, mesh1);
+
+    BoundsComponent bc1;
+    bc1.localBounds.min = mesh1.boundsMin;
+    bc1.localBounds.max = mesh1.boundsMax;
+    components.AddBounds(child1, bc1);
 
     // CHILD 2 (counter‑clockwise orbit)
     Entity child2 = entityManager.CreateEntity();
@@ -48,6 +62,17 @@ int Game()
     components.AddTransform(child2, child2T);
     components.AddTriangleRenderable(child2, TriangleRenderable{});
 
+    // Mesh + Bounds for child2
+    ECS::Mesh mesh2;
+    mesh2.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
+    mesh2.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
+    components.AddMesh(child2, mesh2);
+
+    BoundsComponent bc2;
+    bc2.localBounds.min = mesh2.boundsMin;
+    bc2.localBounds.max = mesh2.boundsMax;
+    components.AddBounds(child2, bc2);
+
     // PLAYER ENTITY (WASD movement)
     Entity player = entityManager.CreateEntity();
 
@@ -55,6 +80,17 @@ int Game()
     playerT.position = { 0, 0, 0 };
     components.AddTransform(player, playerT);
     components.AddTriangleRenderable(player, TriangleRenderable{});
+
+    // Mesh + Bounds for player
+    ECS::Mesh meshPlayer;
+    meshPlayer.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
+    meshPlayer.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
+    components.AddMesh(player, meshPlayer);
+
+    BoundsComponent bcPlayer;
+    bcPlayer.localBounds.min = meshPlayer.boundsMin;
+    bcPlayer.localBounds.max = meshPlayer.boundsMax;
+    components.AddBounds(player, bcPlayer);
 
     // SCENE GRAPH PARENTING
     sceneGraph.SetParent(child1, root);

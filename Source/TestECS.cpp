@@ -8,6 +8,8 @@
 #include "cameraControllerSystem.h"
 #include "cameraControllerComponent.h"
 
+/*
+
 class TestScene : public RuntimeScene
 {
 public:
@@ -113,3 +115,5 @@ int TestECS()
     world.Shutdown();
     return 0;
 }
+
+*/

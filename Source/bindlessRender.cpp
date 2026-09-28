@@ -8,6 +8,8 @@
 #include "utils.h"
 #include "vertex.h"
 #include "vma.h"
+#include "culling.h"
+#include "componentManager.h"
 
 BindlessRender::BindlessRender()
 {
@@ -307,6 +309,10 @@ void BindlessRender::Render()
 
 		for (Entity e : triangleEntities)
 		{
+			BoundsComponent* bc = components.GetBounds(e);
+			if (bc && !bc->visible)
+				continue;
+
 			Transform* t = components.GetTransform(e);
 			if (!t) continue;
 
