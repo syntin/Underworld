@@ -24,7 +24,7 @@ VkPipeline GraphicsPipeline::Create(Device& device, Window window, SwapChain swa
 	VkPushConstantRange pushConstantRange{
 	.stageFlags = VK_SHADER_STAGE_VERTEX_BIT,
 	.offset = 0,
-	.size = sizeof(float) * 2 // vec2 offset
+	.size = sizeof(float) * 3 // vec2 offset
 	};
 
 	VkPipelineLayoutCreateInfo pipelineLayoutInfo{

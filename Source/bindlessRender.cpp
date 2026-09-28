@@ -310,15 +310,19 @@ void BindlessRender::Render()
 			Transform* t = components.GetTransform(e);
 			if (!t) continue;
 
-			glm::vec2 offset(t->position.x, t->position.y);
+			float pc[3] = {
+				t->position.x,
+				t->position.y,
+				0.25f   // scale = quarter size
+			};
 
 			vkCmdPushConstants(
 				cmd,
 				_pipeline->GetPipelineLayout(),
 				VK_SHADER_STAGE_VERTEX_BIT,
 				0,
-				sizeof(offset),
-				&offset
+				sizeof(pc),
+				pc
 			);
 
 			vkCmdDraw(cmd, 3, 1, 0, 0);
