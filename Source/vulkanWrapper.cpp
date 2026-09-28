@@ -17,8 +17,8 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(SDL_Window* existingWindow)
 {
-	printf("InitializeVulkan: existingWindow = %p\n", existingWindow);
-	printf("Stored window = %p\n", _window.GetSDLWindow());
+	//printf("InitializeVulkan: existingWindow = %p\n", existingWindow);
+	//printf("Stored window = %p\n", _window.GetSDLWindow());
 
 	_window.SetSDLWindow(existingWindow);
 
@@ -163,7 +163,7 @@ void VulkanWrapper::Render()
 	if (!_running)
 		return;
 
-	std::cout << "SwapChainRecreate flag = " << _swapChain.GetSwapChainRecreate() << std::endl;
+	//std::cout << "SwapChainRecreate flag = " << _swapChain.GetSwapChainRecreate() << std::endl;
 
 	// check if swapchain needs to be recreated
 	if (_swapChain.GetSwapChainRecreate())

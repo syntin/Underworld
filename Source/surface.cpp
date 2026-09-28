@@ -15,8 +15,7 @@ bool Surface::Create(VkInstance& instance, SDL_Window* window)
 {
 	_surface = VK_NULL_HANDLE;
 
-	printf("Surface::Create — window=%p  flags=0lx%lx\n",
-		(void*)window, SDL_GetWindowFlags(window));
+	
 
 	if (!SDL_Vulkan_CreateSurface(window, instance, nullptr, &_surface))
 	{
@@ -24,7 +23,7 @@ bool Surface::Create(VkInstance& instance, SDL_Window* window)
 		return false;
 	}
 
-	printf("Surface created: %p\n", (void*)_surface);
+	
 
 	return true;
 }

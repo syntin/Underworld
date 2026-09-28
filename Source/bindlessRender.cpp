@@ -98,7 +98,7 @@ void BindlessRender::CreateAndEnableBindlessDevice(VkPhysicalDeviceDescriptorInd
 
 void BindlessRender::Render()
 {
-	std::cout << "BindlessRender::Render begin" << std::endl;
+	// std::cout << "BindlessRender::Render begin" << std::endl;
 
 	if (!_device || !_swapChain || !_graphicsQueue || !_sync || !_pipeline)
 		return;
@@ -151,8 +151,8 @@ void BindlessRender::Render()
 	FrameResources& res = frameResources[frameResIndex];
 	//vkResetCommandPool(device, res._commandPool, 0);
 
-	std::cout << "frameResIndex: " << frameResIndex
-		<< " frameResources.size(): " << frameResources.size() << std::endl;
+	//std::cout << "frameResIndex: " << frameResIndex
+	//	<< " frameResources.size(): " << frameResources.size() << std::endl;
 
 
 	// get the resources for this frame
@@ -160,7 +160,7 @@ void BindlessRender::Render()
 
 	uint32_t imageIndex = 0;
 	VkResult acquireResult = vkAcquireNextImageKHR(device, swapchain, UINT64_MAX, imageAcquireSemaphore, VK_NULL_HANDLE, &imageIndex);
-	std::cout << "vkAcquireNextImageKHR result: " << acquireResult << std::endl;
+	//std::cout << "vkAcquireNextImageKHR result: " << acquireResult << std::endl;
 
 	// handle resize and out-of-date images, may need swapchain recreate
 	if (acquireResult == VK_ERROR_OUT_OF_DATE_KHR || acquireResult == VK_SUBOPTIMAL_KHR)
