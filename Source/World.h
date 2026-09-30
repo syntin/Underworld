@@ -8,6 +8,7 @@
 #include "input.h"
 #include "transformSystem.h"
 #include "cameraSystem.h"
+#include "assetRegistry.h"
 
 class CullingSystem;
 
@@ -29,6 +30,7 @@ public:
 	SceneManager& GetSceneManager() { return sceneManager; }
 	EntitySpawner& GetSpawner() { return spawner; }
 	Input& GetInput() { return input; }
+	AssetRegistry& GetAssetRegistry() { return assetRegistry; }
 
 private:
 	EntityManager entityManager;
@@ -37,6 +39,7 @@ private:
 	SceneManager sceneManager;
 	EntitySpawner spawner;
 	Input input;
+	AssetRegistry assetRegistry;
 
 	CullingSystem* _cullingSystem = nullptr;
 	TransformSystem* _transformSystem = nullptr;
