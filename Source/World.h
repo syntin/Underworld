@@ -9,6 +9,7 @@
 #include "transformSystem.h"
 #include "cameraSystem.h"
 #include "assetRegistry.h"
+#include "movementSystem.h"
 
 class CullingSystem;
 
@@ -21,7 +22,6 @@ public:
 	void Initialize();
 	void Update(float dt);
 	void Shutdown();
-	void UpdateTransforms();
 
 public:
 	EntityManager& GetEntityManager() { return entityManager; }
@@ -32,6 +32,9 @@ public:
 	Input& GetInput() { return input; }
 	AssetRegistry& GetAssetRegistry() { return assetRegistry; }
 
+	float GetDeltaTime() const { return m_deltaTime; }
+	void SetDeltaTime(float dt) { m_deltaTime = dt; }
+
 private:
 	EntityManager entityManager;
 	ComponentManager componentManager;
@@ -40,9 +43,12 @@ private:
 	EntitySpawner spawner;
 	Input input;
 	AssetRegistry assetRegistry;
+	MovementSystem movementSystem;
 
 	CullingSystem* _cullingSystem = nullptr;
 	TransformSystem* _transformSystem = nullptr;
 	CameraSystem* _cameraSystem = nullptr;
+	
+	float m_deltaTime = 0.0f;
 
 };

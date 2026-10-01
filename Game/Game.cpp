@@ -34,6 +34,8 @@ int Game()
     rootT.position = { 0, 0, 0 };
     components.AddTransform(root, rootT);
 
+    MovementComponent rootMove;
+    components.AddMovement(root, rootMove);
 
     // CHILD 1 (clockwise orbit)
     Entity child1 = entityManager.CreateEntity();
@@ -42,6 +44,9 @@ int Game()
     child1T.position = { 1, 0, 0 };
     components.AddTransform(child1, child1T);
     components.AddTriangleRenderable(child1, TriangleRenderable{});
+
+    MovementComponent child1Move;
+    components.AddMovement(child1, child1Move);
 
     // Mesh + Bounds for child1
     ECS::Mesh mesh1;
@@ -62,6 +67,9 @@ int Game()
     components.AddTransform(child2, child2T);
     components.AddTriangleRenderable(child2, TriangleRenderable{});
 
+    MovementComponent child2Move;
+    components.AddMovement(child2, child2Move);
+
     // Mesh + Bounds for child2
     ECS::Mesh mesh2;
     mesh2.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
@@ -80,6 +88,9 @@ int Game()
     playerT.position = { 0, 0, 0 };
     components.AddTransform(player, playerT);
     components.AddTriangleRenderable(player, TriangleRenderable{});
+
+    MovementComponent playerMove;
+    components.AddMovement(player, playerMove);
 
     // Mesh + Bounds for player
     ECS::Mesh meshPlayer;
@@ -132,7 +143,7 @@ int Game()
         // clockwise (child1)
         t1->position.x = cos(time) * 0.5f;
         t1->position.y = sin(time) * 0.5f;
-
+        
         // counter‑clockwise (child2)
         t2->position.x = cos(time) * 0.5f;
         t2->position.y = -sin(time) * 0.5f;
@@ -141,14 +152,19 @@ int Game()
         const bool* keys = SDL_GetKeyboardState(NULL);
         float speed = 1.0f;
 
+        MovementComponent* pm = components.GetMovement(player);
+
+        // reset velocity each frame 
+        pm->velocity = glm::vec3(0.0f);
+
         if (keys[SDL_SCANCODE_W])
-            playerTransform->position.y -= speed * dt;
+            pm->velocity.y -= speed;
         if (keys[SDL_SCANCODE_S])
-            playerTransform->position.y += speed * dt;
+            pm->velocity.y += speed;
         if (keys[SDL_SCANCODE_A])
-            playerTransform->position.x -= speed * dt;
+            pm->velocity.x -= speed;
         if (keys[SDL_SCANCODE_D])
-            playerTransform->position.x += speed * dt;
+            pm->velocity.x += speed;
 
         // DEBUG OUTPUTS
         std::cout << "Child1 Pos: "

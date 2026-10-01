@@ -21,15 +21,20 @@ void World::Initialize()
 
 void World::Update(float dt)
 {
+    m_deltaTime = dt;
+
     input.Update();
     
-    // 1. Update transforms (worldMatrix, hierarchy)
+    // Movement system (velocity, acceleration, damping)
+    movementSystem.Update(*this);
+
+    // Update transforms (worldMatrix, hierarchy)
     _transformSystem->Update(componentManager, sceneGraph);
 
-    // 2. Update camera matrices (view + projection)
+    // Update camera matrices (view + projection)
     _cameraSystem->Update(componentManager);
 
-    // 3. Run frustum culling (uses worldMatrix + camera matrices)
+    // Run frustum culling (uses worldMatrix + camera matrices)
     _cullingSystem->Update(*this);
 
 	//add shit here later

@@ -19,6 +19,7 @@
 #include "hierarchy.h"
 #include "cameraControllerComponent.h"
 #include "culling.h"
+#include "movementComponent.h"
 
 struct TriangleRenderable {};
 
@@ -686,6 +687,42 @@ public:
 		return m_boundsPool.GetEntities();
 	}
 	
+	// Movement
+	MovementComponent* AddMovement(Entity e, const MovementComponent& m)
+	{
+		return m_movementPool.AddComponent(e, m);
+	}
+
+	MovementComponent* GetMovement(Entity e)
+	{
+		return m_movementPool.GetComponent(e);
+	}
+
+	const MovementComponent* GetMovement(Entity e) const
+	{
+		return m_movementPool.GetComponent(e);
+	}
+
+	bool HasMovement(Entity e) const
+	{
+		return m_movementPool.HasComponent(e);
+	}
+
+	bool RemoveMovement(Entity e)
+	{
+		return m_movementPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetMovementEntities()
+	{
+		return m_movementPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetMovementEntities() const
+	{
+		return m_movementPool.GetEntities();
+	}
+	
 	
 	// TO DO: Add components as needed
 
@@ -708,6 +745,7 @@ private:
 	ComponentPool<CameraControllerComponent> m_cameraControllerPool;
 	ComponentPool<TriangleRenderable> m_triangleRenderablePool;
 	ComponentPool<BoundsComponent> m_boundsPool;
+	ComponentPool<MovementComponent> m_movementPool;
 
 
 	Entity m_activeCamera;
