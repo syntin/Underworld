@@ -7,7 +7,6 @@
 
 VulkanWrapper::VulkanWrapper()
 {
-
 }
 
 VulkanWrapper::~VulkanWrapper()
@@ -177,12 +176,12 @@ void VulkanWrapper::Render()
 		}
 		else
 		{
-			Uint32 dbgFlags = SDL_GetWindowFlags(win);
+			SDL_WindowFlags dbgFlags = SDL_GetWindowFlags(win);
 			std::cout << "SDL window flags (dbg) = 0x" << std::hex << dbgFlags << std::dec << std::endl;
 			std::cout << "SDL_GetError(): " << SDL_GetError() << std::endl;
 		}
 
-		Uint32 flags = SDL_GetWindowFlags(_window.GetSDLWindow());
+		SDL_WindowFlags flags = SDL_GetWindowFlags(_window.GetSDLWindow());
 		std::cout << "SDL window flags = 0x" << std::hex << flags << std::dec << std::endl;
 
 		bool windowInvalid =

@@ -85,7 +85,7 @@ private:
 	World* _world = nullptr;
 
 private:
-	VkImageMemoryBarrier2 _imageMemoryBarrier2[2];
+	VkImageMemoryBarrier2 _imageMemoryBarrier2[2] = ;
 	bool _running = true;
 	uint32_t _newWidth = WIDTH;
 	uint32_t _newHeight = HEIGHT;
