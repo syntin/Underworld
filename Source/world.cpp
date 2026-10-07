@@ -16,6 +16,9 @@ void World::Initialize()
     _transformSystem = new TransformSystem();
     _cameraSystem = new CameraSystem();
     _cullingSystem = new CullingSystem();
+    _broadphaseSystem = new PhysicsBroadphaseSystem();
+    _narrowphaseSystem = new PhysicsNarrowphaseSystem();
+
 
 }
 
@@ -30,6 +33,12 @@ void World::Update(float dt)
 
     // Update transforms (worldMatrix, hierarchy)
     _transformSystem->Update(componentManager, sceneGraph);
+
+    // Broadphase
+    _broadphaseSystem->Update(*this);
+
+    // Narrowphase
+    _narrowphaseSystem->Update(*this);
 
     // Update camera matrices (view + projection)
     _cameraSystem->Update(componentManager);
@@ -47,5 +56,9 @@ void World::Shutdown()
     delete _transformSystem;
     delete _cameraSystem;
     delete _cullingSystem;
+    delete _broadphaseSystem;
+    delete _narrowphaseSystem;
+
+
 }
 

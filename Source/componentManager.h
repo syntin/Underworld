@@ -20,6 +20,8 @@
 #include "cameraControllerComponent.h"
 #include "culling.h"
 #include "movementComponent.h"
+#include "rigidBodyComponent.h"
+
 
 struct TriangleRenderable {};
 
@@ -723,7 +725,42 @@ public:
 		return m_movementPool.GetEntities();
 	}
 	
-	
+	// RigidBody
+	RigidBodyComponent* AddRigidBody(Entity e, const RigidBodyComponent& rb)
+	{
+		return m_rigidBodyPool.AddComponent(e, rb);
+	}
+
+	RigidBodyComponent* GetRigidBody(Entity e)
+	{
+		return m_rigidBodyPool.GetComponent(e);
+	}
+
+	const RigidBodyComponent* GetRigidBody(Entity e) const
+	{
+		return m_rigidBodyPool.GetComponent(e);
+	}
+
+	bool HasRigidBody(Entity e) const
+	{
+		return m_rigidBodyPool.HasComponent(e);
+	}
+
+	bool RemoveRigidBody(Entity e)
+	{
+		return m_rigidBodyPool.RemoveComponent(e);
+	}
+
+	std::vector<Entity>& GetRigidBodyEntities()
+	{
+		return m_rigidBodyPool.GetEntities();
+	}
+
+	const std::vector<Entity>& GetRigidBodyEntities() const
+	{
+		return m_rigidBodyPool.GetEntities();
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -746,6 +783,7 @@ private:
 	ComponentPool<TriangleRenderable> m_triangleRenderablePool;
 	ComponentPool<BoundsComponent> m_boundsPool;
 	ComponentPool<MovementComponent> m_movementPool;
+	ComponentPool<RigidBodyComponent> m_rigidBodyPool;
 
 
 	Entity m_activeCamera;

@@ -10,6 +10,9 @@
 #include "cameraSystem.h"
 #include "assetRegistry.h"
 #include "movementSystem.h"
+#include "physicsBroadphaseSystem.h"
+#include "physicsNarrowphaseSystem.h"
+#include "rigidBodySolverSystem.h"
 
 class CullingSystem;
 
@@ -31,6 +34,9 @@ public:
 	EntitySpawner& GetSpawner() { return spawner; }
 	Input& GetInput() { return input; }
 	AssetRegistry& GetAssetRegistry() { return assetRegistry; }
+	PhysicsBroadphaseSystem* GetBroadphaseSystem() { return _broadphaseSystem; }
+	PhysicsNarrowphaseSystem* GetNarrowphaseSystem() { return _narrowphaseSystem; }
+	RigidBodySolverSystem* GetRigidBodySolver() { return _rigidBodySolver; }
 
 	float GetDeltaTime() const { return m_deltaTime; }
 	void SetDeltaTime(float dt) { m_deltaTime = dt; }
@@ -48,6 +54,9 @@ private:
 	CullingSystem* _cullingSystem = nullptr;
 	TransformSystem* _transformSystem = nullptr;
 	CameraSystem* _cameraSystem = nullptr;
+	PhysicsBroadphaseSystem* _broadphaseSystem = nullptr;
+	PhysicsNarrowphaseSystem* _narrowphaseSystem = nullptr;
+	RigidBodySolverSystem* _rigidBodySolver = nullptr;
 	
 	float m_deltaTime = 0.0f;
 

@@ -9,6 +9,7 @@ struct AABB {
 
 struct BoundsComponent {
 	AABB localBounds; // Mesh-space AABB
+	AABB worldBounds; // World-space AABB (computed every frame)
 	bool visible = true;
 };
 

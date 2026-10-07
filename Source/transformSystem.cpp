@@ -2,6 +2,7 @@
 #include "componentManager.h"
 #include "transformationMathematics.h"
 #include "SceneGraph.h"
+#include "culling.h"
 
 void TransformSystem::Update(ComponentManager& components, SceneGraph& graph)
 {
@@ -32,6 +33,12 @@ void TransformSystem::Update(ComponentManager& components, SceneGraph& graph)
 		else
 		{
 			t->worldMatrix = t->localMatrix;
+		}
+
+		if (components.HasBounds(entity))
+		{
+			BoundsComponent* bc = components.GetBounds(entity);
+			bc->worldBounds = TransformAABB(bc->localBounds, t->worldMatrix);
 		}
 
 		//clear dirty flags
