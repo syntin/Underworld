@@ -1,6 +1,7 @@
 //RC & DB
 #pragma once
 #include <glm/glm.hpp>
+#include "exportSystem.h"
 
 //RC
 class ColliderComponents
@@ -31,4 +32,13 @@ struct Collider
 
 	bool isTrigger = false;
 	bool dirty = true;
+
+	// Export System Demo
+	// It's pretty simple, just make a constructor
+	Collider() //like this
+	{
+		EXPORT(*this, type);  //then export the thing you need
+		EXPORT(*this, offset); 
+								
+	}
 };

@@ -7,4 +7,12 @@ struct MovementComponent
 	glm::vec3 velocity = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);
 	float damping = 0.98f;
+
+	MovementComponent()
+	{
+		EXPORT(*this, velocity);
+		EXPORT(*this, acceleration);
+		EXPORT(*this, damping);
+
+	}
 };
