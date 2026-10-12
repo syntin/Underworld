@@ -4,6 +4,10 @@
 #include "cullingSystem.h"
 #include "transformSystem.h"
 #include "cameraSystem.h"
+#include "physicsBroadphaseSystem.h"
+#include "physicsNarrowphaseSystem.h"
+#include "rigidBodySolverSystem.h"
+
 
 World::World()
     : spawner(*this)
@@ -18,6 +22,7 @@ void World::Initialize()
     _cullingSystem = new CullingSystem();
     _broadphaseSystem = new PhysicsBroadphaseSystem();
     _narrowphaseSystem = new PhysicsNarrowphaseSystem();
+    _rigidBodySolver = new RigidBodySolverSystem();
 
 
 }
@@ -58,6 +63,7 @@ void World::Shutdown()
     delete _cullingSystem;
     delete _broadphaseSystem;
     delete _narrowphaseSystem;
+    delete _rigidBodySolver;
 
 
 }

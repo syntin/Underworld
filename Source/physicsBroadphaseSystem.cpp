@@ -4,6 +4,7 @@
 #include "componentManager.h"
 #include "culling.h"
 #include "Transform.h"
+#include "World.h"
 
 static bool AABBOVerlap(const BoundsComponent& a, const BoundsComponent& b)
 {
@@ -37,7 +38,11 @@ void PhysicsBroadphaseSystem::Update(World& world)
 
 			if (AABBOVerlap(*ba, *bb))
 			{
-				pairs.push_back({ a,b });
+				PotentialCollision pc;
+				pc.a = a;
+				pc.b = b;
+				pairs.push_back(pc);
+
 			}
 		}
 	}

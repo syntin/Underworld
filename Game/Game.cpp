@@ -6,6 +6,7 @@
 #include <SDL3/SDL.h>
 #include "mesh.h"
 #include "culling.h"
+#include "inspector.h"
 
 int Game()
 {
@@ -16,12 +17,25 @@ int Game()
         SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE
     );
 
+    // SECOND WINDOW FOR INSPECTOR
+    SDL_Window* inspectorWindow = SDL_CreateWindow(
+        "Inspector",
+        400,
+        800,
+        SDL_WINDOW_RESIZABLE
+    );
+
+    SDL_Renderer* inspectorRenderer = SDL_CreateRenderer(inspectorWindow, nullptr);
+
+
     World world;
     world.Initialize();
 
     VulkanBackendAdapter backend;
     backend.SetWorld(&world);
     backend.Initialize(window);
+
+    Inspector inspector;
 
     auto& entityManager = world.GetEntityManager();
     auto& components = world.GetComponentManager();
@@ -123,6 +137,8 @@ int Game()
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+            inspector.HandleEvent(event);
+
             if (event.type == SDL_EVENT_QUIT)
             {
                 running = false;
@@ -185,12 +201,26 @@ int Game()
         // RENDER FRAME
         backend.RenderFrame();
 
+        // Draw inspector in its own window
+        SDL_SetRenderDrawBlendMode(inspectorRenderer, SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(inspectorRenderer, 0, 0, 0, 255);
+        SDL_RenderClear(inspectorRenderer);
+
+        inspector.Draw(inspectorRenderer);
+
+        SDL_RenderPresent(inspectorRenderer);
+
+
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
 
     world.Shutdown();
 
+    SDL_DestroyRenderer(inspectorRenderer);
+    SDL_DestroyWindow(inspectorWindow);
+
     SDL_DestroyWindow(window);
+
     SDL_Quit();
 
     return 0;

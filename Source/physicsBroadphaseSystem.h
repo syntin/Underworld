@@ -1,8 +1,9 @@
 //DB
 #pragma once
-
+#include "entity.h"
 #include <vector>
-#include "World.h"
+
+class World;
 
 struct PotentialCollision
 {
