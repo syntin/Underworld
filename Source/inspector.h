@@ -6,21 +6,21 @@
 class Inspector
 {
 public:
-    void Draw(SDL_Renderer* renderer);
-    void HandleEvent(const SDL_Event& e);
+    SDL_Window* inspectorWindow = nullptr;
 
-private:
+    void HandleEvent(const SDL_Event& e);
+    void Draw(SDL_Renderer* renderer);
+
     bool open = true;
 
-    // Event pointer for this frame
-    const SDL_Event* lastEvent = nullptr;
-
-    // Slider dragging state
-    bool draggingSlider = false;
+    bool   draggingSlider = false;
     float* activeSliderValue = nullptr;
-    float activeSliderMin = 0.0f;
-    float activeSliderMax = 1.0f;
-    float activeSliderX = 0.0f;
-    float activeSliderY = 0.0f;
-    float activeSliderWidth = 200.0f;
+    float  activeSliderMin = 0.0f;
+    float  activeSliderMax = 0.0f;
+    float  activeSliderX = 0.0f;
+    float  activeSliderY = 0.0f;
+    float  activeSliderWidth = 0.0f;
+
+    SDL_Event lastEvent{};
+    bool      hasLastEvent = false;
 };

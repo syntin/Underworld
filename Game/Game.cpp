@@ -10,6 +10,7 @@
 
 int Game()
 {
+        // MAIN VULKAN WINDOW
     SDL_Window* window = SDL_CreateWindow(
         "Vulkan Learning",
         1280,
@@ -17,7 +18,13 @@ int Game()
         SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE
     );
 
-    // SECOND WINDOW FOR INSPECTOR
+    if (!window)
+    {
+        SDL_Log("Failed to create main window: %s", SDL_GetError());
+        return -1;
+    }
+
+    // INSPECTOR WINDOW
     SDL_Window* inspectorWindow = SDL_CreateWindow(
         "Inspector",
         400,
@@ -25,9 +32,20 @@ int Game()
         SDL_WINDOW_RESIZABLE
     );
 
+    if (!inspectorWindow)
+    {
+        SDL_Log("Failed to create inspector window: %s", SDL_GetError());
+        return -1;
+    }
+
     SDL_Renderer* inspectorRenderer = SDL_CreateRenderer(inspectorWindow, nullptr);
+    if (!inspectorRenderer)
+    {
+        SDL_Log("Failed to create inspector renderer: %s", SDL_GetError());
+        return -1;
+    }
 
-
+    // WORLD + SYSTEMS
     World world;
     world.Initialize();
 
@@ -36,10 +54,11 @@ int Game()
     backend.Initialize(window);
 
     Inspector inspector;
+    inspector.inspectorWindow = inspectorWindow;
 
     auto& entityManager = world.GetEntityManager();
-    auto& components = world.GetComponentManager();
-    auto& sceneGraph = world.GetSceneGraph();
+    auto& components    = world.GetComponentManager();
+    auto& sceneGraph    = world.GetSceneGraph();
 
     // ROOT ENTITY
     Entity root = entityManager.CreateEntity();
@@ -62,7 +81,6 @@ int Game()
     MovementComponent child1Move;
     components.AddMovement(child1, child1Move);
 
-    // Mesh + Bounds for child1
     ECS::Mesh mesh1;
     mesh1.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
     mesh1.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
@@ -84,7 +102,6 @@ int Game()
     MovementComponent child2Move;
     components.AddMovement(child2, child2Move);
 
-    // Mesh + Bounds for child2
     ECS::Mesh mesh2;
     mesh2.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
     mesh2.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
@@ -106,7 +123,6 @@ int Game()
     MovementComponent playerMove;
     components.AddMovement(player, playerMove);
 
-    // Mesh + Bounds for player
     ECS::Mesh meshPlayer;
     meshPlayer.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
     meshPlayer.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
@@ -123,8 +139,8 @@ int Game()
     sceneGraph.SetParent(player, root);
 
     // TRANSFORM POINTERS
-    Transform* t1 = components.GetTransform(child1);
-    Transform* t2 = components.GetTransform(child2);
+    Transform* t1              = components.GetTransform(child1);
+    Transform* t2              = components.GetTransform(child2);
     Transform* playerTransform = components.GetTransform(player);
 
     bool running = true;
@@ -132,22 +148,51 @@ int Game()
 
     float time = 0.0f;
 
+    // Get window IDs for routing events
+     // Get window IDs for routing events
+    Uint32 mainWindowID = SDL_GetWindowID(window);
+    Uint32 inspectorWindowID = SDL_GetWindowID(inspectorWindow);
+
     while (running && backend.IsRunning())
     {
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            inspector.HandleEvent(event);
-
-            if (event.type == SDL_EVENT_QUIT)
+            // Mouse button events
+            if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN ||
+                event.type == SDL_EVENT_MOUSE_BUTTON_UP)
             {
-                running = false;
+                if (event.button.windowID == inspectorWindowID)
+                    inspector.HandleEvent(event);
             }
-            else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+
+            // Mouse motion
+            else if (event.type == SDL_EVENT_MOUSE_MOTION)
+            {
+                if (event.motion.windowID == inspectorWindowID)
+                    inspector.HandleEvent(event);
+            }
+
+            // Keyboard events
+            else if (event.type == SDL_EVENT_KEY_DOWN ||
+                event.type == SDL_EVENT_KEY_UP)
+            {
+                if (event.key.windowID == inspectorWindowID)
+                    inspector.HandleEvent(event);
+            }
+
+            // Quit
+            if (event.type == SDL_EVENT_QUIT)
+                running = false;
+
+            // Resize only for main Vulkan window
+            if (event.type == SDL_EVENT_WINDOW_RESIZED &&
+                event.window.windowID == mainWindowID)
             {
                 backend.OnWindowResize(event.window.data1, event.window.data2);
             }
         }
+
 
         // FIXED TIMESTEP
         float dt = 0.016f;
@@ -159,7 +204,7 @@ int Game()
         // clockwise (child1)
         t1->position.x = cos(time) * 0.5f;
         t1->position.y = sin(time) * 0.5f;
-        
+
         // counter‑clockwise (child2)
         t2->position.x = cos(time) * 0.5f;
         t2->position.y = -sin(time) * 0.5f;
@@ -169,8 +214,6 @@ int Game()
         float speed = 1.0f;
 
         MovementComponent* pm = components.GetMovement(player);
-
-        // reset velocity each frame 
         pm->velocity = glm::vec3(0.0f);
 
         if (keys[SDL_SCANCODE_W])
@@ -182,26 +225,10 @@ int Game()
         if (keys[SDL_SCANCODE_D])
             pm->velocity.x += speed;
 
-        // DEBUG OUTPUTS
-        std::cout << "Child1 Pos: "
-            << t1->position.x << ", "
-            << t1->position.y << ", "
-            << t1->position.z << std::endl;
-
-        std::cout << "Child2 Pos: "
-            << t2->position.x << ", "
-            << t2->position.y << ", "
-            << t2->position.z << std::endl;
-
-        std::cout << "Player Pos: "
-            << playerTransform->position.x << ", "
-            << playerTransform->position.y << ", "
-            << playerTransform->position.z << std::endl;
-
-        // RENDER FRAME
+        // VULKAN RENDER FRAME
         backend.RenderFrame();
 
-        // Draw inspector in its own window
+        // INSPECTOR RENDER
         SDL_SetRenderDrawBlendMode(inspectorRenderer, SDL_BLENDMODE_BLEND);
         SDL_SetRenderDrawColor(inspectorRenderer, 0, 0, 0, 255);
         SDL_RenderClear(inspectorRenderer);
@@ -210,7 +237,6 @@ int Game()
 
         SDL_RenderPresent(inspectorRenderer);
 
-
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
 
@@ -218,7 +244,6 @@ int Game()
 
     SDL_DestroyRenderer(inspectorRenderer);
     SDL_DestroyWindow(inspectorWindow);
-
     SDL_DestroyWindow(window);
 
     SDL_Quit();

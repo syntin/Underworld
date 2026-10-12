@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <typeinfo>
+#include <glm/glm.hpp>
 
 struct ExportedVariable
 {
