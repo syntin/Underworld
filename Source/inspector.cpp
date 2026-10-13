@@ -235,8 +235,24 @@ void Inspector::Draw(SDL_Renderer* renderer)
 
     float y = 40.0f;
 
+    void* currentOwner = nullptr;
+
     for (const auto& var : vars)
     {
+        if (var.ownerPtr != currentOwner)
+        {
+            currentOwner = var.ownerPtr;
+
+            DrawText(
+                renderer,
+                var.componentName,
+                30,
+                (int)y
+            );
+
+            y += 20.0f;
+        }
+
         DrawText(renderer, var.name, 30, (int)y);
 
         if (var.typeName.find("float") != std::string::npos)
