@@ -4,6 +4,7 @@
 #include <chrono>
 #include <thread>
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include "mesh.h"
 #include "culling.h"
 #include "inspector.h"
@@ -44,6 +45,13 @@ int Game()
         SDL_Log("Failed to create inspector renderer: %s", SDL_GetError());
         return -1;
     }
+
+    if (!TTF_Init())
+    {
+        SDL_Log("TTF_Init failed!");
+        return -1;
+    }
+
 
     // WORLD + SYSTEMS
     World world;

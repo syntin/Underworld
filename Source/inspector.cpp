@@ -1,13 +1,69 @@
 //DB
 #include "Inspector.h"
 #include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include <iostream>
 
-// TEMP TEXT DRAWING (no SDL_ttf yet)
+static TTF_Font* gInspectorFont = nullptr;
+
+static bool InitializeInspectorFont()
+{
+    if (gInspectorFont)
+        return true;
+
+    gInspectorFont = TTF_OpenFont(
+        "../../Assets/Fonts/aerial.ttf",
+        16
+    );
+
+    if (!gInspectorFont)
+    {
+        SDL_Log("Failed to load font: %s", SDL_GetError());
+        return false;
+    }
+
+    return true;
+}
+
+// TEXT DRAWING 
 static void DrawText(SDL_Renderer* renderer, const std::string& text, int x, int y)
 {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderLine(renderer, x, y, x + (int)text.size() * 7, y);
+    if (!gInspectorFont)
+        return;
+
+    SDL_Color color = { 255, 255, 255, 255 };
+
+    SDL_Surface* surface = TTF_RenderText_Blended(
+        gInspectorFont,
+        text.c_str(),
+        text.size(),
+        color
+    );
+
+    if (!surface)
+        return;
+
+    SDL_Texture* texture =
+        SDL_CreateTextureFromSurface(renderer, surface);
+
+    if (!texture)
+    {
+        SDL_DestroySurface(surface);
+        return;
+    }
+
+    SDL_FRect dst =
+    {
+        (float)x,
+        (float)y,
+        (float)surface->w,
+        (float)surface->h
+    };
+
+    SDL_RenderTexture(renderer, texture, nullptr, &dst);
+
+    SDL_DestroyTexture(texture);
+    SDL_DestroySurface(surface);
 }
 
 // Convert pixel mouse coords → logical window coords
@@ -162,6 +218,12 @@ void Inspector::HandleEvent(const SDL_Event& e)
 void Inspector::Draw(SDL_Renderer* renderer)
 {
     if (!open) return;
+
+
+    if (!gInspectorFont)
+    {
+        InitializeInspectorFont();
+    }
 
     SDL_FRect panel = { 20.0f, 20.0f, 340.0f, 700.0f };
     SDL_SetRenderDrawColor(renderer, 40, 40, 40, 220);

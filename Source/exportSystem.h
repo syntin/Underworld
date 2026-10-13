@@ -5,6 +5,7 @@
 #include <typeinfo>
 #include <glm/glm.hpp>
 
+
 struct ExportedVariable
 {
 	std::string name;
