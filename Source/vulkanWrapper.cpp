@@ -16,9 +16,6 @@ VulkanWrapper::~VulkanWrapper()
 
 void VulkanWrapper::InitializeVulkan(SDL_Window* existingWindow)
 {
-	//printf("InitializeVulkan: existingWindow = %p\n", existingWindow);
-	//printf("Stored window = %p\n", _window.GetSDLWindow());
-
 	_window.SetSDLWindow(existingWindow);
 
 	if (!_window.GetSDLWindow())
@@ -130,32 +127,6 @@ void VulkanWrapper::RequestSwapChainRecreate(uint32_t width, uint32_t height)
 	_requestedHeight = height;
 }
 
-/*
-void VulkanWrapper::Run()
-{
-	_running = true;
-	while (_running)
-	{
-		SDL_Event event{ 0 };
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_EVENT_QUIT)
-			{
-				_running = false;
-				break;
-			}
-			else if (event.type == SDL_EVENT_WINDOW_RESIZED)
-			{
-				uint32_t width = event.window.data1;
-				uint32_t height = event.window.data2;
-				
-				RequestSwapChainRecreate(width, height);
-			}
-		}
-		Render();
-	}
-}
-*/
 
 void VulkanWrapper::Render()
 {
