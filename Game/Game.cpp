@@ -76,7 +76,12 @@ int Game()
     components.AddTransform(root, rootT);
 
     MovementComponent rootMove;
+    rootMove.RegisterExports("Root");
     components.AddMovement(root, rootMove);
+    
+    NameComponent rootName;
+    rootName.name = "Root";
+    components.AddName(root, rootName);
 
     // CHILD 1 (clockwise orbit)
     Entity child1 = entityManager.CreateEntity();
@@ -87,6 +92,7 @@ int Game()
     components.AddTriangleRenderable(child1, TriangleRenderable{});
 
     MovementComponent child1Move;
+    child1Move.RegisterExports("Child1");
     components.AddMovement(child1, child1Move);
 
     ECS::Mesh mesh1;
@@ -99,6 +105,10 @@ int Game()
     bc1.localBounds.max = mesh1.boundsMax;
     components.AddBounds(child1, bc1);
 
+    NameComponent child1Name;
+    child1Name.name = "Child1";
+    components.AddName(child1, child1Name);
+
     // CHILD 2 (counter‑clockwise orbit)
     Entity child2 = entityManager.CreateEntity();
 
@@ -108,6 +118,7 @@ int Game()
     components.AddTriangleRenderable(child2, TriangleRenderable{});
 
     MovementComponent child2Move;
+    child2Move.RegisterExports("Child2");
     components.AddMovement(child2, child2Move);
 
     ECS::Mesh mesh2;
@@ -120,6 +131,10 @@ int Game()
     bc2.localBounds.max = mesh2.boundsMax;
     components.AddBounds(child2, bc2);
 
+    NameComponent child2Name;
+    child2Name.name = "Child2";
+    components.AddName(child2, child2Name);
+
     // PLAYER ENTITY (WASD movement)
     Entity player = entityManager.CreateEntity();
 
@@ -129,6 +144,7 @@ int Game()
     components.AddTriangleRenderable(player, TriangleRenderable{});
 
     MovementComponent playerMove;
+    playerMove.RegisterExports("Player");
     components.AddMovement(player, playerMove);
 
     ECS::Mesh meshPlayer;
@@ -140,6 +156,10 @@ int Game()
     bcPlayer.localBounds.min = meshPlayer.boundsMin;
     bcPlayer.localBounds.max = meshPlayer.boundsMax;
     components.AddBounds(player, bcPlayer);
+
+    NameComponent playerName;
+    playerName.name = "Player";
+    components.AddName(player, playerName);
 
     // SCENE GRAPH PARENTING
     sceneGraph.SetParent(child1, root);
@@ -222,16 +242,16 @@ int Game()
         float speed = 1.0f;
 
         MovementComponent* pm = components.GetMovement(player);
-        pm->velocity = glm::vec3(0.0f);
+        pm->acceleration = glm::vec3(0.0f);
 
         if (keys[SDL_SCANCODE_W])
-            pm->velocity.y -= speed;
+            pm->acceleration.y -= speed;
         if (keys[SDL_SCANCODE_S])
-            pm->velocity.y += speed;
+            pm->acceleration.y += speed;
         if (keys[SDL_SCANCODE_A])
-            pm->velocity.x -= speed;
+            pm->acceleration.x -= speed;
         if (keys[SDL_SCANCODE_D])
-            pm->velocity.x += speed;
+            pm->acceleration.x += speed;
 
         // VULKAN RENDER FRAME
         backend.RenderFrame();

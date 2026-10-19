@@ -245,6 +245,15 @@ void Inspector::Draw(SDL_Renderer* renderer)
 
             DrawText(
                 renderer,
+                var.ownerName,
+                30,
+                (int)y
+            );
+
+            y += 20.0f;
+
+            DrawText(
+                renderer,
                 var.componentName,
                 30,
                 (int)y
@@ -260,7 +269,7 @@ void Inspector::Draw(SDL_Renderer* renderer)
             float* v = (float*)var.valuePtr;
 
             DrawSlider(renderer, 30.0f, y + 20.0f, 200.0f,
-                v, -10.0f, 10.0f,
+                v, -100.0f, 100.0f,
                 ePtr,
                 inspectorWindow,
                 draggingSlider,
@@ -284,17 +293,17 @@ void Inspector::Draw(SDL_Renderer* renderer)
         {
             glm::vec3* v = (glm::vec3*)var.valuePtr;
 
-            DrawSlider(renderer, 30, y + 20, 200, &v->x, -10, 10,
+            DrawSlider(renderer, 30, y + 20, 200, &v->x, -100, 100,
                 ePtr, inspectorWindow, draggingSlider, activeSliderValue,
                 activeSliderMin, activeSliderMax,
                 activeSliderX, activeSliderY, activeSliderWidth);
 
-            DrawSlider(renderer, 30, y + 40, 200, &v->y, -10, 10,
+            DrawSlider(renderer, 30, y + 40, 200, &v->y, -100, 100,
                 ePtr, inspectorWindow, draggingSlider, activeSliderValue,
                 activeSliderMin, activeSliderMax,
                 activeSliderX, activeSliderY, activeSliderWidth);
 
-            DrawSlider(renderer, 30, y + 60, 200, &v->z, -10, 10,
+            DrawSlider(renderer, 30, y + 60, 200, &v->z, -100, 100,
                 ePtr, inspectorWindow, draggingSlider, activeSliderValue,
                 activeSliderMin, activeSliderMax,
                 activeSliderX, activeSliderY, activeSliderWidth);

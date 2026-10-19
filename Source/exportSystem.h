@@ -9,6 +9,7 @@
 struct ExportedVariable
 {
     std::string componentName;
+    std::string ownerName;
 	std::string name;
 	std::string typeName;
 	void* ownerPtr;
@@ -44,6 +45,7 @@ private:
 #define EXPORT(owner, variable) \
     ExportRegistry::Instance().Register({ \
         typeid(owner).name(), \
+        "Unknown", \
         #variable, \
         typeid(decltype((owner).variable)).name(), \
         (void*)&(owner), \

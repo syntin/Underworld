@@ -21,6 +21,7 @@
 #include "culling.h"
 #include "movementComponent.h"
 #include "rigidBodyComponent.h"
+#include "nameComponent.h"
 
 
 struct TriangleRenderable {};
@@ -761,6 +762,27 @@ public:
 		return m_rigidBodyPool.GetEntities();
 	}
 
+	// Name
+	NameComponent* AddName(Entity e, const NameComponent& n)
+	{
+		return m_namePool.AddComponent(e, n);
+	}
+
+	NameComponent* GetName(Entity e)
+	{
+		return m_namePool.GetComponent(e);
+	}
+
+	const NameComponent* GetName(Entity e) const
+	{
+		return m_namePool.GetComponent(e);
+	}
+
+	bool HasName(Entity e) const
+	{
+		return m_namePool.HasComponent(e);
+	}
+
 	// TO DO: Add components as needed
 
 private:
@@ -784,6 +806,7 @@ private:
 	ComponentPool<BoundsComponent> m_boundsPool;
 	ComponentPool<MovementComponent> m_movementPool;
 	ComponentPool<RigidBodyComponent> m_rigidBodyPool;
+	ComponentPool<NameComponent> m_namePool;
 
 
 	Entity m_activeCamera;
