@@ -268,6 +268,16 @@ void Inspector::Draw(SDL_Renderer* renderer)
         {
             float* v = (float*)var.valuePtr;
 
+            char valueBuffer[32];
+            sprintf_s(valueBuffer, "%.2f", *v);
+
+            DrawText(
+                renderer,
+                valueBuffer,
+                240,
+                (int)y
+            );
+
             DrawSlider(renderer, 30.0f, y + 20.0f, 200.0f,
                 v, -100.0f, 100.0f,
                 ePtr,
@@ -292,6 +302,18 @@ void Inspector::Draw(SDL_Renderer* renderer)
         else if (var.typeName.find("vec3") != std::string::npos)
         {
             glm::vec3* v = (glm::vec3*)var.valuePtr;
+
+            char xBuffer[32];
+            char yBuffer[32];
+            char zBuffer[32];
+
+            sprintf_s(xBuffer, "X: %.2f", v->x);
+            sprintf_s(yBuffer, "Y: %.2f", v->y);
+            sprintf_s(zBuffer, "Z: %.2f", v->z);
+
+            DrawText(renderer, xBuffer, 240, (int)(y + 20));
+            DrawText(renderer, yBuffer, 240, (int)(y + 40));
+            DrawText(renderer, zBuffer, 240, (int)(y + 60));
 
             DrawSlider(renderer, 30, y + 20, 200, &v->x, -100, 100,
                 ePtr, inspectorWindow, draggingSlider, activeSliderValue,
