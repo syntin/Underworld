@@ -43,7 +43,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    // This file is kept for compatibility, but the engine uses SDL + Game() now.
+    // This is kept for compatibility, but the engine uses SDL + Game() now.
     return 0;
 }
 

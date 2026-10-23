@@ -177,7 +177,6 @@ int Game()
     float time = 0.0f;
 
     // Get window IDs for routing events
-     // Get window IDs for routing events
     Uint32 mainWindowID = SDL_GetWindowID(window);
     Uint32 inspectorWindowID = SDL_GetWindowID(inspectorWindow);
 
@@ -242,6 +241,8 @@ int Game()
         float speed = 1.0f;
 
         MovementComponent* pm = components.GetMovement(player);
+
+        //Will be changing this around until i get it where it feels right
         pm->acceleration = glm::vec3(0.0f);
 
         if (keys[SDL_SCANCODE_W])
