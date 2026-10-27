@@ -13,6 +13,7 @@
 #include "physicsBroadphaseSystem.h"
 #include "physicsNarrowphaseSystem.h"
 #include "rigidBodySolverSystem.h"
+#include "AISystem.h"
 
 class CullingSystem;
 
@@ -40,7 +41,15 @@ public:
 
 	float GetDeltaTime() const { return m_deltaTime; }
 	void SetDeltaTime(float dt) { m_deltaTime = dt; }
+	void SetPlayerEntity(Entity e)
+	{
+		playerEntity = e;
+	}
 
+	Entity GetPlayerEntity() const
+	{
+		return playerEntity;
+	}
 private:
 	EntityManager entityManager;
 	ComponentManager componentManager;
@@ -50,6 +59,7 @@ private:
 	Input input;
 	AssetRegistry assetRegistry;
 	MovementSystem movementSystem;
+	AISystem aiSystem;
 
 	CullingSystem* _cullingSystem = nullptr;
 	TransformSystem* _transformSystem = nullptr;
@@ -58,6 +68,8 @@ private:
 	PhysicsNarrowphaseSystem* _narrowphaseSystem = nullptr;
 	RigidBodySolverSystem* _rigidBodySolver = nullptr;
 	
+	Entity playerEntity = INVALID_ENTITY;
+
 	float m_deltaTime = 0.0f;
 
 };

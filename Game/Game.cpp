@@ -161,10 +161,45 @@ int Game()
     playerName.name = "Player";
     components.AddName(player, playerName);
 
+    world.SetPlayerEntity(player);
+
+    // ENEMY ENTITY
+    Entity enemy = entityManager.CreateEntity();
+
+    Transform enemyT;
+    enemyT.position = { 3.0f, 3.0f, 0.0f };
+    components.AddTransform(enemy, enemyT);
+
+    MovementComponent enemyMove;
+    enemyMove.RegisterExports("Enemy");
+    components.AddMovement(enemy, enemyMove);
+
+    AIComponent enemyAI;
+    enemyAI.detectionRange = 20.0f;
+    enemyAI.moveSpeed = 5.0f;
+    components.AddAI(enemy, enemyAI);
+
+    components.AddTriangleRenderable(enemy, TriangleRenderable{});
+
+    ECS::Mesh meshEnemy;
+    meshEnemy.boundsMin = glm::vec3(-0.5f, -0.5f, 0.0f);
+    meshEnemy.boundsMax = glm::vec3(0.5f, 0.5f, 0.0f);
+    components.AddMesh(enemy, meshEnemy);
+
+    BoundsComponent bcEnemy;
+    bcEnemy.localBounds.min = meshEnemy.boundsMin;
+    bcEnemy.localBounds.max = meshEnemy.boundsMax;
+    components.AddBounds(enemy, bcEnemy);
+
+    NameComponent enemyName;
+    enemyName.name = "Enemy";
+    components.AddName(enemy, enemyName);
+
     // SCENE GRAPH PARENTING
     sceneGraph.SetParent(child1, root);
     sceneGraph.SetParent(child2, root);
     sceneGraph.SetParent(player, root);
+    sceneGraph.SetParent(enemy, root);
 
     // TRANSFORM POINTERS
     Transform* t1              = components.GetTransform(child1);
@@ -238,7 +273,7 @@ int Game()
 
         // PLAYER MOVEMENT (WASD)
         const bool* keys = SDL_GetKeyboardState(NULL);
-        float speed = 1.0f;
+        float speed = 10.0f;
 
         MovementComponent* pm = components.GetMovement(player);
 

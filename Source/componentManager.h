@@ -22,6 +22,7 @@
 #include "movementComponent.h"
 #include "rigidBodyComponent.h"
 #include "nameComponent.h"
+#include "aiComponents.h"
 
 
 struct TriangleRenderable {};
@@ -783,6 +784,32 @@ public:
 		return m_namePool.HasComponent(e);
 	}
 
+	// AI 
+
+	AIComponent* AddAI(Entity e, const AIComponent& ai)
+	{
+		return m_aiPool.AddComponent(e, ai);
+	}
+
+	AIComponent* GetAI(Entity e)
+	{
+		return m_aiPool.GetComponent(e);
+	}
+
+	const AIComponent* GetAI(Entity e) const
+	{
+		return m_aiPool.GetComponent(e);
+	}
+
+	bool HasAI(Entity e) const
+	{
+		return m_aiPool.HasComponent(e);
+	}
+
+	std::vector<Entity>& GetAIEntities()
+	{
+		return m_aiPool.GetEntities();
+	}
 	// TO DO: Add components as needed
 
 private:
@@ -807,7 +834,7 @@ private:
 	ComponentPool<MovementComponent> m_movementPool;
 	ComponentPool<RigidBodyComponent> m_rigidBodyPool;
 	ComponentPool<NameComponent> m_namePool;
-
+	ComponentPool<AIComponent> m_aiPool;
 
 	Entity m_activeCamera;
 };

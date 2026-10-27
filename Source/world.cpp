@@ -33,6 +33,9 @@ void World::Update(float dt)
 
     input.Update();
     
+    // AI 
+    aiSystem.Update(*this);
+
     // Movement system (velocity, acceleration, damping)
     movementSystem.Update(*this);
 
