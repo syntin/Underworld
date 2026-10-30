@@ -273,7 +273,7 @@ int Game()
 
         // PLAYER MOVEMENT (WASD)
         const bool* keys = SDL_GetKeyboardState(NULL);
-        float speed = 10.0f;
+        float speed = 7.5f;
 
         MovementComponent* pm = components.GetMovement(player);
 

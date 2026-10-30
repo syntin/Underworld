@@ -31,6 +31,7 @@ void World::Update(float dt)
 {
     m_deltaTime = dt;
 
+    // Input
     input.Update();
     
     // AI 
